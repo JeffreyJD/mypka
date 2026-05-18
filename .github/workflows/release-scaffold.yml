@@ -205,17 +205,47 @@ jobs:
           # versioned asset — same sha256, just a fixed filename.
           LATEST_ZIP="$(dirname "$ZIP")/mypka-scaffold-latest.zip"
           cp "$ZIP" "$LATEST_ZIP"
-          NOTES="Automated myPKA scaffold release v${VERSION} (AUTO-39 pipeline).
+
+          # --- User-facing release notes -------------------------------------
+          # Release notes are for the PEOPLE downloading the scaffold, not for
+          # CI debugging. NEVER put internal infra here: no Storage bucket
+          # paths, no internal issue refs. Only the public sha256 (a legit
+          # integrity hash) and the asset download links belong on this page.
+          #
+          # The body is the matching CHANGELOG.md section, extracted by version
+          # header `## [<version>]`, so every release self-documents what
+          # actually changed for the user.
+          CHANGELOG_SECTION=$(awk -v ver="$VERSION" '
+            $0 ~ "^## \\[" ver "\\]" { capture=1; next }
+            capture && /^## \[/      { exit }
+            capture                  { print }
+          ' CHANGELOG.md | sed -e 's/^[[:space:]]*$//' )
+          # Trim leading/trailing blank lines.
+          CHANGELOG_SECTION=$(printf '%s\n' "$CHANGELOG_SECTION" \
+            | sed -e :a -e '/^\n*$/{$d;N;ba}' -e '/./,$!d')
+          if [ -z "$CHANGELOG_SECTION" ]; then
+            CHANGELOG_SECTION="See [CHANGELOG.md](CHANGELOG.md) for the full list of changes in this release."
+          fi
+
+          NOTES="## myPKA scaffold v${VERSION}
+
+          ${CHANGELOG_SECTION}
+
+          ---
+
+          ### Download
+
+          - **Latest (stable URL):** [\`mypka-scaffold-latest.zip\`](https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/mypka-scaffold-latest.zip) — always resolves to the newest scaffold.
+          - **This version (pinned):** the \`mypka-scaffold-v${VERSION}.zip\` asset attached below.
+
+          Unzip it into a folder, open that folder in your LLM tool, and paste \`initialize yourself in this folder\` — see the [README](https://github.com/${GITHUB_REPOSITORY}/blob/main/README.md) for the full setup.
+
+          ### Integrity
 
           - ZIP sha256: \`${ZIP_SHA}\`
-          - Storage: \`ai-library-packs/scaffold/mypka-scaffold-v${VERSION}.zip\`
-          - Per-file classifier manifest attached + in Storage as
-            \`scaffold/mypka-scaffold-v${VERSION}-manifest.json\`.
-          - \`mypka-scaffold-latest.zip\` is a fixed-name copy of the versioned ZIP
-            (same bytes/sha256) so the stable
-            \`/releases/latest/download/mypka-scaffold-latest.zip\` URL resolves.
 
-          See CHANGELOG.md for details."
+          Full changelog: [CHANGELOG.md](https://github.com/${GITHUB_REPOSITORY}/blob/main/CHANGELOG.md)"
+
           gh release create "$TAG" "$ZIP" "$LATEST_ZIP" "$MANIFEST" \
             --title "myPKA scaffold v${VERSION}" \
             --notes "$NOTES" \

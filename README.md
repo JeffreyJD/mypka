@@ -20,15 +20,19 @@ myPKA is a folder. You drop it on your machine, point your LLM at it, and you ha
 
 > **Why this is different from other scaffolds.** Most folder structures are someone's preference dressed up as a system. myPKA is the working slice of **ICOR**, a methodology Paperless Movement S.L. and thousands of professionals world wide have been running their own business on for years. Every folder, every routing decision, every specialist contract maps to a piece of that framework. The structure is not arbitrary. The reasoning is teachable. Both matter when you scale past the first week.
 
-## What's new in v1.10.0
+## What's new in v2.0.0
 
-This release adds three things, all in service of one outcome: **the team picks up where it left off, even across sessions, even when a different specialist takes over.**
+**This is a MAJOR, breaking release.** The base scaffold roster moves from **nine specialists to six**.
 
-- **A markdown-first task system.** Unfinished work gets written down as a plain `.md` file in `Team Knowledge/tasks/`. Folder location is the status. Frontmatter holds the cross-references back to the SOP, workstream, guideline, life entry, session log, and journal entry that give the work its context. Whoever opens the task next is one wikilink away from everything they need.
-- **Per-agent journals.** Each specialist now has a `journal/` inside their team folder. They write a short entry whenever they learn something durable — an anti-pattern, a decision rule, a "next time, do it this way." The next session starts smarter than the last one ended.
-- **An LLM-readable migration changelog.** `CHANGELOG-MIGRATION.md` at the root is a numbered, idempotent recipe any LLM can follow to upgrade an older myPKA folder. The folder is the database; the upgrade story lives in the folder too.
+The three creative specialists — **Iris** (Design System Architect), **Charta** (Infographic Designer), and **Pixel** (Visual Specialist) — and everything they own (their contracts, their per-agent journals, four design SOPs, the `GL-003-design-system` Guideline, and their team-portrait images) come **out of the base scaffold**. They now ship as the optional **Designer Expansion Pack** from the AI Library.
 
-That's it. No new tools, no new dependencies. Just three small additions to the same plain-markdown shape. Additive — v1.9.x folders gain new directories without losing anything.
+The base scaffold now ships exactly six specialists: **Larry, Nolan, Pax, Penn, Mack, and Silas.**
+
+- **Why the change.** The base scaffold is the working slice of ICOR everyone needs — PKM, journaling, research, hiring, automation, database work. Brand and visual work is real work, but it isn't universal. Pulling the creative trio into an opt-in pack keeps the base lean for the majority and gives design-focused users a clean, dedicated pack instead of carrying weight they may never use.
+- **What you get if you do design work.** Install the **Designer Expansion Pack** from the AI Library — it restores Iris, Charta, Pixel, the four design SOPs, and `GL-003-design-system` as a drop-in pack. Nothing is lost; the capability simply moves to opt-in.
+- **Why it's a MAJOR bump.** Removing specialists from the base roster is a breaking structural change under semver. An existing myPKA folder updated from 1.10.x to 2.0.0 will lose the three creative agents from its base roster unless the Designer Expansion Pack is installed. See **Migrating to v2.0.0** below.
+
+Everything else is unchanged — the task system, per-agent journals, and the LLM-readable migration changelog introduced earlier all carry forward. Plain markdown, any LLM, yours forever.
 
 ## Get going now
 
@@ -73,7 +77,7 @@ Six specialists ship pre-loaded. **You only ever talk to Larry.** Larry routes.
 <table>
 <tr>
 <td width="140" align="center"><img src="github/team/larry.png" width="120" alt="Larry the Red Fox - Team Leader and Orchestrator" /></td>
-<td><b>Larry - Team Leader & Orchestrator</b><br/><i>A Red Fox. Sharp ears, sharper instincts.</i><br/><br/>Every request you make lands with Larry first. He clarifies, picks the right specialist, hands off the brief, and synthesizes the answer back to you. He's also the team's <b>Librarian</b> (keeps the wiki clean, fixes broken <code>[[wikilinks]]</code>, enforces the SSOT Golden Rule), <b>Session-Log Author</b> (writes a daily log of what the team did and what changed), and as of v1.10.0, the team's <b>Task Walker</b> (surfaces what's open at session start). Larry never executes specialist work himself - that's the iron rule.</td>
+<td><b>Larry - Team Leader & Orchestrator</b><br/><i>A Red Fox. Sharp ears, sharper instincts.</i><br/><br/>Every request you make lands with Larry first. He clarifies, picks the right specialist, hands off the brief, and synthesizes the answer back to you. He's also the team's <b>Librarian</b> (keeps the wiki clean, fixes broken <code>[[wikilinks]]</code>, enforces the SSOT Golden Rule), <b>Session-Log Author</b> (writes a daily log of what the team did and what changed), and the team's <b>Task Walker</b> (surfaces what's open at session start). Larry never executes specialist work himself - that's the iron rule.</td>
 </tr>
 <tr>
 <td width="140" align="center"><img src="github/team/nolan.png" width="120" alt="Nolan the Pitbull - Talent Acquisition" /></td>
@@ -97,7 +101,7 @@ Six specialists ship pre-loaded. **You only ever talk to Larry.** Larry routes.
 </tr>
 </table>
 
-Each specialist has a contract at `Team/<Name> - <Role>/AGENTS.md`, and as of v1.10.0, a `journal/` folder for durable insights. Full routing table at `Team/agent-index.md`.
+Each specialist has a contract at `Team/<Name> - <Role>/AGENTS.md` and a `journal/` folder for durable insights. Full routing table at `Team/agent-index.md`.
 
 > Need brand and visual work — design systems, infographics, stylized images? The **Designer Expansion Pack** adds three creative specialists (Iris, Charta, Pixel) to your team. It's an optional pack from the AI Library, not part of the base six.
 
@@ -106,8 +110,8 @@ Each specialist has a contract at `Team/<Name> - <Role>/AGENTS.md`, and as of v1
 ## What lives where
 
 - `PKM/` is your knowledge. `My Life/` holds the five life concepts (Goals, Habits, Topics, Projects, Key Elements). `Documents/`, `CRM/`, `Images/`, and `Journal/` sit alongside it. Notes connect through `[[wikilinks]]`, not nested folders.
-- `Team/` holds your specialists. One folder per agent. Each has its own `AGENTS.md` and, as of v1.10.0, its own `journal/` for durable cross-session insights.
-- `Team Knowledge/` holds the team's playbook. SOPs are atomic procedures. Workstreams orchestrate multi-agent flows. Guidelines are static reference info. **`tasks/` is new in v1.10.0** and holds unfinished work the team is tracking across sessions (`open/`, `in-progress/`, `done/<YYYY>/<MM>/`, `cancelled/<YYYY>/<MM>/`).
+- `Team/` holds your specialists. One folder per agent. Each has its own `AGENTS.md` and its own `journal/` for durable cross-session insights.
+- `Team Knowledge/` holds the team's playbook. SOPs are atomic procedures. Workstreams orchestrate multi-agent flows. Guidelines are static reference info. `tasks/` holds unfinished work the team is tracking across sessions (`open/`, `in-progress/`, `done/<YYYY>/<MM>/`, `cancelled/<YYYY>/<MM>/`).
 - `Deliverables/` is where the team puts work-in-progress and finished artifacts - research briefs, hire workups, multi-file projects. Time-stamped, ephemeral, the team's working surface. **Pax** drops research here. **Nolan** drops hire workups here. **Larry** collects multi-specialist work here.
 - `Team Inbox/` is your drop zone for raw inputs. Drop screenshots, voice memos, business cards, links, or a quick braindump and the team files them into PKM. *"I have something, not sure where"* goes here. **Penn** usually picks it up, **Larry** routes it.
 - `AGENTS.md` at the root is the source of truth for how the whole team behaves.
@@ -126,11 +130,15 @@ Next session, Larry walks `tasks/open/` and `tasks/in-progress/` first, before d
 
 The journal sits next to this. When the assignee learns something durable while working a task — a build pattern that worked, an anti-pattern they want to remember, a rule of thumb — they write a short entry in their `journal/`. The next time a task references that entry, they re-read their own past thinking before starting. Learning compounds across sessions.
 
-## Migrating from v1.9.x to v1.10.0
+## Migrating to v2.0.0
 
-v1.10.0 is purely additive. v1.9.x folders gain new directories and templates. Nothing existing is moved, renamed, or modified.
+v2.0.0 is a **breaking** upgrade — the base roster shrinks by three. This is the breaking step: updating from 1.10.x removes **Iris, Charta, and Pixel** (plus the four design SOPs and `GL-003-design-system`) from your base scaffold.
 
-Open `CHANGELOG-MIGRATION.md` at the root and ask your LLM to run the recipe. It's nine numbered, idempotent steps. You can audit each one before it runs. After the migration, run `bash validation-script.sh .` from the scaffold root — it exits 0 when the upgrade is structurally complete.
+- **If you do brand or visual work**, install the **Designer Expansion Pack** from the AI Library *before or right after* upgrading. It restores Iris, Charta, Pixel, the four design SOPs, and `GL-003-design-system` as an opt-in pack — full creative capability, nothing lost.
+- **If you do only PKM, journaling, research, hiring, automation, or database work**, no action is needed. The six-specialist base covers you.
+- **Existing session logs** that reference the removed agents or SOP-007–010 are left untouched as a historical record.
+
+Open `CHANGELOG-MIGRATION.md` at the root and ask your LLM to run the recipe — it's numbered and idempotent, and you can audit each step before it runs. After the migration, run `bash validation-script.sh .` from the scaffold root — it exits 0 when the upgrade is structurally complete. See the `[2.0.0]` entry in [CHANGELOG.md](CHANGELOG.md) for the full list of what moved.
 
 ## Principles
 
