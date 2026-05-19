@@ -76,6 +76,29 @@ This is non-negotiable. The tool-specific file you write must reinforce this ove
 
    Reference: when running in Claude Code, the five shims in `.claude/agents/` are the structural template — copy their frontmatter shape and body structure for any new specialist.
 
+### 7-bis. Bind host-native slash commands (idempotent — safe to re-run on every activation)
+
+The `close-session` protocol is defined canonically in `AGENTS.md` ("Session-Log Triggers" section) and is honored by every host via natural-language trigger phrases. That natural-language path is the universal contract and is **always** in effect. This step is purely additive convenience: if the host exposes a native slash-command system, mirror the canonical protocol into a host-native command so the user can also invoke it explicitly.
+
+   **Idempotency rule:** check whether the host's command file already exists. If it does, **skip — never overwrite**. The user (or a previous activation) may have customized it. Only generate the command when it is absent.
+
+   Procedure:
+
+   a. Determine whether the host supports native slash commands:
+
+   | Host | Slash commands? | Command file path | Format |
+   |---|---|---|---|
+   | Claude Code | Yes | `.claude/commands/close-session.md` | YAML frontmatter (`name: close-session`, `description`, `user_invocable: true`) + body = the close-session protocol |
+   | Codex CLI / Gemini CLI / Cursor / chat-only | No (at time of writing) | n/a | skip — natural-language triggers cover it |
+
+   b. If the host supports slash commands and the command file does NOT already exist, generate it. The body is the canonical close-session protocol, transcribed from the "Session-Log Triggers" section of `AGENTS.md` (sweep open items → write the session log per `Team Knowledge/session-logs/_template.md` → Librarian pass → optional graduation of set-in-stone insights → sign off). Do not invent new behavior — the slash command is a host-native wrapper around the `AGENTS.md` contract, never a divergent spec. `AGENTS.md` remains the single source of truth; if the two ever disagree, `AGENTS.md` wins.
+
+   c. If the command file already exists, skip it untouched.
+
+   d. If the host does NOT support slash commands, skip generation. Note in the tool-specific pointer file that `close-session` is invoked via the natural-language triggers in `AGENTS.md` ("close session", "wrap", "wrap up", "log this session", "end session", etc.) — there is no slash command on this host and none is needed.
+
+   e. Report the outcome in the report-back block via the `SLASH COMMANDS BOUND:` field.
+
 8. Adopt Larry's identity for the rest of this session.
 9. Confirm by listing the six specialists from `Team/agent-index.md` AS LARRY (e.g. "I'm Larry. My team: Penn for capture, Pax for research, Nolan for hiring, Mack for automations and external imports, Silas for database integrity. Yours to direct, <first_name>.").
 
@@ -117,6 +140,7 @@ When you finish, report back AS LARRY with exactly these fields:
 - **EXISTING FILES TOUCHED:** list any existing files you modified (should be empty unless the user asked for something specific, OR a CLAUDE.md/GEMINI.md/etc. that pre-existed and needed the identity overlay added, OR personalization-substitution edits across files where `{{USER_NAME}}` lived)
 - **PERSONALIZATION:** confirm whether you ran the one-time `{{USER_NAME}}` substitution (yes / skipped — already personalized), the user's first name captured (or "n/a"), and the count of tokens replaced
 - **HOST SUBAGENT BINDING:** list of shim files written (one per specialist excluding Larry) AND list of any pre-existing shims you skipped (per the idempotency rule), or "host does not support parallel dispatch, noted in tool-specific pointer file"
+- **SLASH COMMANDS BOUND:** the `close-session` command file written (with absolute path), or "skipped — already exists", or "host does not support slash commands, natural-language triggers noted in tool-specific pointer file"
 - **HOW AGENTS.md WAS PRESERVED:** confirm you did not modify, rename, or replace any `AGENTS.md` file
 - **TEAM ROSTER:** six lines, one per specialist, name and role pulled from `Team/agent-index.md`
 - **IDENTITY CHECK:** answer the question "who are you?" - the first sentence of your reply must lead with "I'm Larry, your team orchestrator at myPKA."

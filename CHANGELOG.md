@@ -2,6 +2,29 @@
 
 All notable changes to the myPKA scaffold are tracked here. Versions follow semver: MAJOR for breaking structural changes, MINOR for additions, PATCH for fixes.
 
+## [2.1.0] - 2026-05-19
+
+**Slash commands become adapter-generated.** The `/close-session` command is no longer pre-baked into the scaffold as a Claude-only file. The adapter now generates it at setup time from the canonical close-session protocol in `AGENTS.md`, so the scaffold ships host-neutral and every host gets the right thing: Claude Code gets the slash command, hosts without slash commands skip it and rely on the natural-language triggers. Additive, non-breaking — Claude Code users get the command regenerated idempotently on next activation. (COU-272)
+
+### Added
+
+- **ADAPTER-PROMPT §7-bis "Bind host-native slash commands."** New idempotent setup step: if the host supports native slash commands (Claude Code → `.claude/commands/close-session.md`), the adapter generates `close-session.md` from the canonical close-session protocol in `AGENTS.md`. Hosts without slash commands (Codex CLI, Gemini CLI, Cursor, chat-only) skip generation and the tool-specific pointer file notes the natural-language triggers instead. Skip-if-exists — never overwrites a user-customized command file.
+- **`SLASH COMMANDS BOUND:` report-back field** in ADAPTER-PROMPT — the adapter now reports whether the close-session command was written, skipped (already exists), or not applicable for the host.
+
+### Removed
+
+- **`.claude/commands/close-session.md` is no longer tracked in the repo.** It was a Claude-Code-only pre-baked file; it is now adapter-generated per §7-bis. Removing it from the scaffold makes the repo host-neutral. (Note: `.claude/agents/*.md` shims are in the same pre-baked-Claude-only category and a candidate for the same treatment — tracked separately, not part of this release.)
+
+### Changed
+
+- `AGENTS.md` (root) — close-session trigger row gains the member-facing phrases "close this session", "wrap", "log this session". The slash-command-optionality line is tightened: `/close-session` is explicitly a Claude-Code-only convenience generated at setup (ADAPTER-PROMPT §7-bis), not required and not shipped; the natural-language triggers are the canonical universal path.
+- `validation-script.sh` — `.scaffold-version` check widened from the `2.0.x` line to the full `2.x` line; v2.1.0 introduces no structural changes the script must enforce.
+
+### Version files
+
+- `VERSION` → `2.1.0`
+- `.scaffold-version` → `2.1.0`
+
 ## [2.0.0] - 2026-05-18
 
 **Breaking structural change.** The base scaffold roster moves from **nine specialists to six**. The three creative specialists — Iris (Design System Architect), Charta (Infographic Designer), Pixel (Visual Specialist) — and everything they own come out of the base scaffold and into the optional **Designer Expansion Pack** from the AI Library. The base now ships Larry, Nolan, Pax, Penn, Mack, and Silas. A user updating an existing myPKA from 1.10.x to 2.0.0 loses the three creative agents from their base roster — install the Designer Expansion Pack to keep them. (COU-261)

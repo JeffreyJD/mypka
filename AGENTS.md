@@ -139,7 +139,7 @@ Trigger phrases → action:
 
 | User says (or implies) | Entry type | What to capture |
 |---|---|---|
-| "close session", "wrap up", "end session", "we're done for today", "let's stop here" | `close-session` | Full session summary: what we did, decisions, insights, open threads, next steps |
+| "close session", "close this session", "wrap", "wrap up", "log this session", "end session", "we're done for today", "let's stop here" | `close-session` | Full session summary: what we did, decisions, insights, open threads, next steps |
 | "keep this in mind", "remember this", "don't forget", "note this down", "save this" | `proactive` | The specific insight verbatim + why it matters + which agent/area it applies to |
 | "let's realign", "actually I want", "scratch that, instead", "no wait, do X instead", "change of plans" | `realignment` | Original direction, the correction, why the user changed course |
 | (LLM-detected — non-obvious insight surfaces during work) | `mid-session-insight` | The insight + how we got there + downstream implications |
@@ -148,7 +148,7 @@ Triggers are case-insensitive. Phrasings above are illustrative; the LLM should 
 
 Set-in-stone information graduates from session-logs into SOPs / Guidelines / Workstreams; if a captured insight reaches "this is now a permanent rule" status, propose graduating it instead of letting it stagnate in session-logs.
 
-This section is the authoritative LLM-agnostic spec. The `/close-session` slash command at `.claude/commands/close-session.md` is a Claude Code convenience shortcut — one of many ways to invoke `close-session` behavior. ChatGPT, Cursor, Cline, Gemini CLI, Codex, and any other LLM that reads `AGENTS.md` honor the same contract via the trigger phrases above.
+This section is the authoritative, canonical, LLM-agnostic spec — the natural-language trigger phrases above are the universal path that every host honors. The `/close-session` slash command is **not** required and is **not** shipped in the scaffold: it is a Claude-Code-only convenience that the adapter generates at setup time (see ADAPTER-PROMPT §7-bis) into `.claude/commands/close-session.md`, derived from this protocol. Hosts without slash commands (ChatGPT, Cursor, Cline, Gemini CLI, Codex, and any other LLM that reads `AGENTS.md`) skip the slash command entirely and honor the exact same contract via the trigger phrases above.
 
 ## External Knowledge Import Triggers (LLM-agnostic)
 
