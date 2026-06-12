@@ -1,6 +1,6 @@
 # Journal - Index
 
-The inbox of your myPKA. One markdown file per day. Penn (Journal Writer) writes here when the user shares thoughts, screenshots, photos, or voice notes.
+The inbox of your myPKA. One markdown file per day. Radar (Journal Writer) writes here when the user shares thoughts, screenshots, photos, or voice notes.
 
 ## Structure
 
@@ -8,23 +8,24 @@ The inbox of your myPKA. One markdown file per day. Penn (Journal Writer) writes
 
 - One file per day.
 - Filename: ISO date prefix plus a kebab-case slug for the day's main theme.
-- If the day already has an entry, Penn appends a section to the existing file rather than creating a second one.
+- If the day already has an entry, Radar appends a section to the existing file rather than creating a second one.
 
-Auto-create rule: when Penn writes today's Journal entry and the `YYYY/` or `MM/` subfolder does not exist, Penn creates it.
+Auto-create rule: when Radar writes today's Journal entry and the `YYYY/` or `MM/` subfolder does not exist, Radar creates it.
 
 ## How entries are written
 
 See [[WS-001-daily-journaling]] for the full Workstream. Short version:
 
-- Penn writes the entry in plain markdown.
+- Radar writes the entry in plain markdown.
 - People, organizations, topics, projects, and goals are linked via `[[wikilinks]]` to their canonical files.
 - Images are embedded via `![[Images/YYYY/MM/...]]`. The image lives in `PKM/Images/`, the journal entry references it.
 
 ## Active files
 
 - `2026/05/` — [[2026-05-04-first-day]] — seeded course sample. The entry referenced in the Dr. Schmidt SSOT demo.
+- `2026/06/` — [[2026-06-11-environment-registry-kickoff]] — Environment Registry created; locked decisions on location (myPKA) and secrets (pointers-only).
 
-Penn appends or adds entries here as you share journal input.
+Radar appends or adds entries here as you share journal input.
 
 ## Subfolders by year
 

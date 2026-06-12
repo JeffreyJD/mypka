@@ -1,6 +1,6 @@
 # GL-002 - Frontmatter Conventions
 
-> **This Guideline is a general rule every agent reads on every relevant action.** Every entity note Penn captures, every entity Silas writes during an import, every audit Iris runs — they all read this file. SOPs and Workstreams `[[wikilink]]` here rather than restating the schema.
+> **This Guideline is a general rule every agent reads on every relevant action.** Every entity note Radar captures, every entity Margaret writes during an import, every audit Iris runs — they all read this file. SOPs and Workstreams `[[wikilink]]` here rather than restating the schema.
 
 This is the source of truth for the YAML frontmatter that sits at the top of every entity note in your myPKA. Every other file that needs to talk about field names `[[wikilinks]]` here.
 
@@ -89,6 +89,10 @@ Per entity, the required field is the one that names the thing:
 | Topic | `name` |
 | Key Element | `name` |
 | Document | `title` |
+| Host | `name` |
+| Service | `name` |
+| Account | `name` |
+| Software | `name` |
 
 Everything else is optional. A note with three frontmatter fields is fine. A note with twenty is also fine. The shape stays consistent.
 
@@ -101,6 +105,18 @@ If you find yourself wanting a field that is not in this Guideline:
 3. Then use it.
 
 One-off `notes_jane_likes` style keys break the SQLite migration silently. Free-form notes go in the body.
+
+### 7. Secrets are pointers, never values
+
+**Locked decision (2026-06-11): no credential value is ever written into a myPKA file.** This folder syncs to cloud storage; a password or API key written here is a plaintext secret in the cloud.
+
+The Environment entities (Host, Service, Account, Software) carry three pointer fields instead:
+
+- `secrets_ref` — WHERE the credential lives (`".env on davisglobe-vps-ash-1"`, `"Bitwarden > Homelab > Lighthouse iDRAC"`). Never the credential itself.
+- `env_var_names` — the NAMES of environment variables a service or account uses. Names are documentation; values stay in the `.env` file on the host.
+- `license_ref` — where a license key lives, never the key.
+
+Usernames, IPs, ports, URLs, and hostnames are fine in frontmatter — they identify the door, not the key. If the pointer-only policy ever proves too slow in practice, the agreed fallback is **hybrid**: low-risk, LAN-only credentials may move inline after an explicit user decision recorded in a session log. High-value secrets (anything with spend, root access, or trading authority) stay pointers forever.
 
 ## Entity schemas
 
@@ -272,6 +288,133 @@ Notes:
 - `physical_location` and `digital_location` are independent. A document can have both, either, or neither.
 - `renewal_trigger` is the date you want to be reminded to act. The actual `expiry_date` may be later.
 - Body section conventions: `## Summary`, `## Key terms`, `## Notes`.
+
+### Hosts - `PKM/Environment/Hosts/<slug>.md`
+
+A Host is any machine you own, rent, or administer: a physical server, a cloud VPS, a laptop, a desktop, a single-board computer.
+
+```yaml
+---
+name: davisglobe-vps-ash-1                 # required
+host_type: vps                             # physical | vps | laptop | desktop | sbc | other
+status: active                             # planned | building | active | retired
+provider: hetzner                          # who you rent/bought it from
+os: Ubuntu 26.04 LTS
+location: Ashburn, VA
+specs: 4 vCPU / 8 GB RAM / 150 GB disk
+ip_public: 178.156.163.139
+ip_public_v6: 2a01:4ff:f4:67e5::1
+ip_lan: 10.0.20.10
+ip_tailscale: 100.91.84.117
+dns_name: davisglobe-vps-ash-1.tailfe9a46.ts.net
+access: ssh trader@178.156.163.139         # how to get in — the door, not the key
+secrets_ref: SSH key on jeff-laptop        # WHERE credentials live (rule 7), never the value
+renewal_date: 2027-06-11
+monthly_cost: 12
+linked_accounts:
+  - hetzner                                # slugs of Accounts (the provider account, etc.)
+tags:
+  - trading
+---
+```
+
+Notes:
+- Per rule 7, `secrets_ref` is a pointer. No passwords, no keys, no tokens in this file, ever.
+- `ip_lan` for homelab machines, `ip_public` for cloud machines, `ip_tailscale` when on the tailnet. A host can have all three.
+- `status: building` is for hardware mid-assembly; `planned` for designed-on-paper.
+- Body section conventions: `## What runs here`, `## Security posture`, `## Backups`, `## Open questions`.
+
+### Services - `PKM/Environment/Services/<slug>.md`
+
+A Service is a deployed thing that runs on a Host: an app, a Docker container, a VM, an LXC, a cron job, a database.
+
+```yaml
+---
+name: Prophet Trader                       # required
+status: active                             # planned | active | paused | retired
+service_type: app                          # app | container | vm | lxc | cron_job | database | network | other
+runtime: cron                              # docker | vm | lxc | systemd | cron | bare_metal | other
+host: davisglobe-vps-ash-1                 # slug of a Host
+install_path: /home/trader/prophet-trader
+repo_path: C:\Users\jeff\dev\prophet-trader # where the code lives (local path or repo URL)
+url: https://example.internal:8096
+ports:
+  - 8096
+schedule: "30 9 * * 1-5 ET"                # cron expression or human description
+env_file: /home/trader/prophet-trader/.env # pointer to the env file location (rule 7)
+env_var_names:                             # variable NAMES only, never values (rule 7)
+  - ALPACA_PAPER_API_KEY
+monitoring: healthchecks.io dead-man's switch
+depends_on:
+  - some-other-service                     # slugs of Services
+linked_accounts:
+  - alpaca                                 # slugs of Accounts this service uses
+tags:
+  - trading
+---
+```
+
+Notes:
+- `host` stores the slug of a Host note per rule 4. One service, one host; if the same app runs on two hosts, that is two Service notes.
+- `env_var_names` documents what the `.env` must contain so a rebuild is possible without archaeology. Values live only in the `.env` on the host.
+- Body section conventions: `## What it does`, `## How it is deployed`, `## Runbook`, `## Open questions`.
+
+### Accounts - `PKM/Environment/Accounts/<slug>.md`
+
+An Account is a relationship with an external provider: hosting, an API, a SaaS subscription, an exchange, a domain registrar.
+
+```yaml
+---
+name: Alpaca                               # required
+status: active                             # active | trial | paused | cancelled
+account_type: api                          # hosting | api | saas | exchange | domain | email | bot | other
+provider_url: https://alpaca.markets
+username: jeff@example.com
+plan: Paper trading (free tier)
+monthly_cost: 0
+renewal_date: 2027-01-15
+secrets_ref: .env on davisglobe-vps-ash-1  # WHERE the key/token lives (rule 7)
+env_var_names:
+  - ALPACA_PAPER_API_KEY
+  - ALPACA_PAPER_SECRET_KEY
+linked_services:
+  - prophet-trader                         # slugs of Services that use this account
+linked_hosts:
+  - davisglobe-vps-ash-1                   # slugs of Hosts (for hosting providers)
+tags:
+  - trading
+---
+```
+
+Notes:
+- One file per provider account. If you hold two separate accounts at the same provider (personal + business), that is two notes.
+- `renewal_date` + `monthly_cost` make "what am I paying for and when does it renew" a frontmatter query.
+- Body section conventions: `## What it is for`, `## Key facts`, `## Open questions`.
+
+### Software - `PKM/Environment/Software/<slug>.md`
+
+Software is a tool you license, subscribe to, or depend on — tracked when forgetting it would cost money or break a rebuild.
+
+```yaml
+---
+name: Claude Code                          # required
+status: active                             # active | trialing | retired
+software_type: subscription                # subscription | license | open_source | os | other
+vendor: Anthropic
+version: ""
+installed_on:
+  - jeff-laptop                            # slugs of Hosts
+license_ref: ""                            # WHERE the license key lives (rule 7), never the key
+renewal_date: 2027-01-15
+monthly_cost: 20
+tags:
+  - ai
+---
+```
+
+Notes:
+- Not every package on every machine — only software whose loss, renewal, or license you need to track. OS-level inventory belongs in the Host note's body.
+- Body section conventions: `## What I use it for`, `## Setup notes`, `## Open questions`.
 
 ## How to extend this Guideline
 

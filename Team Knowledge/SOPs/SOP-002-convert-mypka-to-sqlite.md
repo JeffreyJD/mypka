@@ -1,6 +1,6 @@
 # SOP-002 - Convert Markdown Vault to SQLite
 
-- **Default owner:** Silas (the user runs the procedure with any code-capable LLM as the executor; Silas owns the pre-flight audit and the migration report)
+- **Default owner:** Margaret (the user runs the procedure with any code-capable LLM as the executor; Margaret owns the pre-flight audit and the migration report)
 - **Reusable by any agent.** This is a skill, not a 1:1 ownership. SOPs are procedures any agent can invoke when they need them.
 - **Triggered by:** the user decides their markdown myPKA has outgrown plain files and wants a SQLite mirror for structured queries, analytics, or LLM-side performance.
 - **References:** [[GL-001-file-naming-conventions]], [[Team Knowledge/INDEX]]
@@ -64,6 +64,11 @@ PKM/
 │   ├── Goals/<slug>.md                         -> goals table
 │   └── Habits/<slug>.md                        -> habits table
 ├── Documents/<slug>.md                         -> documents table (metadata)
+├── Environment/
+│   ├── Hosts/<slug>.md                         -> hosts table
+│   ├── Services/<slug>.md                      -> services table
+│   ├── Accounts/<slug>.md                      -> accounts table
+│   └── Software/<slug>.md                      -> software table
 └── Images/YYYY/MM/...                          -> referenced via ![[…]] embeds, not inserted directly
 ```
 
@@ -74,16 +79,16 @@ INDEX.md files in each folder are navigation hubs. Skip them. Do not insert.
 ### 1. Set up
 
 - Create a fresh empty SQLite file: `mypka.db`.
-- Define the schema with these tables (and only these): `people`, `organizations`, `topics`, `projects`, `key_elements`, `goals`, `habits`, `journal`, `documents`, `journal_media`, `content_index`. Do not invent columns the markdown has no source for.
+- Define the schema with these tables (and only these): `people`, `organizations`, `topics`, `projects`, `key_elements`, `goals`, `habits`, `journal`, `documents`, `hosts`, `services`, `accounts`, `software`, `journal_media`, `content_index`. Do not invent columns the markdown has no source for.
 - Open one DB connection. Use a single transaction per table for atomicity.
 
 ### 2. Build a slug to id resolver
 
 For tables with FK references (`journal.key_element_id`, `journal.project_id`, etc.), you need to map a kebab-case slug back to an integer primary key. Strategy:
 
-1. **First pass insert:** people, organizations, topics, key_elements, projects, goals, habits. These have no FKs to journal or documents.
+1. **First pass insert:** people, organizations, topics, key_elements, projects, goals, habits, hosts, accounts. These have no FKs to journal or documents. (`services.host_id` and `software` host references resolve against `hosts_by_slug` in the second pass.)
 2. **Build in-memory dicts:** `people_by_slug = {slug: id}`, etc.
-3. **Second pass insert:** journal, documents. Resolve FKs via the dicts.
+3. **Second pass insert:** journal, documents, services, software. Resolve FKs via the dicts.
 4. **Third pass insert:** junction rows (`journal_media`, `content_index` for wikilink-derived relations).
 
 ### 3. Frontmatter to column mapping
@@ -149,6 +154,51 @@ For each `![[Images/YYYY/MM/<file>]]` line, insert one row:
 | `doc_type` | frontmatter `doc_type` |
 | `physical_location`, `digital_location` | same key |
 | `expiry_date`, `renewal_trigger` | same |
+| `notes` | body text |
+
+**`hosts`** (sources: `PKM/Environment/Hosts/`)
+
+| Column | Source |
+|---|---|
+| `slug` | filename stem |
+| `name` | frontmatter `name` or first H1 |
+| `host_type`, `status`, `provider`, `os`, `location`, `specs` | same key in frontmatter |
+| `ip_public`, `ip_public_v6`, `ip_lan`, `ip_tailscale`, `dns_name` | same key |
+| `access`, `secrets_ref`, `renewal_date`, `monthly_cost` | same key |
+| `linked_accounts` | frontmatter list of slugs, resolved via `content_index` in the third pass |
+| `notes` | body text |
+
+**`services`** (sources: `PKM/Environment/Services/`)
+
+| Column | Source |
+|---|---|
+| `slug` | filename stem |
+| `name` | frontmatter `name` or first H1 |
+| `status`, `service_type`, `runtime`, `install_path`, `repo_path`, `url`, `schedule`, `env_file`, `monitoring` | same key in frontmatter |
+| `host_id` | resolve frontmatter `host` slug via `hosts_by_slug` |
+| `ports`, `env_var_names` | frontmatter lists, JSON-encoded |
+| `depends_on`, `linked_accounts` | frontmatter lists of slugs, resolved via `content_index` in the third pass |
+| `notes` | body text |
+
+**`accounts`** (sources: `PKM/Environment/Accounts/`)
+
+| Column | Source |
+|---|---|
+| `slug` | filename stem |
+| `name` | frontmatter `name` or first H1 |
+| `status`, `account_type`, `provider_url`, `username`, `plan`, `monthly_cost`, `renewal_date`, `secrets_ref` | same key in frontmatter |
+| `env_var_names` | frontmatter list, JSON-encoded |
+| `linked_services`, `linked_hosts` | frontmatter lists of slugs, resolved via `content_index` in the third pass |
+| `notes` | body text |
+
+**`software`** (sources: `PKM/Environment/Software/`)
+
+| Column | Source |
+|---|---|
+| `slug` | filename stem |
+| `name` | frontmatter `name` or first H1 |
+| `status`, `software_type`, `vendor`, `version`, `license_ref`, `renewal_date`, `monthly_cost` | same key in frontmatter |
+| `installed_on` | frontmatter list of Host slugs, resolved via `content_index` in the third pass |
 | `notes` | body text |
 
 ### 4. Wikilink to relation extraction

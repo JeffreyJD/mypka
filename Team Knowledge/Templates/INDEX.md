@@ -26,6 +26,10 @@ Then open the new file and edit. The Properties tab in mypka-interface will popu
 | [[Templates/topic]] | Topic | `PKM/My Life/Topics/<slug>.md` |
 | [[Templates/key-element]] | Key Element | `PKM/My Life/Key Elements/<slug>.md` |
 | [[Templates/document]] | Document | `PKM/Documents/<slug>.md` |
+| [[Templates/host]] | Host | `PKM/Environment/Hosts/<slug>.md` |
+| [[Templates/service]] | Service | `PKM/Environment/Services/<slug>.md` |
+| [[Templates/account]] | Account | `PKM/Environment/Accounts/<slug>.md` |
+| [[Templates/software]] | Software | `PKM/Environment/Software/<slug>.md` |
 
 ## Rules these templates follow
 
