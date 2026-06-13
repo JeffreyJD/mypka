@@ -24,6 +24,7 @@ See [[WS-001-daily-journaling]] for the full Workstream. Short version:
 
 - `2026/05/` — [[2026-05-04-first-day]] — seeded course sample. The entry referenced in the Dr. Schmidt SSOT demo.
 - `2026/06/` — [[2026-06-11-environment-registry-kickoff]] — Environment Registry created; locked decisions on location (myPKA) and secrets (pointers-only).
+- `2026/06/` — [[2026-06-12-outback-and-cron-fixes]] — Wi-Fi profile fix, prophet-trader cron timezone bug, Outback rough-running investigation opened.
 
 Radar appends or adds entries here as you share journal input.
 
