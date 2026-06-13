@@ -8,7 +8,7 @@ install_path: /home/trader/prophet-trader
 repo_path: C:\Users\jeff\dev\prophet-trader
 url: ""
 ports: []
-schedule: "30 9 * * 1-5 daily routine; 0 10 * * 0 weekly autopsy — TZ America/New_York"
+schedule: "ET (system TZ = America/New_York, permanent fix 2026-06-13, DST-safe): 30 9 * * 1-5 routine; 0 10 * * 0 autopsy; 0 0 * * * B2 backup"
 env_file: /home/trader/prophet-trader/.env (chmod 600, 25 variables)
 env_var_names:
   - ANTHROPIC_API_KEY
@@ -47,18 +47,16 @@ AI-driven paper-trading system (agent council architecture). Phase 2 paper tradi
 
 ## How it is deployed
 
-- Runs as the `trader` user from a Python venv at `/home/trader/prophet-trader/.venv`, scheduled by crontab (not systemd):
-  ```
-  TZ=America/New_York
-  30 9 * * 1-5 /home/trader/prophet-trader/install/run_routine.sh >> /home/trader/prophet-trader/data/logs/cron.log 2>&1
-  0 10 * * 0  /home/trader/prophet-trader/install/run_weekly_autopsy.sh >> /home/trader/prophet-trader/data/logs/cron.log 2>&1
-  ```
+- Runs as the `trader` user from a Python venv at `/home/trader/prophet-trader/.venv`, scheduled by crontab (not systemd).
+- **Timezone — permanent fix applied 2026-06-13 (DST-safe).** Background: the original crontab used ET times with a `TZ=` line, but Ubuntu cron applies `TZ` only to the job environment, not the schedule, so the first run fired at 05:30 ET (4 hrs early). Interim fix (2026-06-12) rewrote the crontab in UTC. **Permanent fix (2026-06-13):** set the *system* timezone to Eastern (`sudo timedatectl set-timezone America/New_York && sudo systemctl restart cron`) and restored clean ET crontab times (`30 9` / `0 10` / `0 0`). Because the system clock is now ET, the schedule follows DST automatically — no UTC math, no seasonal drift. Old crontab backed up at `~/crontab.bak.20260613-permfix`.
 - `env_var_names` above lists the load-bearing `.env` variables (names only, per [[GL-002-frontmatter-conventions]] rule 7); the full template is `.env.example` in the repo. Live-trading variables (`ALPACA_LIVE_*`, `BYBIT_LIVE_*`) exist in the template but stay empty until Phase 3.
 - Runtime state (trades.jsonl, decisions, autopsies, phase_state.json, kill_switch.json) is gitignored — lives only on the host + B2 backup.
 
 ## Runbook
 
 - Watch a run: `ssh trader@178.156.163.139` then `tail -f /home/trader/prophet-trader/data/logs/routine-YYYY-MM-DD.log`
+- Observatory dashboard (not a persistent service on the VPS — run on demand via SSH tunnel):
+  `ssh -L 8000:127.0.0.1:8000 trader@178.156.163.139`, then on the VPS `cd ~/prophet-trader && .venv/bin/python -m uvicorn src.api.server:app --host 127.0.0.1 --port 8000`, then browse http://127.0.0.1:8000 on the laptop. Candidate upgrade: systemd unit + Tailscale-only binding per `docs/DEPLOYMENT.md`.
 - "Did it run at all?" — healthchecks.io is the only layer that catches a machine that never started ([[healthchecks-io]]).
 - Test alerting: `python scripts/test_healthchecks.py`
 - Backups: rclone → [[backblaze-b2]] daily 00:00 ET.
