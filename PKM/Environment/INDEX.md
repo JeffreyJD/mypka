@@ -25,6 +25,11 @@ Schemas live in [[GL-002-frontmatter-conventions]] (Hosts, Services, Accounts, S
 - [[lighthouse]] — Dell R730 Proxmox hypervisor (building)
 - [[watchtower]] — Dell R740 Frigate NVR (planned)
 - [[opnsense-r340]] — Dell R340 network gateway (building)
+- [[uck-g2-plus]] — UniFi Cloud Key Gen2 Plus, home network controller (active)
+- [[usg-pro-4]] — UniFi Security Gateway Pro 4, home router/firewall (active)
+- [[us-24]] — UniFi Switch 24, core switch (adoption pending — hard reset required)
+- [[ap-firstfloor-livingroom]] — UniFi AP AC Pro, 1F living room, ch. 36 5GHz (active)
+- [[ap-secondfloor-masterbedroom]] — UniFi AP AC Pro, 2F master bedroom, ch. 149 5GHz (active)
 
 ### Services
 - [[prophet-trader]] — AI trading system on davisglobe-vps-ash-1 (active, Phase 2 paper)
@@ -41,6 +46,10 @@ Schemas live in [[GL-002-frontmatter-conventions]] (Hosts, Services, Accounts, S
 - Backblaze B2 restore never tested — see [[backblaze-b2]].
 - Tailscale ACL policy unreviewed; phone key re-auths 2026-07-31 — see [[tailscale]].
 - Homelab service notes (TrueNAS, AdGuard, Jellyfin, Frigate, etc.) get created as each service actually deploys — planned services live in the body of their Host note until then.
+
+## Network design
+
+Full network design document: [[network-design]] — IP schema, VLAN register, RF plan, firewall ruleset, device registry, and expansion roadmap.
 
 ## Resolved this session (2026-06-11)
 

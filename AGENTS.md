@@ -45,7 +45,7 @@ The **team** is not bounded by the folder. The team is a personality with contra
 
 The only acceptable "no" is when the user explicitly says they do not want to grow the team for this work.
 
-## The team (6 specialists)
+## The team (7 specialists)
 
 See [[Team/agent-index]] for the full routing table.
 
@@ -57,6 +57,7 @@ See [[Team/agent-index]] for the full routing table.
 | Radar | [[Team/Radar - Journal Writer/AGENTS]] | Captures daily inputs into the Journal and PKM |
 | Klinger | [[Team/Klinger - Automation Specialist/AGENTS]] | API integrations, MCP servers, webhooks, OAuth, automations. Connection layer for external imports — fetches the bytes, hands off to Margaret. Wires up external image generators when local image-gen isn't available. |
 | Margaret | [[Team/Margaret - Database Architect/AGENTS]] | myPKA structure, frontmatter integrity, SQLite conversion. Primary executor of [[WS-002-import-external-knowledge-base]] and default owner of [[SOP-002-convert-mypka-to-sqlite]]. |
+| Sparky | [[Team/Sparky - Network Architect/AGENTS]] | Network architecture, VLANs, firewall rules, UniFi administration, wireless RF planning, IP addressing schema, network security, incident triage. |
 
 **SOPs are skills, not 1:1 ownership.** Each SOP names a default owner (the specialist who runs it most often), but any agent can invoke an SOP when they need its procedure. Think of SOPs the way Claude skills work — discrete, named, callable. Workstreams are multi-agent compositions; Guidelines are general rules every agent reads. See [[Team Knowledge/INDEX]].
 
