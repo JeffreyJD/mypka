@@ -101,17 +101,70 @@ All rules: **LAN In**, **Drop**, **Before Predefined**.
 
 ## Future network expansion plan
 
-Jeff's target architecture (when expansion AP hardware arrives):
+### Target architecture
+
+Jeff's stated goal: **2 APs per room** — one dedicated to IoT traffic, one dedicated to main devices.
 
 ```
-Per room: 2 APs
-  AP-A: broadcasts IoT SSID only (2.4 GHz)
-  AP-B: broadcasts Main SSID only (5 GHz+)
+Per room:
+  AP-A (IoT):  2.4 GHz only  → Downton Abbey-IOT  (VLAN 20)
+  AP-B (Main): 5 GHz primary → Downton Abbey       (VLAN 1)
 ```
 
-Rooms planned: Living Room (1F), Master Bedroom (2F) — already covered. Additional rooms TBD.
+The two current AP AC Pros become the **Main APs** (AP-B). Two new APs (can be lower-cost models — UAP-AC-Lite or U6-Lite — since IoT devices are 2.4 GHz only) become the **IoT APs** (AP-A).
 
-When 4-AP setup is in place, update RF plan to assign channels across 4 APs maintaining non-overlapping coverage.
+---
+
+### 4-AP RF plan (when IoT APs added)
+
+| AP | Role | Location | 2.4 GHz Ch. | 5 GHz Ch. | SSIDs |
+|---|---|---|---|---|---|
+| AP-1B (existing) | Main | 1F Living Room | 1 | **36** | Downton Abbey, Downton Abbey-Guest |
+| AP-2B (existing) | Main | 2F Master Bedroom | 11 | **149** | Downton Abbey, Downton Abbey-Guest |
+| AP-1A (new) | IoT | 1F Living Room | **6** | disabled | Downton Abbey-IOT only |
+| AP-2A (new) | IoT | 2F Master Bedroom | **11** | disabled | Downton Abbey-IOT only |
+
+**Channel strategy with 4 APs:**
+- 2.4 GHz: Main APs on 1 and 11; IoT APs on 6 and 11. Three non-overlapping channels (1, 6, 11) split across 4 radios — acceptable co-channel sharing between 2F Main and 2F IoT since they serve different VLANs and different client types.
+- 5 GHz: Main APs only (36 and 149). IoT APs disable 5 GHz entirely.
+
+---
+
+### Switch port VLAN assignments (needed after US 24 adoption)
+
+When new IoT APs are added, the [[us-24]] switch ports need VLAN tagging configured:
+
+| Port use | Native VLAN | Tagged VLANs |
+|---|---|---|
+| Uplink to USG-Pro-4 | 1 | 20, 30 |
+| Main AP ports (AP-1B, AP-2B) | 1 | 20, 30 |
+| IoT AP ports (AP-1A, AP-2A) | 20 | — |
+| UCK G2 Plus port | 1 | — |
+| Wired device ports (default) | 1 | — |
+| Future IoT wired device ports | 20 | — |
+
+**Why this matters:** Until US 24 is adopted and ports are configured, VLAN isolation is only enforced at the USG firewall (layer 3). Switch-level VLAN assignment (layer 2) provides true wire-level isolation so IoT devices can't even see main devices on the switch.
+
+---
+
+### Steps when new IoT APs arrive
+
+1. **Unbox and connect** each new AP to the US 24 (must be adopted first — see Pending items).
+2. **Adopt** each AP in [[uck-g2-plus]] controller.
+3. **Configure radio** — disable 5 GHz, set 2.4 GHz to the planned channel (6 for 1F, 11 for 2F).
+4. **Assign SSIDs** — enable only Downton Abbey-IOT on each IoT AP; disable Downton Abbey and Downton Abbey-Guest.
+5. **Remove IoT SSID from Main APs** — edit AP-1B and AP-2B to broadcast Downton Abbey and Downton Abbey-Guest only (remove Downton Abbey-IOT).
+6. **Configure switch ports** — assign IoT AP ports to native VLAN 20 in the US 24 config.
+7. **Update RF plan** in this document and in each AP host note.
+8. **Rename all APs** in the controller to the naming convention above (AP-1A, AP-1B, AP-2A, AP-2B).
+
+---
+
+### Recommended AP hardware for IoT expansion
+
+- **UniFi U6-Lite** — Wi-Fi 6, 2.4 + 5 GHz (can disable 5 GHz), ~$99. Best option if budget allows; supports WPA3 for newer IoT devices.
+- **UniFi UAP-AC-Lite** — Wi-Fi 5, same generation as current APs, ~$79 used. Works fine for 2.4 GHz IoT only.
+- Both adopt into [[uck-g2-plus]] without issue.
 
 ---
 
