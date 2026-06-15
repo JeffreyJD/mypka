@@ -26,7 +26,7 @@ myPKA is a folder. You drop it on your machine, point your LLM at it, and you ha
 
 The three creative specialists — **Iris** (Design System Architect), **Charta** (Infographic Designer), and **Pixel** (Visual Specialist) — and everything they own (their contracts, their per-agent journals, four design SOPs, the `GL-003-design-system` Guideline, and their team-portrait images) come **out of the base scaffold**. They now ship as the optional **Designer Expansion Pack** from the AI Library.
 
-The base scaffold now ships exactly six specialists: **Larry, Nolan, Pax, Penn, Mack, and Silas.**
+The base scaffold now ships exactly six specialists: **Hawkeye, Potter, B.J., Radar, Klinger, and Margaret.**
 
 - **Why the change.** The base scaffold is the working slice of ICOR everyone needs — PKM, journaling, research, hiring, automation, database work. Brand and visual work is real work, but it isn't universal. Pulling the creative trio into an opt-in pack keeps the base lean for the majority and gives design-focused users a clean, dedicated pack instead of carrying weight they may never use.
 - **What you get if you do design work.** Install the **Designer Expansion Pack** from the AI Library — it restores Iris, Charta, Pixel, the four design SOPs, and `GL-003-design-system` as a drop-in pack. Nothing is lost; the capability simply moves to opt-in.
@@ -40,8 +40,8 @@ Everything else is unchanged — the task system, per-agent journals, and the LL
 2. Open the folder in your LLM tool (Claude Code, Codex CLI, Gemini CLI, Cursor, or Obsidian + chat plugin).
 3. Paste the contents of `initialize yourself in this folder` as your first message.
 4. The LLM reads `ADAPTER-PROMPT.md`, writes a tool-specific pointer file (`CLAUDE.md`, `GEMINI.md`, etc.), and reports the team is online.
-5. Ask "Who are you?" and you'll see Larry is at your service.
-6. Ask "What's open?" and Larry walks the new `Team Knowledge/tasks/open/` folder for you.
+5. Ask "Who are you?" and you'll see Hawkeye is at your service.
+6. Ask "What's open?" and Hawkeye walks the new `Team Knowledge/tasks/open/` folder for you.
 
 That's the whole setup. There is no install step.
 
@@ -52,7 +52,7 @@ Once you have the team online and start using it, you'll hit moments where you w
 A working knowledge system, fully assembled, that does this on day one:
 
 - **Organizes your life from a single daily journal.** You write what happened. The team files the people, projects, decisions, and ideas where they belong. Connections between notes are made for you.
-- **Remembers unfinished work for you.** When something can't finish in one turn, the team writes it down as a task in `Team Knowledge/tasks/`. Next session, Larry walks `tasks/open/` and surfaces what's waiting. The team genuinely picks up where it left off.
+- **Remembers unfinished work for you.** When something can't finish in one turn, the team writes it down as a task in `Team Knowledge/tasks/`. Next session, Hawkeye walks `tasks/open/` and surfaces what's waiting. The team genuinely picks up where it left off.
 - **Carries learning forward.** Each specialist keeps a journal of durable insights at `Team/<Name>/journal/`. When a task references one of their entries, they re-read their own past thinking before starting work.
 - **Runs in any LLM you already use.** Claude Code (and Claude Cowork), Codex CLI, Gemini CLI, Cursor, ChatGPT, Obsidian with a chat plugin. The same scaffold, the same team, the same files. You change models. Your knowledge doesn't move. Session-log triggers (`close session`, `keep this in mind`, `let's realign`, etc.) work with any LLM that reads `AGENTS.md` — ChatGPT, Claude, Gemini, Cursor, Cline, Codex, and the rest. Not Claude-only.
 - **Stays in plain markdown.** Every note is a `.md` file. You can read it without the AI. You can grep it. You can sync it with Dropbox or git. You can open it in Obsidian and keep working with no AI at all.
@@ -72,32 +72,32 @@ If you've ever opened a blank Obsidian vault and didn't know where to put anythi
 
 ## Meet the team
 
-Six specialists ship pre-loaded. **You only ever talk to Larry.** Larry routes.
+Six specialists ship pre-loaded. **You only ever talk to Hawkeye.** Hawkeye routes.
 
 <table>
 <tr>
-<td width="140" align="center"><img src="github/team/larry.png" width="120" alt="Larry the Red Fox - Team Leader and Orchestrator" /></td>
-<td><b>Larry - Team Leader & Orchestrator</b><br/><i>A Red Fox. Sharp ears, sharper instincts.</i><br/><br/>Every request you make lands with Larry first. He clarifies, picks the right specialist, hands off the brief, and synthesizes the answer back to you. He's also the team's <b>Librarian</b> (keeps the wiki clean, fixes broken <code>[[wikilinks]]</code>, enforces the SSOT Golden Rule), <b>Session-Log Author</b> (writes a daily log of what the team did and what changed), and the team's <b>Task Walker</b> (surfaces what's open at session start). Larry never executes specialist work himself - that's the iron rule.</td>
+<td width="140" align="center"><img src="github/team/larry.png" width="120" alt="Hawkeye the Red Fox - Team Leader and Orchestrator" /></td>
+<td><b>Hawkeye - Team Leader & Orchestrator</b><br/><i>A Red Fox. Sharp ears, sharper instincts.</i><br/><br/>Every request you make lands with Hawkeye first. He clarifies, picks the right specialist, hands off the brief, and synthesizes the answer back to you. He's also the team's <b>Librarian</b> (keeps the wiki clean, fixes broken <code>[[wikilinks]]</code>, enforces the SSOT Golden Rule), <b>Session-Log Author</b> (writes a daily log of what the team did and what changed), and the team's <b>Task Walker</b> (surfaces what's open at session start). Hawkeye never executes specialist work himself - that's the iron rule.</td>
 </tr>
 <tr>
-<td width="140" align="center"><img src="github/team/nolan.png" width="120" alt="Nolan the Pitbull - Talent Acquisition" /></td>
-<td><b>Nolan - Talent Acquisition</b><br/><i>A Pitbull in glasses. Loyal, methodical, allergic to lazy hires.</i><br/><br/>When you outgrow the six shipped specialists, Nolan handles the hire end-to-end: briefs Pax for research, drafts the new specialist's contract (<code>AGENTS.md</code>), validates against the SOP, and gets your sign-off before adding anyone to the roster. Nolan is the reason your team scales without diluting.</td>
+<td width="140" align="center"><img src="github/team/potter.png" width="120" alt="Potter the Pitbull - Talent Acquisition" /></td>
+<td><b>Potter - Talent Acquisition</b><br/><i>A Pitbull in glasses. Loyal, methodical, allergic to lazy hires.</i><br/><br/>When you outgrow the six shipped specialists, Potter handles the hire end-to-end: briefs B.J. for research, drafts the new specialist's contract (<code>AGENTS.md</code>), validates against the SOP, and gets your sign-off before adding anyone to the roster. Potter is the reason your team scales without diluting.</td>
 </tr>
 <tr>
-<td width="140" align="center"><img src="github/team/pax.png" width="120" alt="Pax the Raven - Deep Research" /></td>
-<td><b>Pax - Deep Research</b><br/><i>A Raven. Patient, source-cited, allergic to a single-source answer.</i><br/><br/>When something matters - a hire, a market read, a "is this actually true" - Pax goes wide before going deep. Returns a triangulated brief in <code>Deliverables/</code>, never a one-shot opinion.</td>
+<td width="140" align="center"><img src="github/team/bj.png" width="120" alt="B.J. the Raven - Deep Research" /></td>
+<td><b>B.J. - Deep Research</b><br/><i>A Raven. Patient, source-cited, allergic to a single-source answer.</i><br/><br/>When something matters - a hire, a market read, a "is this actually true" - B.J. goes wide before going deep. Returns a triangulated brief in <code>Deliverables/</code>, never a one-shot opinion.</td>
 </tr>
 <tr>
-<td width="140" align="center"><img src="github/team/penn.png" width="120" alt="Penn the Owl - Journal Writer" /></td>
-<td><b>Penn - Journal Writer</b><br/><i>A Barn Owl. Quiet, watchful, careful filer.</i><br/><br/>Penn handles the team's scribe duties. Drop screenshots, voice memos, business cards, or rough thoughts into <code>Team Inbox/</code>. Penn files everything into the right corner of <code>PKM/</code> with the right <code>[[wikilinks]]</code>. He never forgets where things go and never assumes you're done thinking when you drop something in.</td>
+<td width="140" align="center"><img src="github/team/radar.png" width="120" alt="Radar the Owl - Journal Writer" /></td>
+<td><b>Radar - Journal Writer</b><br/><i>A Barn Owl. Quiet, watchful, careful filer.</i><br/><br/>Radar handles the team's scribe duties. Drop screenshots, voice memos, business cards, or rough thoughts into <code>Team Inbox/</code>. Radar files everything into the right corner of <code>PKM/</code> with the right <code>[[wikilinks]]</code>. He never forgets where things go and never assumes you're done thinking when you drop something in.</td>
 </tr>
 <tr>
-<td width="140" align="center"><img src="github/team/mack.png" width="120" alt="Mack - Automation and Integration Specialist" /></td>
-<td><b>Mack - Automation & Integration Specialist</b><br/><i>The connection layer. Quiet when it works, loud when it breaks.</i><br/><br/>Mack wires your myPKA to the rest of the world. MCP server setup, API integrations, webhook receivers, OAuth flows, and any automation that needs to run reliably in the background. When an external knowledge import needs an authenticated fetch first (Notion API, Apple Notes export, a live MCP server), Mack establishes the connection, lands the bytes at a path, and hands off to Silas to run the actual import. Idempotency, retries, structured logs, credentials in <code>.env</code> — never in code.</td>
+<td width="140" align="center"><img src="github/team/klinger.png" width="120" alt="Klinger - Automation and Integration Specialist" /></td>
+<td><b>Klinger - Automation & Integration Specialist</b><br/><i>The connection layer. Quiet when it works, loud when it breaks.</i><br/><br/>Klinger wires your myPKA to the rest of the world. MCP server setup, API integrations, webhook receivers, OAuth flows, and any automation that needs to run reliably in the background. When an external knowledge import needs an authenticated fetch first (Notion API, Apple Notes export, a live MCP server), Klinger establishes the connection, lands the bytes at a path, and hands off to Margaret to run the actual import. Idempotency, retries, structured logs, credentials in <code>.env</code> — never in code.</td>
 </tr>
 <tr>
-<td width="140" align="center"><img src="github/team/silas.png" width="120" alt="Silas - Database Architect" /></td>
-<td><b>Silas - Database Architect</b><br/><i>Schema is destiny. Slugs are primary keys.</i><br/><br/>Silas guards the structural integrity of your knowledge base. He runs external knowledge imports (drop a Notion zip, a Heptabase backup, an Obsidian vault, a Roam graph — Silas runs <code>WS-002</code> and lands the entities in the right folders), audits frontmatter against <code>GL-002</code>, catches schema drift before it spreads, and runs the markdown-to-SQLite conversion (<code>SOP-002</code>) when your myPKA outgrows plain files. Markdown stays canonical; the SQLite mirror is a regenerable performance layer. Silas never invents fields, never silently rewrites content, and never lets ad-hoc YAML keys accumulate.</td>
+<td width="140" align="center"><img src="github/team/margaret.png" width="120" alt="Margaret - Database Architect" /></td>
+<td><b>Margaret - Database Architect</b><br/><i>Schema is destiny. Slugs are primary keys.</i><br/><br/>Margaret guards the structural integrity of your knowledge base. He runs external knowledge imports (drop a Notion zip, a Heptabase backup, an Obsidian vault, a Roam graph — Margaret runs <code>WS-002</code> and lands the entities in the right folders), audits frontmatter against <code>GL-002</code>, catches schema drift before it spreads, and runs the markdown-to-SQLite conversion (<code>SOP-002</code>) when your myPKA outgrows plain files. Markdown stays canonical; the SQLite mirror is a regenerable performance layer. Margaret never invents fields, never silently rewrites content, and never lets ad-hoc YAML keys accumulate.</td>
 </tr>
 </table>
 
@@ -112,8 +112,8 @@ Each specialist has a contract at `Team/<Name> - <Role>/AGENTS.md` and a `journa
 - `PKM/` is your knowledge. `My Life/` holds the five life concepts (Goals, Habits, Topics, Projects, Key Elements). `Documents/`, `CRM/`, `Images/`, and `Journal/` sit alongside it. Notes connect through `[[wikilinks]]`, not nested folders.
 - `Team/` holds your specialists. One folder per agent. Each has its own `AGENTS.md` and its own `journal/` for durable cross-session insights.
 - `Team Knowledge/` holds the team's playbook. SOPs are atomic procedures. Workstreams orchestrate multi-agent flows. Guidelines are static reference info. `tasks/` holds unfinished work the team is tracking across sessions (`open/`, `in-progress/`, `done/<YYYY>/<MM>/`, `cancelled/<YYYY>/<MM>/`).
-- `Deliverables/` is where the team puts work-in-progress and finished artifacts - research briefs, hire workups, multi-file projects. Time-stamped, ephemeral, the team's working surface. **Pax** drops research here. **Nolan** drops hire workups here. **Larry** collects multi-specialist work here.
-- `Team Inbox/` is your drop zone for raw inputs. Drop screenshots, voice memos, business cards, links, or a quick braindump and the team files them into PKM. *"I have something, not sure where"* goes here. **Penn** usually picks it up, **Larry** routes it.
+- `Deliverables/` is where the team puts work-in-progress and finished artifacts - research briefs, hire workups, multi-file projects. Time-stamped, ephemeral, the team's working surface. **B.J.** drops research here. **Potter** drops hire workups here. **Hawkeye** collects multi-specialist work here.
+- `Team Inbox/` is your drop zone for raw inputs. Drop screenshots, voice memos, business cards, links, or a quick braindump and the team files them into PKM. *"I have something, not sure where"* goes here. **Radar** usually picks it up, **Hawkeye** routes it.
 - `AGENTS.md` at the root is the source of truth for how the whole team behaves.
 
 > **Note on note shape.** Every entity note (a Person, an Organization, a Project, a Goal, a Habit, a Topic, a Key Element, a Document) starts from a template in `Team Knowledge/Templates/`. Structured data lives in YAML frontmatter at the top of the file; narrative lives in the body. The canonical field schemas are in [[Team Knowledge/Guidelines/GL-002-frontmatter-conventions]]. The mypka-interface Properties tab and the SQLite migration both read frontmatter — keep your facts there, your stories in the body.
@@ -122,11 +122,11 @@ Each specialist has a contract at `Team/<Name> - <Role>/AGENTS.md` and a `journa
 
 Here's the whole shape, in plain English.
 
-You ask the team to do something that won't finish in one turn. Larry (or whoever picked up the request) writes a small markdown file into `Team Knowledge/tasks/open/`. The frontmatter names who it's for, why it matters, and what context already exists: which SOP applies, which workstream it belongs to, which session log birthed it, which life entry it touches, which journal entry the assignee should re-read first. The body restates the work in your words.
+You ask the team to do something that won't finish in one turn. Hawkeye (or whoever picked up the request) writes a small markdown file into `Team Knowledge/tasks/open/`. The frontmatter names who it's for, why it matters, and what context already exists: which SOP applies, which workstream it belongs to, which session log birthed it, which life entry it touches, which journal entry the assignee should re-read first. The body restates the work in your words.
 
 When the assignee picks it up, the file moves from `open/` to `in-progress/` and they leave a one-line update inside it. They keep working. If they get blocked, they write the reason in the frontmatter so they (or someone else) know what to chase. When it's done, the file moves to `done/<year>/<month>/` with the outcome written in.
 
-Next session, Larry walks `tasks/open/` and `tasks/in-progress/` first, before doing anything else. The team starts the day knowing what's waiting and where things stood. Nothing falls on the floor between sessions.
+Next session, Hawkeye walks `tasks/open/` and `tasks/in-progress/` first, before doing anything else. The team starts the day knowing what's waiting and where things stood. Nothing falls on the floor between sessions.
 
 The journal sits next to this. When the assignee learns something durable while working a task — a build pattern that worked, an anti-pattern they want to remember, a rule of thumb — they write a short entry in their `journal/`. The next time a task references that entry, they re-read their own past thinking before starting. Learning compounds across sessions.
 

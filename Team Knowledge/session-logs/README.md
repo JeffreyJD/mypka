@@ -14,7 +14,7 @@ agents write" below. Folders nest by year and month. The agent creates the
 
 ## When agents write here
 
-1. **At session close** (`/close-session`). Larry runs the close-session
+1. **At session close** (`/close-session`). Hawkeye runs the close-session
    protocol, sweeps any open tasks, writes a `close-session` entry summarizing
    what landed, what got deferred, and what changed.
 2. **Mid-session, when something durable happens.** Agents may proactively
@@ -27,7 +27,7 @@ The four entry types:
 
 | `type:` | When to write |
 |---|---|
-| `close-session` | End-of-session summary, written by Larry on `/close-session`. |
+| `close-session` | End-of-session summary, written by Hawkeye on `/close-session`. |
 | `mid-session-insight` | Something the team learned mid-session that the next session needs to know. |
 | `realignment` | You pushed back on a plan or corrected a misread. Capture the correction verbatim. |
 | `proactive` | An agent flagged an issue, opportunity, or pattern worth surfacing without being asked. |
@@ -44,7 +44,7 @@ graduates to the right home in `Team Knowledge/`:
 - A static reference rule (naming, tone, defaults) → a Guideline
   (`Team Knowledge/Guidelines/GL-NNN-<slug>.md`).
 
-Larry handles graduation as Librarian. The session log entry stays where it
+Hawkeye handles graduation as Librarian. The session log entry stays where it
 is (append-only), and the new SOP/Workstream/Guideline cross-links back via
 `[[wikilinks]]`.
 

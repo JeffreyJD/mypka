@@ -5,6 +5,7 @@ An outcome with a horizon and an explicit definition of "shipped." Three load-be
 ## Active files
 
 - [[ship-mvp-by-q3]] — seeded course sample. The canonical shape every Goal file follows.
+- [[find-florida-property]] — purchase Florida property in Trinity/New Port Richey under $350K (Mulcahy)
 
 ## Naming
 

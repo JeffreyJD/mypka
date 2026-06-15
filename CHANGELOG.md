@@ -68,7 +68,7 @@ Resources written before v2.2.0 may carry a pre-GL-004 `linked_tasks` field. Per
 
 ## [2.0.0] - 2026-05-18
 
-**Breaking structural change.** The base scaffold roster moves from **nine specialists to six**. The three creative specialists — Iris (Design System Architect), Charta (Infographic Designer), Pixel (Visual Specialist) — and everything they own come out of the base scaffold and into the optional **Designer Expansion Pack** from the AI Library. The base now ships Larry, Nolan, Pax, Penn, Mack, and Silas. A user updating an existing myPKA from 1.10.x to 2.0.0 loses the three creative agents from their base roster — install the Designer Expansion Pack to keep them. (COU-261)
+**Breaking structural change.** The base scaffold roster moves from **nine specialists to six**. The three creative specialists — Iris (Design System Architect), Charta (Infographic Designer), Pixel (Visual Specialist) — and everything they own come out of the base scaffold and into the optional **Designer Expansion Pack** from the AI Library. The base now ships Hawkeye, Potter, B.J., Radar, Klinger, and Margaret. A user updating an existing myPKA from 1.10.x to 2.0.0 loses the three creative agents from their base roster — install the Designer Expansion Pack to keep them. (COU-261)
 
 ### Removed
 
@@ -80,8 +80,8 @@ Resources written before v2.2.0 may carry a pre-GL-004 `linked_tasks` field. Per
 
 ### Changed
 
-- `Team/agent-index.md` — routing table down to six rows; "nine specialists" → "six specialists"; Mack's row drops the Pixel-handoff parenthetical.
-- `Team/Larry - Orchestrator/AGENTS.md` — routing cheatsheet drops the four design rows; "What Larry does not do" drops the two design/GL-003 lines.
+- `Team/agent-index.md` — routing table down to six rows; "nine specialists" → "six specialists"; Klinger's row drops the Pixel-handoff parenthetical.
+- `Team/Hawkeye - Orchestrator/AGENTS.md` — routing cheatsheet drops the four design rows; "What Hawkeye does not do" drops the two design/GL-003 lines.
 - `AGENTS.md` (root) — "The team (9 specialists)" → "The team (6 specialists)"; team table down to six rows; "the current 9 specialists" → "6".
 - `README.md` — "nine"/"9" roster references → "six"/"6" (×5 including version badge); three creative team-card blocks removed; added a Designer Pack pointer note.
 - `WAY-FORWARD.md` — roster lines and the "When … specialists isn't enough" section updated to six; capability list drops infographic layout, image stylization, and design-system authoring (now pack capabilities).
@@ -133,9 +133,9 @@ Wires v1.10.0's task system and journal SOPs into the agent contracts. v1.10.0 s
 
 ### Changed
 
-- `Team/Larry - Orchestrator/AGENTS.md` — adds `## Session boot — task-walk first` before `## Three duties`. Larry now walks `Team Knowledge/tasks/open/` + `tasks/in-progress/` per [[SOP-list-open-tasks]] at every session boot and surfaces open priority-1 / in-progress / blocked / stale items in the greeting. Tom no longer has to ask "what's open?" — the team picks up where it left off automatically.
-- `Team/Larry - Orchestrator/AGENTS.md` — Duty 1 step 4 (Brief) now requires Larry to create a task via [[SOP-create-task]] before delegating any work that won't finish in-turn, populating all six `linked_*` arrays. The specialist resumes from the task file, not from chat scrollback.
-- All 8 specialist AGENTS.md (Nolan, Pax, Penn, Mack, Silas, Charta, Pixel, Iris) — adds a shared `## Task discipline (v1.10.1)` section right after the agent's "When Larry routes to <Name>" section. The block wires three behaviors at dispatch:
+- `Team/Hawkeye - Orchestrator/AGENTS.md` — adds `## Session boot — task-walk first` before `## Three duties`. Hawkeye now walks `Team Knowledge/tasks/open/` + `tasks/in-progress/` per [[SOP-list-open-tasks]] at every session boot and surfaces open priority-1 / in-progress / blocked / stale items in the greeting. Tom no longer has to ask "what's open?" — the team picks up where it left off automatically.
+- `Team/Hawkeye - Orchestrator/AGENTS.md` — Duty 1 step 4 (Brief) now requires Hawkeye to create a task via [[SOP-create-task]] before delegating any work that won't finish in-turn, populating all six `linked_*` arrays. The specialist resumes from the task file, not from chat scrollback.
+- All 8 specialist AGENTS.md (Potter, B.J., Radar, Klinger, Margaret, Charta, Pixel, Iris) — adds a shared `## Task discipline (v1.10.1)` section right after the agent's "When Hawkeye routes to <Name>" section. The block wires three behaviors at dispatch:
   1. Read your `linked_journal_entries` and the matching files in `Team/<your-name>/journal/` per [[SOP-read-own-journal]] before starting work. Auditable via a `## Updates` line that names the priors you carried.
   2. When you create a task, populate all six `linked_*` arrays per [[SOP-create-task]].
   3. When you close a task, write the `## Outcome` and, if there's a durable lesson, write a journal entry per [[SOP-write-journal-entry]] and link it from the closed task.
@@ -161,7 +161,7 @@ Adds task management, per-agent journals, and an LLM-readable migration changelo
 - `Team Knowledge/tasks/INDEX.md` — auto-generated summary view (open by priority, in-progress by assignee, recently closed). Rebuilt at the end of every task-touching SOP and re-checked at session boot.
 - `Team Knowledge/tasks/{open,in-progress,done,cancelled}/.gitkeep` — placeholders so empty folders survive in git.
 - Task ID scheme: `tsk-YYYY-MM-DD-NNN`. Lexical sort matches chronological sort. Date-prefixed filenames stay self-describing when referenced from session logs months later.
-- `Team/<Name> - <Role>/journal/` — per-agent durable insight notes. One folder per shipped specialist (Larry, Nolan, Pax, Penn, Mack, Silas, Charta, Pixel, Iris). The agent commits an entry when they learn something cross-session: a lesson, a decision rule, an anti-pattern. Journal entries are topical, not chronological.
+- `Team/<Name> - <Role>/journal/` — per-agent durable insight notes. One folder per shipped specialist (Hawkeye, Potter, B.J., Radar, Klinger, Margaret, Charta, Pixel, Iris). The agent commits an entry when they learn something cross-session: a lesson, a decision rule, an anti-pattern. Journal entries are topical, not chronological.
 - `Team/<Name> - <Role>/journal/_template.md` — starter file for journal entries. Locked frontmatter (`agent_id`, `type`, `topic`, `tags`, `linked_session_logs`, `linked_tasks`, `related_journal_entries`, `status`).
 - `.scaffold-version` — plain-text file at the repo root containing `1.10.0`. Single source of truth for which migrations apply.
 - `CHANGELOG-MIGRATION.md` — machine-actionable upgrade spec. Per-version sections with numbered, idempotent recipes any LLM can follow to upgrade an older myPKA folder. Includes a validation script that exits 0 on a structurally valid migration.
@@ -170,7 +170,7 @@ Adds task management, per-agent journals, and an LLM-readable migration changelo
   - `SOP-create-task.md` — confronts all six cross-reference arrays at creation.
   - `SOP-claim-task.md` — atomic claim via `git mv`. Loser retries on a re-list.
   - `SOP-close-task.md` — moves to `done/` with outcome filled in. Surfaces open sub-tasks for explicit decision.
-  - `SOP-list-open-tasks.md` — folder walk that Larry runs at session boot.
+  - `SOP-list-open-tasks.md` — folder walk that Hawkeye runs at session boot.
   - `SOP-rebuild-task-index.md` — awk-based, sub-500ms target on 1,000 tasks.
   - `SOP-write-journal-entry.md` — trigger test, body shape, supersession rules.
   - `SOP-read-own-journal.md` — what each agent runs before starting work on a task.
@@ -192,18 +192,18 @@ Adds task management, per-agent journals, and an LLM-readable migration changelo
 
 ## [1.9.0] - 2026-05-09
 
-**Host subagent binding ships out of the box.** First activation now generates host-specific subagent shims so the eight deputies (Penn, Pax, Nolan, Mack, Silas, Charta, Pixel, Iris) can dispatch in parallel via the host's agent runtime — not role-played in a single context. Larry is excluded (he's the main-session identity, not a dispatched subagent).
+**Host subagent binding ships out of the box.** First activation now generates host-specific subagent shims so the eight deputies (Radar, B.J., Potter, Klinger, Margaret, Charta, Pixel, Iris) can dispatch in parallel via the host's agent runtime — not role-played in a single context. Hawkeye is excluded (he's the main-session identity, not a dispatched subagent).
 
 The contract: **two layers, never three.** The wiki contract at `Team/<Name>/AGENTS.md` is canonical and host-agnostic. The host shim (`.claude/agents/<slug>.md` for Claude Code; `.codex/agents/<slug>.md` for Codex if supported; per-spec for Gemini) is a thin pointer that the host runtime reads to dispatch the specialist. We do NOT add a third layer (e.g. a `CLAUDE.md` inside each `Team/<Name>/`) — that violates SSOT.
 
 ### Added
 
-- `.claude/agents/{charta,iris,mack,nolan,pax,penn,pixel,silas}.md` — Claude Code subagent shims for the eight deputies. YAML frontmatter (`name`, `description`, `tools`) + body that points back to the wiki contract via path. ~30-60 lines each. Larry is intentionally excluded.
+- `.claude/agents/{charta,iris,klinger,potter,bj,radar,pixel,margaret}.md` — Claude Code subagent shims for the eight deputies. YAML frontmatter (`name`, `description`, `tools`) + body that points back to the wiki contract via path. ~30-60 lines each. Hawkeye is intentionally excluded.
 - `ADAPTER-PROMPT.md` Step 7 (new) — host-agnostic procedure to walk `Team/`, derive each slug, and generate host-specific shims on first init. Per-host matrix: Claude Code → `.claude/agents/`, Codex CLI → `.codex/agents/` (when supported), Gemini CLI → per spec, Cursor / chat-only → noted limitation. **Idempotent** — re-running Step 7 skips any pre-existing shims (never overwrites user customizations). Report-back template adds `HOST SUBAGENT BINDING` field listing written + skipped.
 
 ### Changed
 
-- `Team/Nolan - HR/AGENTS.md` — every hire now ships two artifacts: the wiki contract AND the host shim(s) for every host the user has activated. Detection by pointer-file presence (`CLAUDE.md`, `AGENTS.md.codex`, `GEMINI.md`, `.cursor/rules/main.md`).
+- `Team/Potter - HR/AGENTS.md` — every hire now ships two artifacts: the wiki contract AND the host shim(s) for every host the user has activated. Detection by pointer-file presence (`CLAUDE.md`, `AGENTS.md.codex`, `GEMINI.md`, `.cursor/rules/main.md`).
 - `Team Knowledge/SOPs/SOP-001-how-to-add-a-new-specialist.md` §5 — host-agnostic principle plus host-specific shim path matrix. Two artifacts always go together.
 - `VERSION` 1.8.2 → 1.9.0.
 
@@ -219,7 +219,7 @@ The contract: **two layers, never three.** The wiki contract at `Team/<Name>/AGE
 
 ### Changed
 
-- `Team/Larry - Orchestrator/AGENTS.md` — "Tom double-clicks `start.command`" → "{{USER_NAME}} double-clicks `start.command`".
+- `Team/Hawkeye - Orchestrator/AGENTS.md` — "Tom double-clicks `start.command`" → "{{USER_NAME}} double-clicks `start.command`".
 - `Team Knowledge/session-logs/_template.md` — example follow-up items "Tom reviews v1" → "{{USER_NAME}} reviews v1".
 - `Team Knowledge/Workstreams/WS-003-install-an-expansion.md` — "Tom-approved canonical exception" → "Pre-canonicalized exception".
 - `README.md`, `WAY-FORWARD.md` — "Tom builds the system" → "Dr. Thomas Rödl builds the system" (formal authorship credit).
@@ -235,7 +235,7 @@ The contract: **two layers, never three.** The wiki contract at `Team/<Name>/AGE
 
 ## [1.8.1] - 2026-05-09
 
-**Initial public release.** myPKA ships with a 9-person pre-hired AI team (Larry, Nolan, Pax, Penn, Mack, Silas, Charta, Pixel, Iris), full Personal Knowledge Architecture folder structure (PKM/My Life, PKM/CRM, PKM/Documents, PKM/Journal, PKM/Images), Team Knowledge layer (SOPs, Workstreams, Guidelines, Templates, session-logs), and the Expansions architecture for downloadable agent + connector packs.
+**Initial public release.** myPKA ships with a 9-person pre-hired AI team (Hawkeye, Potter, B.J., Radar, Klinger, Margaret, Charta, Pixel, Iris), full Personal Knowledge Architecture folder structure (PKM/My Life, PKM/CRM, PKM/Documents, PKM/Journal, PKM/Images), Team Knowledge layer (SOPs, Workstreams, Guidelines, Templates, session-logs), and the Expansions architecture for downloadable agent + connector packs.
 
 ### Highlights
 

@@ -5,13 +5,13 @@ embedded at the top of the public README.
 
 If you cloned this scaffold for personal use and don't plan to publish it back
 to GitHub, you can safely delete this entire folder. The myPKA system itself
-does not read or depend on anything in here. Larry, Penn, Pax, Nolan, Mack,
-and Silas never touch it.
+does not read or depend on anything in here. Hawkeye, Radar, B.J., Potter, Klinger,
+and Margaret never touch it.
 
 ## What lives here
 
-- `team/` — portrait PNGs of the six shipped specialists (Larry, Nolan, Pax,
-  Penn, Mack, Silas), used in the README's "Meet the team" table.
+- `team/` — portrait PNGs of the six shipped specialists (Hawkeye, Potter, B.J.,
+  Radar, Klinger, Margaret), used in the README's "Meet the team" table.
 - `youtube/` — thumbnail used as the clickable launch-video tile at the top of
   the README.
 

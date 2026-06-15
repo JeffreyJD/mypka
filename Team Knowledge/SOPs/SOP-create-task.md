@@ -125,9 +125,9 @@ Cross-refs: <count of populated linked_* arrays>/7 populated.
 
 ## Worked example (minimal — no deliverables yet)
 
-User to Larry: "Mack, the mux-webhook is throwing 401s — please look into MUX_WEBHOOK_SECRET drift."
+User to Hawkeye: "Klinger, the mux-webhook is throwing 401s — please look into MUX_WEBHOOK_SECRET drift."
 
-Larry's call:
+Hawkeye's call:
 
 ```bash
 TODAY=2026-05-09
@@ -137,14 +137,14 @@ SLUG=mux-webhook-401
 FILENAME=tsk-2026-05-09-001-mux-webhook-401.md
 ```
 
-Step 4 — Larry walks the cross-references:
+Step 4 — Hawkeye walks the cross-references:
 
-- `linked_sops` — `[SOP-claim-task]` (Mack will follow this when picking up).
+- `linked_sops` — `[SOP-claim-task]` (Klinger will follow this when picking up).
 - `linked_workstreams` — `[]` (no active workstream covers this; it's a one-off fire).
 - `linked_guidelines` — `[]` (no standards apply; it's a config drift fix).
 - `linked_my_life` — `[]` (this is internal infrastructure, not user life context).
 - `linked_session_logs` — `[2026-05-09-22-30_larry_video-launch-coordination]` (the session it surfaced in).
-- `linked_journal_entries` — `[]` (Mack hasn't written a webhook journal entry yet — this task may birth one).
+- `linked_journal_entries` — `[]` (Klinger hasn't written a webhook journal entry yet — this task may birth one).
 - `linked_deliverables` — `[]` (no working artifacts yet; this is a fix-in-place task, not a multi-file workup).
 
 File written to `Team Knowledge/tasks/open/tsk-2026-05-09-001-mux-webhook-401.md`:
@@ -153,7 +153,7 @@ File written to `Team Knowledge/tasks/open/tsk-2026-05-09-001-mux-webhook-401.md
 ---
 id: tsk-2026-05-09-001
 title: "Fix mux-webhook 401 / MUX_WEBHOOK_SECRET drift"
-assignee: mack
+assignee: klinger
 priority: 1
 status: open
 blocked_reason: null
@@ -195,19 +195,19 @@ The mux-webhook endpoint started returning 401 mid-launch. Suspected MUX_WEBHOOK
 _(filled when status flips to done)_
 ```
 
-Then `SOP-rebuild-task-index` and report: `Created [[tsk-2026-05-09-001-mux-webhook-401]] (priority 1, assignee mack). Cross-refs: 2/7 populated (linked_sops, linked_session_logs).`
+Then `SOP-rebuild-task-index` and report: `Created [[tsk-2026-05-09-001-mux-webhook-401]] (priority 1, assignee klinger). Cross-refs: 2/7 populated (linked_sops, linked_session_logs).`
 
 ## Worked example (with `linked_deliverables` populated)
 
-User to Larry: "Mack, install a new MCP server — there's a workup in Deliverables already, plus a security check pending."
+User to Hawkeye: "Klinger, install a new MCP server — there's a workup in Deliverables already, plus a security check pending."
 
-Mack identifies the task wraps four working artifacts already on disk under `Deliverables/2026-05-12-mcp-install/`. The seven-array walk produces:
+Klinger identifies the task wraps four working artifacts already on disk under `Deliverables/2026-05-12-mcp-install/`. The seven-array walk produces:
 
 ```yaml
 ---
 id: tsk-2026-05-12-001
 title: "Install <name> MCP (workup → security check → keys → install → smoke test)"
-assignee: mack
+assignee: klinger
 priority: 2
 status: open
 blocked_reason: awaiting security re-verification + user API keys
@@ -215,7 +215,7 @@ blocked_by: null
 created: 2026-05-12T12:56:20Z
 updated: 2026-05-12T18:30:00Z
 due: null
-created_by: mack
+created_by: klinger
 source: larry-brief-2026-05-12
 parent: null
 linked_sops:
@@ -255,7 +255,7 @@ The body's `## Context one click away` block mirrors:
   - [[user-checklist]]
 ```
 
-Report back: `Created [[tsk-2026-05-12-001-install-mcp]] (priority 2, assignee mack). Cross-refs: 5/7 populated (sops, workstreams, guidelines, session_logs, deliverables).`
+Report back: `Created [[tsk-2026-05-12-001-install-mcp]] (priority 2, assignee klinger). Cross-refs: 5/7 populated (sops, workstreams, guidelines, session_logs, deliverables).`
 
 ## Common mistakes
 

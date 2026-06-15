@@ -11,7 +11,7 @@ Continuity for the assignee. Your journal is what you've already learned that fu
 
 ## When to call
 
-- Every session boot, after Larry hands you a task and before you start working.
+- Every session boot, after Hawkeye hands you a task and before you start working.
 - When you're about to do something that pattern-matches an old situation, even if you already booted earlier.
 
 ## Steps
@@ -74,7 +74,7 @@ If the task is in a domain where you have NO journal entries yet, that's signal 
 Before starting the task, name the priors you're carrying. Append to the task's `## Updates`:
 
 ```
-- 2026-05-10 09:18 (mack) — priors loaded: [[2026-05-09-tauri-appimage-vs-deb]] applies; [[2026-04-12-rust-toolchain-pinning]] also applies
+- 2026-05-10 09:18 (klinger) — priors loaded: [[2026-05-09-tauri-appimage-vs-deb]] applies; [[2026-04-12-rust-toolchain-pinning]] also applies
 ```
 
 This makes the resumption surface auditable. If you forgot a relevant prior and made a mistake, the absence is visible in the update log. Future-anyone reading the task knows what you knew when you started.
@@ -85,7 +85,7 @@ If your journal grows past ~50 entries, don't read every entry every time. Steps
 
 ## Worked example
 
-Knox, booted by Larry to work on `tsk-2026-05-12-001-tauri-windows-codesign`. Tags: `[tauri, windows, codesign, ci]`.
+Knox, booted by Hawkeye to work on `tsk-2026-05-12-001-tauri-windows-codesign`. Tags: `[tauri, windows, codesign, ci]`.
 
 Step 1 — task's `linked_journal_entries` includes `[2026-04-15-tauri-v2-capabilities-default]`. Knox reads it in full.
 

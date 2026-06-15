@@ -55,7 +55,7 @@ This is the resumption move. Skip it and you start cold. See [[GL-004-task-resou
 
 5. **If you read journal entries during pre-flight, note that in the update line:**
    ```
-   - 2026-05-10 09:15 (mack) — picked up; loaded priors from [[2026-05-09-tauri-appimage-vs-deb]]
+   - 2026-05-10 09:15 (klinger) — picked up; loaded priors from [[2026-05-09-tauri-appimage-vs-deb]]
    ```
 
    This makes the resumption surface auditable. Future-you (or anyone resuming again) sees what priors were carried.
@@ -89,7 +89,7 @@ You're working a task in `in-progress/` and hit something you can't resolve righ
 
 4. **Append to `## Updates`:**
    ```
-   - 2026-05-10 11:42 (mack) — blocked: waiting on Vercel env var rotation by the user; unblock condition: MUX_WEBHOOK_SECRET set in prod env
+   - 2026-05-10 11:42 (klinger) — blocked: waiting on Vercel env var rotation by the user; unblock condition: MUX_WEBHOOK_SECRET set in prod env
    ```
 
 5. **Rebuild the index.** The rebuild's "BLOCKED" callout will surface this in the in-progress section.
@@ -111,7 +111,7 @@ The blocker cleared. You're picking the task back up.
 
 2. **Append to `## Updates`:**
    ```
-   - 2026-05-10 14:20 (mack) — unblocked: env var rotation confirmed in prod; resuming
+   - 2026-05-10 14:20 (klinger) — unblocked: env var rotation confirmed in prod; resuming
    ```
 
 3. **Rebuild the index.**
@@ -129,10 +129,10 @@ No file move. The task stays in `open/`.
 
 ## Worked example (claim)
 
-Mack runs [[SOP-list-open-tasks]] and sees:
+Klinger runs [[SOP-list-open-tasks]] and sees:
 
 ```
-[priority 1] tsk-2026-05-09-001-mux-webhook-401 — assignee: mack
+[priority 1] tsk-2026-05-09-001-mux-webhook-401 — assignee: klinger
 ```
 
 Pre-flight: opens the file, reads `linked_sops: [SOP-claim-task]`, `linked_session_logs: [2026-05-09-22-30_larry_video-launch-coordination]`, `linked_journal_entries: []`, `linked_deliverables: []`. Walks the session log to recover the launch context.
@@ -147,7 +147,7 @@ git mv "Team Knowledge/tasks/open/tsk-2026-05-09-001-mux-webhook-401.md" \
 Edits the file: `status: in-progress`, `updated: 2026-05-10T09:15:00Z`. Appends:
 
 ```
-- 2026-05-10 09:15 (mack) — picked up, investigating; loaded launch context from [[2026-05-09-22-30_larry_video-launch-coordination]]
+- 2026-05-10 09:15 (klinger) — picked up, investigating; loaded launch context from [[2026-05-09-22-30_larry_video-launch-coordination]]
 ```
 
 Runs [[SOP-rebuild-task-index]]. Reports back: `Claimed [[tsk-2026-05-09-001-mux-webhook-401]], digging in.`

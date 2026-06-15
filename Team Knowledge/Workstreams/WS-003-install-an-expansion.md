@@ -1,10 +1,10 @@
 # WS-003 - Install an Expansion
 
 - **Status:** Active (since v1.7.0)
-- **Type:** Workstream — a multi-agent composition. The agents below collaborate to deliver the outcome. New Workstreams emerge when patterns repeat across session-logs; this one ships pre-canonicalized because Expansions are a day-1 install/uninstall flow that needs the multi-agent choreography (Larry → Vex → Nolan → Mack → Silas → Larry) wired correctly out of the box. **Pre-canonicalized exception**, alongside [[WS-001-daily-journaling]] and [[WS-002-import-external-knowledge-base]].
-- **Owners:** **Larry** (orchestrator, pre-flight, post-install validation, archive, announcement). **Vex** (security review — gate). **Nolan** (team merge — copies agents, SOPs, guidelines, templates into your myPKA). **Mack** (connector wiring — env vars, MCP servers, runtime announcement). **Silas** (post-merge integrity check).
-- **References:** `Expansions/docs/expansion-spec.md` (locked manifest schema), [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]], [[SOP-001-how-to-add-a-new-specialist]] (Nolan's hire procedure — adapted here for pack-shaped hires), [[Team/agent-index]].
-- **Triggered by:** any user phrasing that signals "install or uninstall an Expansion." See **Trigger contract** below. Also: Larry detects new folders in `Expansions/` on session boot and offers to run this workstream.
+- **Type:** Workstream — a multi-agent composition. The agents below collaborate to deliver the outcome. New Workstreams emerge when patterns repeat across session-logs; this one ships pre-canonicalized because Expansions are a day-1 install/uninstall flow that needs the multi-agent choreography (Hawkeye → Vex → Potter → Klinger → Margaret → Hawkeye) wired correctly out of the box. **Pre-canonicalized exception**, alongside [[WS-001-daily-journaling]] and [[WS-002-import-external-knowledge-base]].
+- **Owners:** **Hawkeye** (orchestrator, pre-flight, post-install validation, archive, announcement). **Vex** (security review — gate). **Potter** (team merge — copies agents, SOPs, guidelines, templates into your myPKA). **Klinger** (connector wiring — env vars, MCP servers, runtime announcement). **Margaret** (post-merge integrity check).
+- **References:** `Expansions/docs/expansion-spec.md` (locked manifest schema), [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]], [[SOP-001-how-to-add-a-new-specialist]] (Potter's hire procedure — adapted here for pack-shaped hires), [[Team/agent-index]].
+- **Triggered by:** any user phrasing that signals "install or uninstall an Expansion." See **Trigger contract** below. Also: Hawkeye detects new folders in `Expansions/` on session boot and offers to run this workstream.
 
 ## Purpose
 
@@ -15,7 +15,7 @@ Take a folder dropped into `Expansions/`, validate it, security-review it, merge
 - Does not author Expansion manifests. That's the Expansion author's job (per `Expansions/docs/expansion-spec.md`).
 - Does not bypass Vex's security review. Tier-2 (myICOR-issued) Expansions are hash-pinned in `Expansions/.trusted-sources` only after Vex clears them. Tier-3 (community) Expansions get an interactive trust prompt. Either way, Vex is the gate.
 - Does not silently overwrite existing files in the your myPKA. If a merge target already exists, the workstream stops and asks.
-- Does not auto-launch runtime Expansions. That rule is hard. Mack announces; the user launches.
+- Does not auto-launch runtime Expansions. That rule is hard. Klinger announces; the user launches.
 
 ## Trigger contract
 
@@ -24,24 +24,24 @@ Take a folder dropped into `Expansions/`, validate it, security-review it, merge
 | "install the [X] Expansion" / "install Slack" / "install the App Developer pack" | Run this workstream from §1 |
 | "I dropped the [X] pack into Expansions/" / "there's a new folder in Expansions" | Detect → confirm → run §1 |
 | "uninstall [X]" / "remove the [X] Expansion" / "rip out [X]" | Run **§Uninstall** |
-| (Larry-detected at session boot — new folder in `Expansions/` with valid `expansion.yaml` and not yet recorded in `Expansions/INDEX.md`) | Announce + offer to run §1 |
+| (Hawkeye-detected at session boot — new folder in `Expansions/` with valid `expansion.yaml` and not yet recorded in `Expansions/INDEX.md`) | Announce + offer to run §1 |
 
 ## Pre-flight (before any agent does anything)
 
-Larry confirms the Expansion folder exists at `Expansions/<slug>/` and contains an `expansion.yaml` at its root. If not, Larry tells the user what's missing and stops.
+Hawkeye confirms the Expansion folder exists at `Expansions/<slug>/` and contains an `expansion.yaml` at its root. If not, Hawkeye tells the user what's missing and stops.
 
 ---
 
-## Step 1 — Larry: detect, parse, present preview
+## Step 1 — Hawkeye: detect, parse, present preview
 
-Larry reads `Expansions/<slug>/expansion.yaml` and validates against the schema in `Expansions/docs/expansion-spec.md`:
+Hawkeye reads `Expansions/<slug>/expansion.yaml` and validates against the schema in `Expansions/docs/expansion-spec.md`:
 
 1. **Required fields present?** `name`, `slug`, `version`, `description`, `category`, `expansion_type`, `requires_scaffold_version`, `requires_agents`, `license`, `author`. Missing or malformed → `invalid` row in `INDEX.md`, install blocked, surface the error to the user.
-2. **`requires_scaffold_version` matches?** Larry compares against `VERSION`. Mismatch → `incompatible` row, install blocked.
-3. **`requires_agents` present?** Larry checks each entry against `Team/agent-index.md`. Missing pre-hire → block install with "install [X] Expansion first" or "run SOP-001 to hire [X]".
-4. **Folder name = `slug`?** If not, Larry stops and asks the user to rename.
+2. **`requires_scaffold_version` matches?** Hawkeye compares against `VERSION`. Mismatch → `incompatible` row, install blocked.
+3. **`requires_agents` present?** Hawkeye checks each entry against `Team/agent-index.md`. Missing pre-hire → block install with "install [X] Expansion first" or "run SOP-001 to hire [X]".
+4. **Folder name = `slug`?** If not, Hawkeye stops and asks the user to rename.
 
-If all checks pass, Larry presents the **install preview** to the user:
+If all checks pass, Hawkeye presents the **install preview** to the user:
 
 ```
 Expansion: <name> v<version>
@@ -63,13 +63,13 @@ Manifest hash: <sha256 first 12 chars>
 Proceed? [y/n/inspect]
 ```
 
-User answers `y` → §2. `n` → stop, write a session-log entry capturing the abort. `inspect` → Larry opens the folder for the user to read, then re-prompts.
+User answers `y` → §2. `n` → stop, write a session-log entry capturing the abort. `inspect` → Hawkeye opens the folder for the user to read, then re-prompts.
 
 ---
 
 ## Step 2 — Vex: security review (the gate)
 
-Vex audits the Expansion folder before any merge happens. This is a hard gate — Larry does not advance to §3 until Vex returns green or the user explicitly accepts a yellow flag.
+Vex audits the Expansion folder before any merge happens. This is a hard gate — Hawkeye does not advance to §3 until Vex returns green or the user explicitly accepts a yellow flag.
 
 Vex's checks:
 
@@ -83,14 +83,14 @@ Vex's checks:
 Vex returns one of:
 
 - **GREEN** → §3 (proceed).
-- **YELLOW** → Larry surfaces the flag to the user with Vex's reasoning. User overrides → §3. User declines → stop.
-- **RED** → install blocked. Larry tells the user why. No override path.
+- **YELLOW** → Hawkeye surfaces the flag to the user with Vex's reasoning. User overrides → §3. User declines → stop.
+- **RED** → install blocked. Hawkeye tells the user why. No override path.
 
 ---
 
-## Step 3 — Nolan: merge agents, SOPs, guidelines, templates, workstreams
+## Step 3 — Potter: merge agents, SOPs, guidelines, templates, workstreams
 
-Nolan executes the file-level merge. Read-and-confirm each operation before writing.
+Potter executes the file-level merge. Read-and-confirm each operation before writing.
 
 ### 3.1 Agents (`adds_agents`)
 
@@ -101,7 +101,7 @@ For each `{ name, role, folder }` entry:
 3. Copy the entire `Expansions/<slug>/agents/<folder>/` directory to `Team/<folder>/`.
 4. Append a row to `Team/agent-index.md` for the new specialist (name, folder, role description). Format: match the existing index's row shape.
 5. Update root `AGENTS.md` "The team" table to bump the count and add the new row.
-6. Update `Team/Larry - Orchestrator/AGENTS.md` routing cheatsheet with any triggers the new agent should own (pulled from the agent's own AGENTS.md or from the Expansion's `ADAPT-EXPANSION.md` hint table).
+6. Update `Team/Hawkeye - Orchestrator/AGENTS.md` routing cheatsheet with any triggers the new agent should own (pulled from the agent's own AGENTS.md or from the Expansion's `ADAPT-EXPANSION.md` hint table).
 
 ### 3.2 SOPs (`adds_sops`) — auto-numbered
 
@@ -110,7 +110,7 @@ For each `{ default_owner, file }` entry:
 1. Read the next free `SOP-NNN` slot by scanning `Team Knowledge/SOPs/` (zero-padded, no skips per [[GL-001-file-naming-conventions]]).
 2. Copy `Expansions/<slug>/sops/<file>` (or wherever the manifest points) to `Team Knowledge/SOPs/SOP-NNN-<derived-slug>.md`. Slug derived from the source filename minus the descriptive `SOP-` prefix the author used (e.g. `SOP-slack-post-message.md` → slug `slack-post-message` → `SOP-NNN-slack-post-message.md`).
 3. Update `Team Knowledge/SOPs/INDEX.md` with a new row: number, title, default owner, one-line description.
-4. If the SOP body references its own filename (back-pointers, internal links), Nolan rewrites those references to the new auto-numbered name. **All internal `[[wikilinks]]` are checked.**
+4. If the SOP body references its own filename (back-pointers, internal links), Potter rewrites those references to the new auto-numbered name. **All internal `[[wikilinks]]` are checked.**
 
 ### 3.3 Guidelines (`adds_guidelines`)
 
@@ -126,28 +126,28 @@ Copy each path under `Team Knowledge/Templates/`. If a template with the same na
 
 ### 3.6 Failure rollback
 
-If any step in §3 fails after writes have started, Nolan rolls back: undo every file copy, restore every modified `INDEX.md` and root file from git (or from the pre-merge snapshot Nolan took at the start of §3). Vault returns to pre-install state.
+If any step in §3 fails after writes have started, Potter rolls back: undo every file copy, restore every modified `INDEX.md` and root file from git (or from the pre-merge snapshot Potter took at the start of §3). Vault returns to pre-install state.
 
 ---
 
-## Step 4 — Silas: post-merge integrity check
+## Step 4 — Margaret: post-merge integrity check
 
-Silas validates your myPKA state after Nolan's merge:
+Margaret validates your myPKA state after Potter's merge:
 
 1. **Frontmatter compliance.** Any new template added under `Team Knowledge/Templates/` must validate against [[GL-002-frontmatter-conventions]]. Any new agent's AGENTS.md gets a structural sanity check (has Identity, Role, etc. sections).
 2. **`agent-index.md` consistency.** Every folder under `Team/` is listed in the index, and every index row points to an existing folder.
-3. **Wikilink resolution.** Every `[[wikilink]]` in the new files resolves to an existing target. Broken links → flag to Larry, do not auto-fix.
+3. **Wikilink resolution.** Every `[[wikilink]]` in the new files resolves to an existing target. Broken links → flag to Hawkeye, do not auto-fix.
 4. **INDEX.md consistency.** SOPs, Workstreams, Guidelines, Templates indexes match the actual folder contents.
-5. **No SSOT violations introduced.** New SOPs/Guidelines/Workstreams don't duplicate existing rules. Soft warning if Silas detects overlap.
+5. **No SSOT violations introduced.** New SOPs/Guidelines/Workstreams don't duplicate existing rules. Soft warning if Margaret detects overlap.
 
-Silas returns one of:
+Margaret returns one of:
 
 - **PASS** → §5.
-- **FAIL** → Larry surfaces the failure list. Two paths: (a) Nolan rolls back; (b) user accepts a known issue and proceeds (rare; logged in session-log).
+- **FAIL** → Hawkeye surfaces the failure list. Two paths: (a) Potter rolls back; (b) user accepts a known issue and proceeds (rare; logged in session-log).
 
 ---
 
-## Step 5 — Mack: connector wiring (only if `connector` / `runtime` / `hybrid`)
+## Step 5 — Klinger: connector wiring (only if `connector` / `runtime` / `hybrid`)
 
 Skip this step for pure `agent_pack` Expansions.
 
@@ -157,7 +157,7 @@ For each `env_vars` entry:
 
 1. If `required: true` and not already set in `Expansions/<slug>/.env`, prompt the user. Echo `sensitive: true` values masked.
 2. Write to `Expansions/<slug>/.env`. `chmod 600` the file.
-3. Confirm `Expansions/<slug>/.env` is gitignored (the Expansion's own `.gitignore` should cover this; if not, Mack adds the entry to your myPKA root `.gitignore`).
+3. Confirm `Expansions/<slug>/.env` is gitignored (the Expansion's own `.gitignore` should cover this; if not, Klinger adds the entry to your myPKA root `.gitignore`).
 
 ### 5.2 MCP servers
 
@@ -179,25 +179,25 @@ For `expansion_type: runtime` or `hybrid` with a runtime block:
 
 ---
 
-## Step 6 — Larry: post-install validation
+## Step 6 — Hawkeye: post-install validation
 
-Larry runs `post_install_validation` from the manifest:
+Hawkeye runs `post_install_validation` from the manifest:
 
 - Each `{ type: "file_exists", path: "..." }` → check.
 - Each `{ type: "shell", cmd: "...", expect_exit: 0 }` → run, check exit code.
 - Each `{ type: "http", url: "...", expect_status: 200 }` → curl, check status.
 
-Failures → Larry surfaces them to the user. Two paths: (a) re-run the failing step (typically a re-prompt for env vars); (b) accept and continue with the issue logged.
+Failures → Hawkeye surfaces them to the user. Two paths: (a) re-run the failing step (typically a re-prompt for env vars); (b) accept and continue with the issue logged.
 
 ---
 
-## Step 7 — Larry: archive + announce
+## Step 7 — Hawkeye: archive + announce
 
 1. **Write session-log entry.** `Team Knowledge/session-logs/YYYY/MM/YYYY-MM-DD-HH-MM_larry_install-<slug>-v<version>.md`. Capture: which Expansion, version, agents added, SOPs added (with their new SOP-NNN numbers), Vex's verdict, env vars set (keys only, never values), runtime announced (yes/no), validation results, anomalies.
-2. **Archive the Expansion folder.** Move the live install marker to `Expansions/_installed/<slug>-<version>/.manifest.json` so the active `Expansions/` slot is freed (the actual files merged into `Team/` and `Team Knowledge/` are the canonical home now). The `.manifest.json` is a snapshot of `expansion.yaml` plus the install metadata (timestamp, who installed, sha256). This is what Larry reads to detect "is this Expansion installed?" on future session boots.
+2. **Archive the Expansion folder.** Move the live install marker to `Expansions/_installed/<slug>-<version>/.manifest.json` so the active `Expansions/` slot is freed (the actual files merged into `Team/` and `Team Knowledge/` are the canonical home now). The `.manifest.json` is a snapshot of `expansion.yaml` plus the install metadata (timestamp, who installed, sha256). This is what Hawkeye reads to detect "is this Expansion installed?" on future session boots.
 3. **Update `Expansions/INDEX.md`.** Add a row for the newly installed Expansion.
 4. **Announce the new specialists / capabilities** to the user. For agent packs: introduce each new agent by name and role. For connectors: tell the user which triggers now route to the connector and the SOP they own. For runtimes: confirm how to launch.
-5. **Walk through `post_install_steps`.** Larry reads each step aloud (figuratively) and either executes it or hands it to the user.
+5. **Walk through `post_install_steps`.** Hawkeye reads each step aloud (figuratively) and either executes it or hands it to the user.
 
 Done. The install workstream returns control to whatever the user asked for next.
 
@@ -207,9 +207,9 @@ Done. The install workstream returns control to whatever the user asked for next
 
 Symmetric. Triggered by "uninstall [X] Expansion", "remove [X]", "rip out [X]".
 
-### U1 — Larry: confirm + present uninstall preview
+### U1 — Hawkeye: confirm + present uninstall preview
 
-Larry reads `Expansions/_installed/<slug>-<version>/.manifest.json`. If not found, the Expansion is not installed — Larry tells the user. If found, Larry presents the **uninstall preview**:
+Hawkeye reads `Expansions/_installed/<slug>-<version>/.manifest.json`. If not found, the Expansion is not installed — Hawkeye tells the user. If found, Hawkeye presents the **uninstall preview**:
 
 ```
 Will remove:
@@ -228,11 +228,11 @@ Will keep (per residual_paths):
 Proceed? [y/n]
 ```
 
-### U2 — Mack: stop runtime + tear down connector
+### U2 — Klinger: stop runtime + tear down connector
 
 For runtime Expansions: `launchctl unload` the plist (macOS); kill the foreground process (Linux/Windows). Remove the plist from `~/Library/LaunchAgents/`. Deregister MCP servers from the user's LLM config. Clear `Expansions/<slug>/.env`.
 
-### U3 — Nolan: reverse the merge
+### U3 — Potter: reverse the merge
 
 For each `adds_agents` entry: remove `Team/<folder>/`, remove the row from `Team/agent-index.md`, remove the row from root `AGENTS.md` team table. Decrement the team count.
 
@@ -240,11 +240,11 @@ For each `adds_sops` entry: identify the installed `SOP-NNN-<slug>.md` (via the 
 
 For each `adds_guidelines`, `adds_workstreams`, `adds_templates`: same shape.
 
-### U4 — Silas: post-uninstall integrity check
+### U4 — Margaret: post-uninstall integrity check
 
-Same as install §4, but checking that removed files left no dangling wikilinks, INDEX rows, or `agent-index` rows. Flag any orphans for Larry to clean up.
+Same as install §4, but checking that removed files left no dangling wikilinks, INDEX rows, or `agent-index` rows. Flag any orphans for Hawkeye to clean up.
 
-### U5 — Larry: archive + session-log
+### U5 — Hawkeye: archive + session-log
 
 Move `Expansions/_installed/<slug>-<version>/` to `Expansions/_uninstalled/<slug>-<version>/` (preserves the install record). If the Expansion folder itself is still present in `Expansions/` (the user dropped it back in to trigger uninstall, or it was never archived), `rm -rf` it. Anything in the manifest's `uninstall.residual_paths` that the user said `keep` to is left alone; everything else is removed.
 
@@ -257,18 +257,18 @@ Write the uninstall session-log entry. Update `Expansions/INDEX.md` to remove th
 | Situation | Behaviour |
 |---|---|
 | Vex flags YELLOW, user overrides | Logged in the session-log with explicit user-consent line. Vex re-audits if the Expansion is later updated. |
-| Vex flags RED | Install blocked. No override. Larry tells the user the specific concern. |
-| `requires_agents` missing | Install blocked. Larry tells the user "install <X> Expansion first" or "run SOP-001 to hire <X>". |
-| Collision: `Team/<folder>/` already exists | Nolan stops at §3. User chooses: rename (suffix `-from-<slug>`), skip that agent, or abort install. |
-| Collision: SOP slug already taken | Nolan auto-resolves by appending `-<slug>` to the SOP slug (e.g., `SOP-NNN-post-message-slack.md`). |
-| Mid-install failure | Nolan rolls back §3 writes. Mack rolls back §5 if reached. Vault returns to pre-install state. Failure logged. |
-| Post-install validation fails | Larry surfaces; user chooses re-run or accept. |
+| Vex flags RED | Install blocked. No override. Hawkeye tells the user the specific concern. |
+| `requires_agents` missing | Install blocked. Hawkeye tells the user "install <X> Expansion first" or "run SOP-001 to hire <X>". |
+| Collision: `Team/<folder>/` already exists | Potter stops at §3. User chooses: rename (suffix `-from-<slug>`), skip that agent, or abort install. |
+| Collision: SOP slug already taken | Potter auto-resolves by appending `-<slug>` to the SOP slug (e.g., `SOP-NNN-post-message-slack.md`). |
+| Mid-install failure | Potter rolls back §3 writes. Klinger rolls back §5 if reached. Vault returns to pre-install state. Failure logged. |
+| Post-install validation fails | Hawkeye surfaces; user chooses re-run or accept. |
 | User uninstalls then reinstalls a different version | The `_installed` archive shows the old version's footprint. New install proceeds normally; auto-numbering picks new SOP slots. |
 
 ---
 
 ## Owner agency
 
-Each agent in this workstream owns their step. If Vex's audit logic improves, Vex updates §2 directly (and tells Larry). If Nolan finds a better merge sequence, Nolan updates §3. Larry owns the orchestration shell (§1, §6, §7) and the trigger contract.
+Each agent in this workstream owns their step. If Vex's audit logic improves, Vex updates §2 directly (and tells Hawkeye). If Potter finds a better merge sequence, Potter updates §3. Hawkeye owns the orchestration shell (§1, §6, §7) and the trigger contract.
 
 The Expansion author owns their `expansion.yaml`, their bundled files, and the `post_install_validation` rules. They do not own this workstream — the scaffold owns the install procedure, every Expansion plugs into the same one.

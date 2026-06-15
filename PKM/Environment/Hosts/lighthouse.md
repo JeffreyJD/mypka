@@ -1,4 +1,4 @@
----
+﻿---
 name: lighthouse
 host_type: physical
 status: building
@@ -23,7 +23,7 @@ tags:
 
 Dell PowerEdge R730 — primary Proxmox hypervisor for the homelab. "The light." Mid-build: ~60% of Phase 1 parts acquired, nothing assembled yet as of the April 2026 handoff.
 
-**SSOT note:** detailed build state (parts, orders, compatibility decisions, phased milestones) lives in `C:\Users\jeff\My Drive\PKA-Jeffrey\homelab\` (`build-log.md`, `parts-compatibility.md`, `network-build.md`, `network-schema.md`). This note is the registry view; do not duplicate the build tracker here.
+**SSOT note:** detailed build state (parts, orders, compatibility decisions, phased milestones) lives in `PKM/Documents/homelab/` (`build-log.md`, `parts-compatibility.md`, `network-build.md`, `network-schema.md`). This note is the registry view; do not duplicate the build tracker here.
 
 ## Network identity (from homelab network-schema)
 

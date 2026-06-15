@@ -6,10 +6,10 @@ When a specialist produces something substantial - a research brief, a draft doc
 
 ## When to use it
 
-- **Pax** delivers a research report -> `Deliverables/YYYY-MM-DD-<topic-slug>.md`
-- **Nolan** delivers a hire workup -> `Deliverables/YYYY-MM-DD-<role-slug>-hire-research.md`
+- **B.J.** delivers a research report -> `Deliverables/YYYY-MM-DD-<topic-slug>.md`
+- **Potter** delivers a hire workup -> `Deliverables/YYYY-MM-DD-<role-slug>-hire-research.md`
 - A new specialist delivers a multi-file project -> `Deliverables/YYYY-MM-DD-<project-slug>/`
-- **Larry** collects briefs from multiple specialists for a single initiative -> one folder per initiative, named by date and slug
+- **Hawkeye** collects briefs from multiple specialists for a single initiative -> one folder per initiative, named by date and slug
 
 ## When NOT to use it
 

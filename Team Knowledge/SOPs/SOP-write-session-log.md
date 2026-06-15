@@ -1,6 +1,6 @@
 # SOP — Write a Session Log
 
-- **Owner:** Larry (default), any specialist agent (when running independently)
+- **Owner:** Hawkeye (default), any specialist agent (when running independently)
 - **Triggered by:** end of a working session, mid-session checkpoint, end-of-day
 - **Output:** a new file in `Team Knowledge/session-logs/<YYYY>/<MM>/`
 - **References:** [[SOP-write-journal-entry]] (for cross-session insights), [[SOP-create-task]] (for queued follow-up work)
@@ -23,8 +23,8 @@ A chronological record of one working session. Append-only by design (write once
 
 ## When to write
 
-- **End of every Larry-coordinated session.** Larry writes one as Session-Log Author (one of his three duties).
-- **End of an independent specialist session.** When a specialist runs a long-running task without Larry in the loop, they write their own session log.
+- **End of every Hawkeye-coordinated session.** Hawkeye writes one as Session-Log Author (one of his three duties).
+- **End of an independent specialist session.** When a specialist runs a long-running task without Hawkeye in the loop, they write their own session log.
 - **Mid-session checkpoint** if the session crosses a major boundary. One log per chunk, not one giant log.
 
 ## Filename convention
@@ -34,7 +34,7 @@ Team Knowledge/session-logs/<YYYY>/<MM>/YYYY-MM-DD-HH-MM_<agent>_<short-title-sl
 ```
 
 - `YYYY-MM-DD-HH-MM` is the session END timestamp (UTC), not start.
-- `<agent>` is lowercase agent name: `larry`, `knox`, `mack`.
+- `<agent>` is lowercase agent name: `larry`, `knox`, `klinger`.
 - `<short-title-slug>` is kebab-case, ~30–60 chars, captures the session's headline.
 
 Example: `2026-05-09-17-30_knox_v0.4.2-tauri-linux-deb-pivot.md`
@@ -115,14 +115,14 @@ The wiring is symmetric so a reader walking either direction (task → session, 
 
 ## Worked example
 
-Mack closes the mux-webhook task at 18:00 UTC. He writes:
+Klinger closes the mux-webhook task at 18:00 UTC. He writes:
 
 File: `Team Knowledge/session-logs/2026/05/2026-05-10-18-00_mack_mux-webhook-recovery.md`
 
 ```markdown
 ---
-agent_id: mack
-session_id: 2026-05-10-mack-webhook-firefighting
+agent_id: klinger
+session_id: 2026-05-10-klinger-webhook-firefighting
 timestamp: 2026-05-10T18:00:00Z
 type: end-of-session
 linked_sops: []
@@ -135,7 +135,7 @@ linked_journal_entries: [2026-05-10-secret-rotation-discipline]
 # Mux webhook 401 recovery — secret rotation propagated, runbook follow-up queued
 
 ## Context
-Larry handed me [[tsk-2026-05-09-001-mux-webhook-401]] at session start. The endpoint had been 401-ing since rotation. Production-impacting.
+Hawkeye handed me [[tsk-2026-05-09-001-mux-webhook-401]] at session start. The endpoint had been 401-ing since rotation. Production-impacting.
 
 ## What I shipped
 - Diagnosed: MUX_WEBHOOK_SECRET was rotated in Mux dashboard, never updated in Vercel prod env.
@@ -162,7 +162,7 @@ If a webhook is 401-ing in prod and the code looks fine, env var drift is the fi
 Journal: [[2026-05-10-secret-rotation-discipline]]
 ```
 
-Mack then makes sure the closed task's `linked_session_logs` includes this session's basename, and the new task he created lists it too. Cross-links are symmetric.
+Klinger then makes sure the closed task's `linked_session_logs` includes this session's basename, and the new task he created lists it too. Cross-links are symmetric.
 
 ## Common mistakes
 

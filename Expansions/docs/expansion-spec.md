@@ -10,7 +10,7 @@ Scaffold this spec ships with: **myPKA v1.7.0**.
 
 ## What an Expansion is
 
-An Expansion is a single folder that **grows the user's pre-hired team or wires the team to an external system**. Drop the folder into `Expansions/`. Larry detects it on the next session boot, walks the install workstream ([[WS-003-install-an-expansion]]), and the team grows.
+An Expansion is a single folder that **grows the user's pre-hired team or wires the team to an external system**. Drop the folder into `Expansions/`. Hawkeye detects it on the next session boot, walks the install workstream ([[WS-003-install-an-expansion]]), and the team grows.
 
 Two important framing notes:
 
@@ -26,7 +26,7 @@ The OSS scaffold's `Expansions/` folder is **structurally empty by design**. It 
 | Shape | Adds | Examples |
 |---|---|---|
 | `agent_pack` | New specialists (`adds_agents`), their SOPs, optionally Guidelines/Templates | App Developer Pack (Felix + Vex + Vera) |
-| `connector` | OAuth/API/webhook wiring, env vars, MCP server registrations. May add SOPs default-owned by Mack. | Notion, Readwise, Linear |
+| `connector` | OAuth/API/webhook wiring, env vars, MCP server registrations. May add SOPs default-owned by Klinger. | Notion, Readwise, Linear |
 | `runtime` | Long-lived background process (`start.command` / launchd plist). Listener/relay shape. | Slack Expansion, mypka-interface |
 | `hybrid` | Combines two of the above. Rare. Permitted only when splitting into two Expansions would produce a worse user experience. | An agent pack that also ships a runtime listener |
 
@@ -34,7 +34,7 @@ The OSS scaffold's `Expansions/` folder is **structurally empty by design**. It 
 
 ## `expansion.yaml` — schema v1 (LOCKED)
 
-Every Expansion folder MUST contain an `expansion.yaml` at its root. Larry parses it forgivingly: bad YAML or missing required fields produce an `invalid` row in `INDEX.md` rather than crashing the session.
+Every Expansion folder MUST contain an `expansion.yaml` at its root. Hawkeye parses it forgivingly: bad YAML or missing required fields produce an `invalid` row in `INDEX.md` rather than crashing the session.
 
 ### Required fields (all expansion types)
 
@@ -46,8 +46,8 @@ Every Expansion folder MUST contain an `expansion.yaml` at its root. Larry parse
 | `description` | string | One sentence. Goes into `Expansions/INDEX.md`. |
 | `category` | string | Free-text tag for the AI Library (e.g., `agents`, `connector`, `productivity`). |
 | `expansion_type` | enum | `agent_pack` \| `connector` \| `runtime` \| `hybrid` |
-| `requires_scaffold_version` | semver range | e.g. `">=1.7.0 <2.0.0"`. Larry refuses to install on mismatch. |
-| `requires_agents` | list | Pre-hired agents this Expansion uses (e.g., `[Larry, Mack]`). Larry blocks install if any are missing. |
+| `requires_scaffold_version` | semver range | e.g. `">=1.7.0 <2.0.0"`. Hawkeye refuses to install on mismatch. |
+| `requires_agents` | list | Pre-hired agents this Expansion uses (e.g., `[Hawkeye, Klinger]`). Hawkeye blocks install if any are missing. |
 | `license` | string | SPDX identifier or short string (`proprietary`, `MIT`, `CC-BY-NC-SA-4.0`, …). |
 | `author` | string | Who shipped this Expansion. |
 
@@ -62,9 +62,9 @@ Every Expansion folder MUST contain an `expansion.yaml` at its root. Larry parse
 | `adds_workstreams` | rare | List of `{ slug, file }`. Workstreams are emergent — pre-shipping is the exception, not the rule. Permitted when the Expansion ships canonical day-1 multi-agent flows that the user can't reasonably author themselves. |
 | `adds_templates` | optional | List of relative paths under the Expansion folder to copy into `Team Knowledge/Templates/`. |
 | `env_vars` | `connector`, `runtime`, `hybrid` | List of `{ key, description, required, sensitive }`. The install workstream prompts the user for `required: true` values; `sensitive: true` values are echoed masked and stored in the Expansion's `.env`. |
-| `post_install_steps` | optional | Human-readable list. Larry walks the user through these after install completes. |
+| `post_install_steps` | optional | Human-readable list. Hawkeye walks the user through these after install completes. |
 | `post_install_validation` | optional | Machine-checkable. Either a shell command to run, or a list of checks (`{ type: "file_exists", path: "…" }`, `{ type: "shell", cmd: "…", expect_exit: 0 }`, `{ type: "http", url: "…", expect_status: 200 }`). |
-| `mcp_servers` | optional, any type | List of MCP server configs. Mack registers these with the user's LLM tool (Claude Code config, Codex config, etc.). Schema: `{ name, command, args, env_vars }`. |
+| `mcp_servers` | optional, any type | List of MCP server configs. Klinger registers these with the user's LLM tool (Claude Code config, Codex config, etc.). Schema: `{ name, command, args, env_vars }`. |
 | `runtime` | `runtime` or `hybrid` | Object describing the long-lived process. See **runtime block** below. |
 | `uninstall` | optional | `{ method: "rm-rf-folder", residual_paths: [...] }`. If omitted, defaults to `rm-rf-folder` with no residuals. |
 
@@ -81,7 +81,7 @@ runtime:
   interactive: false                           # true if the runtime needs a foreground terminal
 ```
 
-Larry **announces** runtimes. He never auto-launches them. The user double-clicks `start.command` (or platform equivalent) when ready. This rule is enforced by Mack's contract and is a hard line in the scaffold.
+Hawkeye **announces** runtimes. He never auto-launches them. The user double-clicks `start.command` (or platform equivalent) when ready. This rule is enforced by Klinger's contract and is a hard line in the scaffold.
 
 ---
 
@@ -97,7 +97,7 @@ description: Adds Felix (frontend), Vex (security), Vera (QA) to your team for b
 category: agents
 expansion_type: agent_pack
 requires_scaffold_version: ">=1.7.0 <2.0.0"
-requires_agents: [Larry, Nolan, Mack]
+requires_agents: [Hawkeye, Potter, Klinger]
 license: proprietary
 author: myICOR
 
@@ -114,7 +114,7 @@ adds_workstreams: []
 adds_templates: []
 env_vars: []
 post_install_steps:
-  - "Larry will introduce the three new specialists in your next session."
+  - "Hawkeye will introduce the three new specialists in your next session."
   - "If you have a design system, Vera references Team Knowledge/Guidelines/GL-003-design-system.md for visual QA."
 post_install_validation:
   - { type: "file_exists", path: "Team/Felix - Frontend Developer/AGENTS.md" }
@@ -128,20 +128,20 @@ post_install_validation:
 name: Slack Expansion
 slug: slack
 version: 1.0.0
-description: Use Slack as a chat surface for Larry. Inbound DMs and @-mentions land in Team Inbox; replies post back in-thread.
+description: Use Slack as a chat surface for Hawkeye. Inbound DMs and @-mentions land in Team Inbox; replies post back in-thread.
 category: connector
 expansion_type: runtime
 requires_scaffold_version: ">=1.7.0 <2.0.0"
-requires_agents: [Larry, Mack]
+requires_agents: [Hawkeye, Klinger]
 license: proprietary
 author: myICOR
 homepage: https://myicor.com/library/slack
 
 adds_agents: []
 adds_sops:
-  - { default_owner: Larry, file: SOP-slack-incoming-routing.md }
-  - { default_owner: Mack,  file: SOP-slack-post-message.md }
-  - { default_owner: Mack,  file: SOP-slack-listener-health.md }
+  - { default_owner: Hawkeye, file: SOP-slack-incoming-routing.md }
+  - { default_owner: Klinger,  file: SOP-slack-post-message.md }
+  - { default_owner: Klinger,  file: SOP-slack-listener-health.md }
 adds_guidelines: []
 adds_workstreams: []
 adds_templates: []
@@ -182,16 +182,16 @@ uninstall:
 name: Notion Connector
 slug: notion-connector
 version: 1.0.0
-description: OAuth-authenticated Notion API connector. Mack uses it for imports and live reads.
+description: OAuth-authenticated Notion API connector. Klinger uses it for imports and live reads.
 category: connector
 expansion_type: connector
 requires_scaffold_version: ">=1.7.0 <2.0.0"
-requires_agents: [Larry, Mack, Silas]
+requires_agents: [Hawkeye, Klinger, Margaret]
 license: proprietary
 author: myICOR
 
 adds_sops:
-  - { default_owner: Mack, file: SOP-notion-fetch.md }
+  - { default_owner: Klinger, file: SOP-notion-fetch.md }
 env_vars:
   - { key: NOTION_TOKEN, description: "Notion internal integration token", required: true, sensitive: true }
 mcp_servers:
@@ -201,7 +201,7 @@ mcp_servers:
     env_vars: [NOTION_TOKEN]
 post_install_steps:
   - "Create an integration at https://www.notion.so/profile/integrations and paste the token into .env."
-  - "Share the workspaces / pages you want Larry to access with the integration."
+  - "Share the workspaces / pages you want Hawkeye to access with the integration."
 post_install_validation:
   - { type: "shell", cmd: "test -n \"$NOTION_TOKEN\"", expect_exit: 0 }
 ```
@@ -225,18 +225,18 @@ post_install_validation:
 |---|---|
 | Token storage | Always env vars in the Expansion's `.env`. Never inline in `expansion.yaml`. Never logged. |
 | Sensitive env display | `sensitive: true` env vars are echoed masked and never written to session-logs. |
-| Manifest tampering | Tier-2 (myICOR-issued) Expansions are hash-pinned in the canonical `.trusted-sources` registry — maintained in the private `mypka-expansions` repo and generated by the release pipeline. Vex audits before the hash is pinned. Hash mismatch → Larry refuses install. |
+| Manifest tampering | Tier-2 (myICOR-issued) Expansions are hash-pinned in the canonical `.trusted-sources` registry — maintained in the private `mypka-expansions` repo and generated by the release pipeline. Vex audits before the hash is pinned. Hash mismatch → Hawkeye refuses install. |
 | Outbound network defaults | Connectors and runtimes that talk to third-party APIs MUST default to least-permissive options. Slack-specific: `unfurl_links: false` and `unfurl_media: false`. Webhook receivers MUST verify signatures. |
-| `requires_agents` enforcement | Larry blocks install if a required pre-hired agent is missing. The user is told which Expansion to install first. |
+| `requires_agents` enforcement | Hawkeye blocks install if a required pre-hired agent is missing. The user is told which Expansion to install first. |
 | Vex security pass | Recommended before public release for any Expansion that touches the network or executes long-lived processes. Required before tier-2 hash-pinning. |
 
-The manifest is **informational only**. Its declarations are not verified, enforced, or guaranteed by Paperless Movement S.L. or by Larry beyond hash-pinning at tier-2. The user is solely responsible for evaluating an Expansion's trustworthiness before installation.
+The manifest is **informational only**. Its declarations are not verified, enforced, or guaranteed by Paperless Movement S.L. or by Hawkeye beyond hash-pinning at tier-2. The user is solely responsible for evaluating an Expansion's trustworthiness before installation.
 
 ---
 
 ## Trust model — three tiers
 
-| Tier | Source | Larry's action on detection |
+| Tier | Source | Hawkeye's action on detection |
 |---|---|---|
 | 1 — Bundled | `author: myICOR` and ships in scaffold | Auto-trust. No prompt. (None ship in v1.7.) |
 | 2 — myICOR-issued | `author: myICOR`, manifest hash matches the canonical `.trusted-sources` registry (in `mypka-expansions`, pipeline-generated) | Calm announcement. Auto-trust on hash match; warn on mismatch. |
@@ -260,11 +260,11 @@ Trust is granted to a `(slug, version)` pair. Major version bumps re-prompt.
 
 Symmetric to install. The uninstall flow ([[WS-003-install-an-expansion]] §uninstall):
 
-1. Larry detects an uninstall request ("uninstall the Slack Expansion", "remove App Developer pack").
-2. Nolan reverses the team merge (removes the Expansion's agents from `Team/`, restores `Team/agent-index.md`).
-3. Mack tears down connector wiring (stops runtimes, removes launchd plists, deregisters MCP servers).
-4. Silas validates the post-uninstall myPKA state.
-5. Larry archives the Expansion folder to `Expansions/_uninstalled/<slug>-<version>/.manifest.json` and writes the session-log entry.
+1. Hawkeye detects an uninstall request ("uninstall the Slack Expansion", "remove App Developer pack").
+2. Potter reverses the team merge (removes the Expansion's agents from `Team/`, restores `Team/agent-index.md`).
+3. Klinger tears down connector wiring (stops runtimes, removes launchd plists, deregisters MCP servers).
+4. Margaret validates the post-uninstall myPKA state.
+5. Hawkeye archives the Expansion folder to `Expansions/_uninstalled/<slug>-<version>/.manifest.json` and writes the session-log entry.
 
 `uninstall.method: rm-rf-folder` plus `residual_paths` is the uninstall contract. Anything not declared in `residual_paths` will be left behind — that's a bug in the Expansion, not the scaffold.
 
@@ -278,7 +278,7 @@ Symmetric to install. The uninstall flow ([[WS-003-install-an-expansion]] §unin
 - The scaffold version sits outside the declared range → `incompatible` row, install blocked.
 - A required pre-hired agent listed in `requires_agents` is not in `Team/agent-index.md` → install blocked with a "install X first" message.
 
-Larry never silently coerces.
+Hawkeye never silently coerces.
 
 ---
 
@@ -308,4 +308,4 @@ Before zipping your Expansion and shipping it:
 - No Expansion binaries.
 - No Expansion manifests beyond the empty `INDEX.md` template.
 
-Expansions live in their own private repos. The OSS scaffold ships only this spec, the contract, and Larry's discovery routine + WS-003 install workstream.
+Expansions live in their own private repos. The OSS scaffold ships only this spec, the contract, and Hawkeye's discovery routine + WS-003 install workstream.

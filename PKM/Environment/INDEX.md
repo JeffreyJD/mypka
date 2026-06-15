@@ -1,4 +1,4 @@
-# Environment - Index
+﻿# Environment - Index
 
 The registry of Jeff's technical environment: every machine, deployed service, provider account, and tracked software in one queryable place. Built 2026-06-11 so that "which agent is on which server, what's the IP, where does the key live, when does it renew" never has to live in Jeff's head.
 
@@ -63,4 +63,4 @@ Full network design document: [[network-design]] — IP schema, VLAN register, R
 - New machine, VPS, account, or subscription → copy the matching template, fill what you know, link it here.
 - When a homelab VM/container goes live on [[lighthouse]] or [[watchtower]], it gets a Service note that moment.
 - Hawkeye's Librarian pass checks this INDEX against the folder at session close.
-- Build-tracker detail for the homelab stays in `C:\Users\jeff\My Drive\PKA-Jeffrey\homelab\` (SSOT); these notes are the registry view and link out.
+- Build-tracker detail for the homelab stays in `PKM/Documents/homelab/` (SSOT); these notes are the registry view and link out.

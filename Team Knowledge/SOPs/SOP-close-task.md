@@ -1,6 +1,6 @@
 # SOP — Close a Task (Done or Cancelled)
 
-- **Owner:** the agent finishing the task (for done) or the user/Larry (for cancel)
+- **Owner:** the agent finishing the task (for done) or the user/Hawkeye (for cancel)
 - **Triggered by:** task work shipping or being abandoned
 - **Output:** task file archived in `done/<YYYY>/<MM>/` or `cancelled/<YYYY>/<MM>/`; every deliverable in `linked_deliverables` archived alongside
 - **References:** [[SOP-rebuild-task-index]], [[SOP-write-journal-entry]], [[GL-004-task-resource-linking]], [[SOP-002-convert-mypka-to-sqlite]]
@@ -161,7 +161,7 @@ You shipped most of the work but a piece slipped to a follow-up. Two options:
 
 ## Worked example (done, no deliverables)
 
-Mack closes the mux-webhook task:
+Klinger closes the mux-webhook task:
 
 ```bash
 mkdir -p "Team Knowledge/tasks/done/2026/05"
@@ -187,19 +187,19 @@ Lessons: [[2026-05-10-secret-rotation-discipline]] (journal).
 Archived deliverables: none (this task had `linked_deliverables: []`).
 ```
 
-Mack also writes the journal entry [[2026-05-10-secret-rotation-discipline]] and adds it to this task's `linked_journal_entries`. He adds the current session log to `linked_session_logs`.
+Klinger also writes the journal entry [[2026-05-10-secret-rotation-discipline]] and adds it to this task's `linked_journal_entries`. He adds the current session log to `linked_session_logs`.
 
 Final update line:
 
 ```
-- 2026-05-10 17:42 (mack) — done: rotated secret + verified webhook 200
+- 2026-05-10 17:42 (klinger) — done: rotated secret + verified webhook 200
 ```
 
-Rebuild index. Report to Larry: `Closed [[tsk-2026-05-09-001-mux-webhook-401]]. One follow-up: [[tsk-2026-05-10-001-document-secret-rotation-runbook]]. Journal: [[2026-05-10-secret-rotation-discipline]]. No deliverables to archive.`
+Rebuild index. Report to Hawkeye: `Closed [[tsk-2026-05-09-001-mux-webhook-401]]. One follow-up: [[tsk-2026-05-10-001-document-secret-rotation-runbook]]. Journal: [[2026-05-10-secret-rotation-discipline]]. No deliverables to archive.`
 
 ## Worked example (done, with deliverable archive)
 
-Mack closes the MCP install task whose `linked_deliverables` referenced four files under `Deliverables/2026-05-12-mcp-install/`:
+Klinger closes the MCP install task whose `linked_deliverables` referenced four files under `Deliverables/2026-05-12-mcp-install/`:
 
 ```bash
 mkdir -p "Team Knowledge/tasks/done/2026/05"
@@ -240,10 +240,10 @@ Sharing check confirmed nothing else under `tasks/open/` or `tasks/in-progress/`
 Final update line:
 
 ```
-- 2026-05-13 11:00 (mack) — done: MCP installed, smoke-tested, 14 shims amended; folder archived to _archive/2026/05/
+- 2026-05-13 11:00 (klinger) — done: MCP installed, smoke-tested, 14 shims amended; folder archived to _archive/2026/05/
 ```
 
-Rebuild index. Report to Larry: `Closed [[tsk-2026-05-12-001-install-mcp]]. Four deliverables archived together as one folder move. One follow-up: [[tsk-2026-05-13-001-settings-audit]].`
+Rebuild index. Report to Hawkeye: `Closed [[tsk-2026-05-12-001-install-mcp]]. Four deliverables archived together as one folder move. One follow-up: [[tsk-2026-05-13-001-settings-audit]].`
 
 ## Common mistakes
 

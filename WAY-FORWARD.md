@@ -14,7 +14,7 @@ This file exists because the README answers *what* and *how*. It doesn't answer 
 
 What this repo gives you, plainly:
 
-- A six-person AI team (Larry, Penn, Pax, Nolan, Mack, Silas) that runs in any LLM you already use.
+- A six-person AI team (Hawkeye, Radar, B.J., Potter, Klinger, Margaret) that runs in any LLM you already use.
 - A working file structure for **My Life** (Goals, Habits, Topics, Projects, Key Elements) plus `Documents/`, `CRM/`, `Images/`, `Journal/`.
 - The agent contracts (`AGENTS.md` per specialist), the routing index, and a starter set of SOPs and Workstreams.
 - A 34-minute walkthrough video where Dr. Thomas Rödl builds the system from scratch.
@@ -22,7 +22,7 @@ What this repo gives you, plainly:
 
 What this repo does **not** include. Not as a feature gate. As honest scope.
 
-- The reasoning behind why **My Life** has five concepts and not eight, why Larry routes through Penn before filing, and why agent contracts are shaped the way they are. That's methodology, not code.
+- The reasoning behind why **My Life** has five concepts and not eight, why Hawkeye routes through Radar before filing, and why agent contracts are shaped the way they are. That's methodology, not code.
 - A working library of additional specialists beyond the six shipped here.
 - Slack integration, Obsidian plugins tuned to the scaffold, and the cohort of operators running this for real work.
 - The **Business half** of the methodology: ICOR as it applies to companies, teams, and revenue.
@@ -37,7 +37,7 @@ The **myPKA System workshop** at [myicor.com](https://myicor.com) is where those
 
 - The **My Life** concept in full: what each of the five categories is for, what belongs in each, and what the boundary cases look like in practice.
 - The per-folder rationale across `PKM/`, `Team/`, `Team Knowledge/`, `Team Inbox/`, and `Deliverables/`. Why each folder exists, what breaks if you remove it, and how to extend it without breaking the model.
-- How Larry, Penn, Pax, Nolan, Mack, and Silas are designed as a team rather than as six prompts. The contracts, the routing logic, the librarian role.
+- How Hawkeye, Radar, B.J., Potter, Klinger, and Margaret are designed as a team rather than as six prompts. The contracts, the routing logic, the librarian role.
 - How to teach the system to a partner, a teammate, or your future self.
 
 This is for anyone who wants to use the scaffold beyond the first month, extend it without diluting it, or teach it to someone else.

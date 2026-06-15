@@ -1,6 +1,6 @@
 # SOP — List Open Tasks
 
-- **Owner:** any agent (Larry runs this at every session boot)
+- **Owner:** any agent (Hawkeye runs this at every session boot)
 - **Triggered by:** session start, status check, "where did we leave off?"
 - **Output:** a printable summary of open and in-progress tasks (with blocked tasks called out)
 - **References:** [[SOP-rebuild-task-index]]
@@ -49,7 +49,7 @@ done
 ### List my open and in-progress tasks (everything I'm currently on the hook for)
 
 ```bash
-ME=mack
+ME=klinger
 grep -rlE "^assignee: ${ME}\b" \
   "Team Knowledge/tasks/open" \
   "Team Knowledge/tasks/in-progress"
@@ -78,9 +78,9 @@ SESSION=2026-05-09-22-30_larry_video-launch-coordination
 grep -rlE "^linked_session_logs:.*${SESSION}" "Team Knowledge/tasks"
 ```
 
-## Larry's session-boot routine
+## Hawkeye's session-boot routine
 
-At the start of every session, Larry runs:
+At the start of every session, Hawkeye runs:
 
 1. `cat "Team Knowledge/tasks/INDEX.md"` — get the lay of the land.
 2. Filter mentally to "Open priority 1" and "In-progress with assignee likely active" — surface those to Tom first.
@@ -89,7 +89,7 @@ At the start of every session, Larry runs:
 
 The output Tom sees at boot is a one-paragraph summary:
 
-> Morning. Open: one urgent for Mack (mux-webhook 401). In progress: Pixel mid-batch on icons, Silas has the secret-rotation task blocked on Vercel env access (3rd day — want to nudge?). Closed yesterday: 4 tasks. No follow-ups stranded.
+> Morning. Open: one urgent for Klinger (mux-webhook 401). In progress: Pixel mid-batch on icons, Margaret has the secret-rotation task blocked on Vercel env access (3rd day — want to nudge?). Closed yesterday: 4 tasks. No follow-ups stranded.
 
 That's the resumption surface. Tom knows where to start without re-reading anything else.
 
@@ -111,6 +111,6 @@ For each task picked up, also read the task's `linked_journal_entries` — see [
 ## Common mistakes
 
 - Trusting the index when something just changed in the same session. Re-run [[SOP-rebuild-task-index]] if you've been editing.
-- Greppping for assignee without `\b` boundary — matches `mackenzie` if the assignee is `mack`. Use `^assignee: mack\b` or `^assignee: mack$`.
+- Greppping for assignee without `\b` boundary — matches `mackenzie` if the assignee is `klinger`. Use `^assignee: klinger\b` or `^assignee: klinger$`.
 - Forgetting that blocked tasks live in `in-progress/`, not in a separate folder. Look for `blocked_reason: ` not equal to `null`.
 - Not surfacing long-blocked or long-stale tasks. The triage prompt at session boot is what keeps the queue alive.

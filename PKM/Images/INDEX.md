@@ -6,7 +6,7 @@ Single shared image bucket for your entire myPKA. Journal entries, CRM People en
 
 `PKM/Images/YYYY/MM/YYYY-MM-DD-<slug>.<ext>`
 
-Auto-create rule: when Penn or another agent saves a new image and the `YYYY/` or `MM/` subfolder does not exist, the agent creates it.
+Auto-create rule: when Radar or another agent saves a new image and the `YYYY/` or `MM/` subfolder does not exist, the agent creates it.
 
 ## SSOT for images
 
@@ -27,7 +27,7 @@ The slug describes what is in the image. Avoid generic slugs like `screenshot` o
 - `2026/05/2026-05-04-dr-schmidt-business-card.png` — seeded course sample, embedded from [[dr-schmidt]].
 - `2026/05/2026-05-04-sample-screenshot.png` — seeded course sample, embedded from [[2026-05-04-first-day]].
 
-Penn saves further images here as you share them.
+Radar saves further images here as you share them.
 
 ## Subfolders by year
 

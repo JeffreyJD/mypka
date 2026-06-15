@@ -1,4 +1,4 @@
----
+﻿---
 name: watchtower
 host_type: physical
 status: planned
@@ -24,7 +24,7 @@ tags:
 
 Dell PowerEdge R740 — dedicated Frigate NVR surveillance server. Fully designed on paper, zero parts ordered. Next build after [[lighthouse]] reaches Phase 2–3.
 
-**SSOT note:** architecture detail lives in `C:\Users\jeff\My Drive\PKA-Jeffrey\homelab\` — this is the registry view.
+**SSOT note:** architecture detail lives in `PKM/Documents/homelab/` — this is the registry view.
 
 ## What runs here (planned)
 

@@ -1,4 +1,4 @@
----
+﻿---
 name: Claude Code
 status: active
 software_type: subscription
@@ -20,7 +20,7 @@ Anthropic's CLI agent — Jeff's daily driver for development and the runtime fo
 
 ## What I use it for
 
-- myPKA orchestration (this folder) and the PKA-Jeffrey agents.
+- myPKA orchestration (this folder) and the mypka agents.
 - prophet-trader development on [[jeff-laptop]].
 
 ## Setup notes

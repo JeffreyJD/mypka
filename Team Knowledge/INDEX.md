@@ -7,7 +7,7 @@ This is the operations side of your myPKA. It holds the team's procedures, orche
 - **[[Team Knowledge/SOPs/INDEX|SOPs]]** — agent skills. Canonical step-by-step procedures, one job per file, LLM-agnostic and reusable across agents. Each SOP has a default owner, but any agent can invoke it. Think of SOPs the way Claude skills work. Filenames: `SOP-NNN-<title>.md`.
 - **[[Team Knowledge/Workstreams/INDEX|Workstreams]]** — multi-agent compositions. Recurring orchestrations where more than one specialist collaborates. Workstreams string SOPs together — think of them the way Claude plugins compose skills. Emergent: the scaffold ships only canonical day-1 flows; new Workstreams get authored when a pattern repeats. Filenames: `WS-NNN-<title>.md`.
 - **[[Team Knowledge/Guidelines/INDEX|Guidelines]]** — general rules every agent reads. Static constraints (naming, frontmatter, design system) that SOPs and Workstreams `[[wikilink]]` to rather than duplicate. Filenames: `GL-NNN-<title>.md`.
-- **session-logs/** — append-only record of every working session, written by Larry. Path: `session-logs/YYYY/MM/YYYY-MM-DD-<slug>.md`.
+- **session-logs/** — append-only record of every working session, written by Hawkeye. Path: `session-logs/YYYY/MM/YYYY-MM-DD-<slug>.md`.
 
 ## Taxonomy in plain English
 
@@ -23,12 +23,12 @@ If naming rules belong in [[GL-001-file-naming-conventions]], do not restate the
 
 ## Cross-session learnings
 
-When the team learns something durable across sessions, Larry appends it to a "Cross-session learnings" section at the bottom of this file. Session-specific notes stay in the session log under `session-logs/YYYY/MM/`.
+When the team learns something durable across sessions, Hawkeye appends it to a "Cross-session learnings" section at the bottom of this file. Session-specific notes stay in the session log under `session-logs/YYYY/MM/`.
 
 ### Cross-session learnings
 
-(empty on day one - Larry fills this as the team operates)
+(empty on day one - Hawkeye fills this as the team operates)
 
 ## Active session log
 
-The current session log lives in `session-logs/YYYY/MM/`. Larry writes one per session at close.
+The current session log lives in `session-logs/YYYY/MM/`. Hawkeye writes one per session at close.

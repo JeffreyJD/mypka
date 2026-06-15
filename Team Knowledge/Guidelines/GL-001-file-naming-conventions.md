@@ -46,8 +46,8 @@ Examples:
 Pattern: `Team/<Name> - <Role>/AGENTS.md` with a literal space-hyphen-space between name and role.
 
 Examples:
-- `Team/Larry - Orchestrator/`
-- `Team/Penn - Journal Writer/`
+- `Team/Hawkeye - Orchestrator/`
+- `Team/Radar - Journal Writer/`
 
 Do not use kebab-case for these folder names. Specialist folder names are display names, read by humans first.
 

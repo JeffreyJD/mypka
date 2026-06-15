@@ -1,28 +1,28 @@
 # SOP-001 - How to Add a New Specialist
 
-- **Default owner:** Nolan
-- **Reusable by any agent.** This is a skill, not a 1:1 ownership. SOPs are procedures any agent can invoke when they need them. Nolan is the default executor for hiring, but any specialist running the procedure (e.g. when bootstrap mode re-engages and Nolan isn't available) follows the same steps.
-- **Co-owner for research step:** Pax
-- **Triggered by:** user request to hire, or Larry detecting a gap
+- **Default owner:** Potter
+- **Reusable by any agent.** This is a skill, not a 1:1 ownership. SOPs are procedures any agent can invoke when they need them. Potter is the default executor for hiring, but any specialist running the procedure (e.g. when bootstrap mode re-engages and Potter isn't available) follows the same steps.
+- **Co-owner for research step:** B.J.
+- **Triggered by:** user request to hire, or Hawkeye detecting a gap
 - **References:** [[GL-001-file-naming-conventions]], [[Team/agent-index]]
 
 ## Pre-hired team
 
-**Larry, Nolan, Pax, Penn, Mack, and Silas ship pre-hired with the scaffold.** SOP-001 governs hiring everyone beyond these six. Do not re-run SOP-001 to "create" any of the six — they already exist. SOP-001 is for the seventh hire onward.
+**Hawkeye, Potter, B.J., Radar, Klinger, and Margaret ship pre-hired with the scaffold.** SOP-001 governs hiring everyone beyond these six. Do not re-run SOP-001 to "create" any of the six — they already exist. SOP-001 is for the seventh hire onward.
 
 ## Purpose
 
-Add a new specialist to the team in a way that keeps the routing table clean, the AGENTS.md contracts consistent, and the SSOT Golden Rule intact. Every hire gets a world-class research brief from Pax before Nolan drafts the contract - this is how the team avoids generic, AI-flavored specialists and ships ones that mirror what the best humans in that role actually do.
+Add a new specialist to the team in a way that keeps the routing table clean, the AGENTS.md contracts consistent, and the SSOT Golden Rule intact. Every hire gets a world-class research brief from B.J. before Potter drafts the contract - this is how the team avoids generic, AI-flavored specialists and ships ones that mirror what the best humans in that role actually do.
 
 ## Steps
 
-### 1. Capture the need (Larry -> Nolan)
+### 1. Capture the need (Hawkeye -> Potter)
 
-Larry routes the hiring request to Nolan with a one-sentence brief: what the new specialist will do that no current specialist can. If Nolan cannot finish that sentence with the user, the role is not ready.
+Hawkeye routes the hiring request to Potter with a one-sentence brief: what the new specialist will do that no current specialist can. If Potter cannot finish that sentence with the user, the role is not ready.
 
-### 2. Brief Pax for the research pass (Nolan -> Pax)
+### 2. Brief B.J. for the research pass (Potter -> B.J.)
 
-Nolan writes a research brief to Pax. Required questions:
+Potter writes a research brief to B.J.. Required questions:
 
 - What does the best-in-world version of this specialist actually do, day to day?
 - What are the core competencies, and what are the anti-patterns (things mediocre versions of this role do that the team should explicitly avoid)?
@@ -30,33 +30,33 @@ Nolan writes a research brief to Pax. Required questions:
 - What boundaries should this role hold? What requests should they refuse or hand back?
 - Suggested name candidates (short, distinct, single word, no collision with existing team).
 
-Pax returns a brief sized to the role - usually 400 to 800 words - cited if the research warranted it. The brief lands in `Deliverables/YYYY-MM-DD-<role-slug>-hire-research.md`.
+B.J. returns a brief sized to the role - usually 400 to 800 words - cited if the research warranted it. The brief lands in `Deliverables/YYYY-MM-DD-<role-slug>-hire-research.md`.
 
-### 3. Pick a name and role (Nolan)
+### 3. Pick a name and role (Potter)
 
-Using Pax's brief, pick:
+Using B.J.'s brief, pick:
 
-- **Name:** short, distinct, single word. From Pax's candidates or a variant. Avoid collisions with existing names.
+- **Name:** short, distinct, single word. From B.J.'s candidates or a variant. Avoid collisions with existing names.
 - **Role:** one short phrase. Example: "Frontend Developer" or "Email Marketer."
 - **Folder:** `Team/<Name> - <Role>/` (space, hyphen, space). Matches the pattern of the six pre-hired specialists.
 
-### 4. Draft the AGENTS.md (Nolan)
+### 4. Draft the AGENTS.md (Potter)
 
-Create `Team/<Name> - <Role>/AGENTS.md`. Translate Pax's research brief into a contract with these sections:
+Create `Team/<Name> - <Role>/AGENTS.md`. Translate B.J.'s research brief into a contract with these sections:
 
-- **Identity** - name, role, who they report to, operating principle (drawn from Pax's "what world-class does day to day").
-- **When Larry routes to them** - the cue patterns.
-- **Method or protocol** - how they work, in steps (drawn from Pax's "deliverables and what world-class looks like").
+- **Identity** - name, role, who they report to, operating principle (drawn from B.J.'s "what world-class does day to day").
+- **When Hawkeye routes to them** - the cue patterns.
+- **Method or protocol** - how they work, in steps (drawn from B.J.'s "deliverables and what world-class looks like").
 - **Deliverable structure** - what their output looks like.
 - **Where they write** - paths and naming. Reference [[GL-001-file-naming-conventions]] for naming.
 - **Cross-references** - Guidelines and Workstreams they touch.
-- **Scope boundaries** - what they do not do (drawn from Pax's "anti-patterns" and "boundaries").
+- **Scope boundaries** - what they do not do (drawn from B.J.'s "anti-patterns" and "boundaries").
 
-Keep it short. The shipped four are the template. Do not paste Pax's research brief into the AGENTS.md - the brief stays in `Deliverables/`. The contract references it via `[[wikilink]]` if useful.
+Keep it short. The shipped four are the template. Do not paste B.J.'s research brief into the AGENTS.md - the brief stays in `Deliverables/`. The contract references it via `[[wikilink]]` if useful.
 
-### 5. Draft the host subagent shim(s) (Nolan)
+### 5. Draft the host subagent shim(s) (Potter)
 
-**Mandatory for every hire, in every host the user has activated.** Without the shim, Larry can only role-play the new specialist within the main context — Larry cannot dispatch them as a parallel subagent via the host's agent-tool. The shim is what binds the wiki contract to the host runtime.
+**Mandatory for every hire, in every host the user has activated.** Without the shim, Hawkeye can only role-play the new specialist within the main context — Hawkeye cannot dispatch them as a parallel subagent via the host's agent-tool. The shim is what binds the wiki contract to the host runtime.
 
 The principle is host-agnostic: a thin pointer to the wiki contract, never a copy of it. The exact path and frontmatter convention is host-specific:
 
@@ -93,13 +93,13 @@ You are **<Name>, <Role> of myPKA**. <One-line operating principle.>
 
 ## Cold-start briefing rule
 
-Fresh context every invocation. Larry must hand you <list of inputs the role needs>. If the brief is missing critical info, ask Larry one tight clarifying question before acting.
+Fresh context every invocation. Hawkeye must hand you <list of inputs the role needs>. If the brief is missing critical info, ask Hawkeye one tight clarifying question before acting.
 
 ## Operating discipline
 
-- <2-5 hard rules drawn from Pax's anti-patterns and the wiki contract>
+- <2-5 hard rules drawn from B.J.'s anti-patterns and the wiki contract>
 
-## Return format to Larry
+## Return format to Hawkeye
 
 - <Status line shape>
 - <Counts / paths / structured findings>
@@ -109,38 +109,38 @@ Fresh context every invocation. Larry must hand you <list of inputs the role nee
 Rules (host-agnostic):
 
 - **Never paste the wiki contract into the shim.** The shim references the contract via path. Three layers (`Team/<Name>/AGENTS.md` + a per-folder host-pointer file + project-root host shim) violates SSOT. Two layers is the contract: wiki canonical, shim host-specific.
-- **The shim's `tools:` (or host equivalent) is minimal.** Penn doesn't need `Bash`. Pax mostly needs `WebFetch` / `WebSearch`. Trim to what the role actually uses.
-- **The shim's `description:` (or host equivalent) reads as routing instruction for Larry.** Lead with the role, then "Use proactively when…", then the owned SOP/Workstream.
+- **The shim's `tools:` (or host equivalent) is minimal.** Radar doesn't need `Bash`. B.J. mostly needs `WebFetch` / `WebSearch`. Trim to what the role actually uses.
+- **The shim's `description:` (or host equivalent) reads as routing instruction for Hawkeye.** Lead with the role, then "Use proactively when…", then the owned SOP/Workstream.
 - **The shim's body is short.** ~30-50 lines. The contract carries the depth.
-- **The shim shape is the same across hosts** — only the file path and frontmatter format change. The body sections (identity, files-to-read-on-invocation, cold-start briefing rule, operating discipline, return format to Larry) are identical regardless of host.
+- **The shim shape is the same across hosts** — only the file path and frontmatter format change. The body sections (identity, files-to-read-on-invocation, cold-start briefing rule, operating discipline, return format to Hawkeye) are identical regardless of host.
 
-Use any existing shim (`.claude/agents/silas.md`, `.claude/agents/penn.md`, etc.) as the structural template for the body — adapt the frontmatter to the host's spec.
+Use any existing shim (`.claude/agents/margaret.md`, `.claude/agents/radar.md`, etc.) as the structural template for the body — adapt the frontmatter to the host's spec.
 
-### 6. Add the row to agent-index (Nolan)
+### 6. Add the row to agent-index (Potter)
 
 Edit [[Team/agent-index]]. Add a row with the specialist's name, role, folder link, and the user input patterns that should route to them.
 
-### 7. Update relevant Workstreams (Nolan)
+### 7. Update relevant Workstreams (Potter)
 
 If the new specialist takes part in a recurring orchestration, edit the matching Workstream in `Team Knowledge/Workstreams/` to mention them via `[[wikilinks]]`. Do not duplicate the AGENTS.md content into the Workstream.
 
-### 8. Confirm with the user (Nolan -> Larry -> user)
+### 8. Confirm with the user (Potter -> Hawkeye -> user)
 
-Show the user the draft AGENTS.md, the draft `.claude/agents/<slug>.md` shim, and the updated agent-index, with a one-line summary of what Pax's research surfaced. Make changes only after they approve.
+Show the user the draft AGENTS.md, the draft `.claude/agents/<slug>.md` shim, and the updated agent-index, with a one-line summary of what B.J.'s research surfaced. Make changes only after they approve.
 
-### 9. Log the hire (Larry)
+### 9. Log the hire (Hawkeye)
 
-Larry writes a line in the next session log: "Hired <Name> as <Role> after research from Pax. Brief at `[[<research-deliverable-slug>]]`. Contract at `[[Team/<Name> - <Role>/AGENTS]]`. Shim at `.claude/agents/<slug>.md`." This becomes part of the team's persistent memory.
+Hawkeye writes a line in the next session log: "Hired <Name> as <Role> after research from B.J.. Brief at `[[<research-deliverable-slug>]]`. Contract at `[[Team/<Name> - <Role>/AGENTS]]`. Shim at `.claude/agents/<slug>.md`." This becomes part of the team's persistent memory.
 
 ## Common mistakes to avoid
 
-- Skipping the Pax research step. Even for "obvious" roles, the research surfaces anti-patterns that prevent generic specs.
-- Pasting Pax's research brief into the AGENTS.md. The brief is reference material in `Deliverables/`. The AGENTS.md is the contract.
-- **Shipping the wiki contract without the matching host subagent shim(s).** The two artifacts go together for every activated host (Claude Code, Codex CLI, Gemini CLI). Without the shim, Larry can only role-play the new specialist — not dispatch them as a parallel subagent in that host.
+- Skipping the B.J. research step. Even for "obvious" roles, the research surfaces anti-patterns that prevent generic specs.
+- Pasting B.J.'s research brief into the AGENTS.md. The brief is reference material in `Deliverables/`. The AGENTS.md is the contract.
+- **Shipping the wiki contract without the matching host subagent shim(s).** The two artifacts go together for every activated host (Claude Code, Codex CLI, Gemini CLI). Without the shim, Hawkeye can only role-play the new specialist — not dispatch them as a parallel subagent in that host.
 - **Treating this as a Claude-only setup.** The principle is host-agnostic. Only the shim path and frontmatter convention is host-specific.
 - **Pasting the wiki contract into the host shim.** The shim references the contract via path. Don't duplicate.
 - **Creating a per-host pointer file (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md.codex`) inside `Team/<Name>/`.** Three layers violates SSOT. Two layers is the rule: wiki contract (host-agnostic) + shim (host-specific, project-root location).
 - Duplicating naming rules inside the new AGENTS.md. Link to [[GL-001-file-naming-conventions]] instead.
 - Naming the folder with a different separator than other specialists. Always: space, hyphen, space.
-- Forgetting to add the row to [[Team/agent-index]]. Larry's routing will skip an unlisted specialist.
+- Forgetting to add the row to [[Team/agent-index]]. Hawkeye's routing will skip an unlisted specialist.
 - Writing the AGENTS.md in the user's voice instead of as a contract. The file is for the LLM, not the reader.

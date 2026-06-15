@@ -1,8 +1,8 @@
 # WS-001 - Daily Journaling
 
 - **Type:** Workstream — a multi-agent composition. The agents below collaborate to deliver the outcome. New Workstreams emerge when patterns repeat across session-logs; this one ships pre-canonicalized because daily journaling is a day-1 flow.
-- **Owners:** Penn (capture and writing), Larry (routing and Librarian pass)
-- **References:** [[SOP-001-how-to-add-a-new-specialist]], [[GL-001-file-naming-conventions]], [[Team/Penn - Journal Writer/AGENTS]], [[Team/Larry - Orchestrator/AGENTS]]
+- **Owners:** Radar (capture and writing), Hawkeye (routing and Librarian pass)
+- **References:** [[SOP-001-how-to-add-a-new-specialist]], [[GL-001-file-naming-conventions]], [[Team/Radar - Journal Writer/AGENTS]], [[Team/Hawkeye - Orchestrator/AGENTS]]
 - **Trigger:** any user input that contains a thought, observation, encounter, screenshot, photo, or voice note.
 
 ## Purpose
@@ -17,27 +17,27 @@ Turn raw daily inputs into structured PKM entries. The Journal is the inbox. Peo
 
 ## Choreography
 
-### Step 1 - Larry receives the input
+### Step 1 - Hawkeye receives the input
 
-Larry checks the routing cheatsheet in his AGENTS.md. Daily journaling triggers route to Penn.
+Hawkeye checks the routing cheatsheet in his AGENTS.md. Daily journaling triggers route to Radar.
 
-### Step 2 - Penn writes the Journal entry
+### Step 2 - Radar writes the Journal entry
 
 - **Path:** `PKM/Journal/YYYY/MM/YYYY-MM-DD-<slug>.md`.
-- **Auto-create folders:** if `YYYY/` or `YYYY/MM/` does not exist, Penn creates them.
+- **Auto-create folders:** if `YYYY/` or `YYYY/MM/` does not exist, Radar creates them.
 - **Filename:** ISO date prefix plus a kebab-case slug derived from the day's main theme. See [[GL-001-file-naming-conventions]].
-- **Format:** plain markdown. One entry per day. If the day already has an entry, Penn appends a new section to the existing file.
+- **Format:** plain markdown. One entry per day. If the day already has an entry, Radar appends a new section to the existing file.
 
-### Step 3 - Penn handles images
+### Step 3 - Radar handles images
 
 - **Path:** `PKM/Images/YYYY/MM/YYYY-MM-DD-<slug>.<ext>`.
 - **Auto-create folders:** same rule as Journal.
 - **Filename pattern:** see [[GL-001-file-naming-conventions]].
-- **Embed in Journal:** Penn embeds the image in the Journal entry with `![[Images/YYYY/MM/YYYY-MM-DD-<slug>.<ext>]]`. The image lives in `PKM/Images/`. The Journal entry references it. Image is never duplicated into the Journal folder.
+- **Embed in Journal:** Radar embeds the image in the Journal entry with `![[Images/YYYY/MM/YYYY-MM-DD-<slug>.<ext>]]`. The image lives in `PKM/Images/`. The Journal entry references it. Image is never duplicated into the Journal folder.
 
-### Step 4 - Penn cross-links to PKM
+### Step 4 - Radar cross-links to PKM
 
-For each entity mentioned in the input, Penn routes by type. Use the table below as the routing map:
+For each entity mentioned in the input, Radar routes by type. Use the table below as the routing map:
 
 | Type of mention | Destination folder | Filename pattern | Notes |
 |---|---|---|---|
@@ -52,8 +52,8 @@ For each entity mentioned in the input, Penn routes by type. Use the table below
 
 For every routed entity:
 
-- If a file already exists at the destination, Penn `[[wikilinks]]` to it from the Journal entry. No restating biographical or contextual details that already live in the canonical file.
-- If no file exists, Penn creates a stub at the right path with the minimum content needed for the link to resolve, then `[[wikilinks]]` to it from the Journal entry.
+- If a file already exists at the destination, Radar `[[wikilinks]]` to it from the Journal entry. No restating biographical or contextual details that already live in the canonical file.
+- If no file exists, Radar creates a stub at the right path with the minimum content needed for the link to resolve, then `[[wikilinks]]` to it from the Journal entry.
 
 This is how the Journal becomes the connective tissue of your myPKA.
 
@@ -72,9 +72,9 @@ Inline-mention only (no stub) when:
 
 When in doubt, create the stub. A stub costs nothing. A missing reference costs the wiki its connectivity.
 
-### Step 5 - Larry's Librarian pass at session close
+### Step 5 - Hawkeye's Librarian pass at session close
 
-At session close, Larry scans the new Journal entry, the new image (if any), and any newly created CRM or My Life stubs:
+At session close, Hawkeye scans the new Journal entry, the new image (if any), and any newly created CRM or My Life stubs:
 
 - Confirms `[[wikilinks]]` resolve.
 - Confirms images sit in `PKM/Images/YYYY/MM/`, not duplicated elsewhere.
@@ -83,9 +83,9 @@ At session close, Larry scans the new Journal entry, the new image (if any), and
 
 ## What this Workstream does not do
 
-- Does not write business workflows. Those are handled by future specialists hired through Nolan via [[SOP-001-how-to-add-a-new-specialist]].
-- Does not produce research reports. Pax handles that.
-- Does not edit the user's existing CRM entries. Penn appends, never overwrites, unless the user asks.
+- Does not write business workflows. Those are handled by future specialists hired through Potter via [[SOP-001-how-to-add-a-new-specialist]].
+- Does not produce research reports. B.J. handles that.
+- Does not edit the user's existing CRM entries. Radar appends, never overwrites, unless the user asks.
 
 ## Naming and image rules
 

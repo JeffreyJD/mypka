@@ -5,6 +5,9 @@ Bounded efforts with a finish line — a set of deliverables you cross off when 
 ## Active files
 
 - [[side-project-mvp]] — seeded course sample. The canonical shape every Project file follows.
+- [[ninth-street-fence]] — fence installation at 9th Street property (Zale)
+- [[european-32mm-cabinet-cnc]] — CNC-cut European 32mm system cabinet build (Zale)
+- [[draft-beer-jockey-box]] — draft beer / jockey box build (Zale)
 
 ## Naming
 

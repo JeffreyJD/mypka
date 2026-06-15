@@ -1,4 +1,4 @@
----
+﻿---
 name: opnsense-r340
 host_type: physical
 status: building
@@ -24,7 +24,7 @@ tags:
 
 Dell PowerEdge R340 — network gateway for the homelab. Chassis, CPU, and boot SSD acquired April 2026; not yet assembled. No codename assigned yet (Lighthouse/Watchtower convention — consider one).
 
-**SSOT note:** build detail lives in `C:\Users\jeff\My Drive\PKA-Jeffrey\homelab\` — this is the registry view.
+**SSOT note:** build detail lives in `PKM/Documents/homelab/` — this is the registry view.
 
 ## What runs here (planned)
 

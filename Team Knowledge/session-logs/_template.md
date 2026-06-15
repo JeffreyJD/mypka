@@ -20,9 +20,9 @@ asking for, what state was your myPKA in.
 Bulleted list of concrete actions the team took during the session. Each
 item names the specialist who did the work.
 
-- Penn captured the dinner notes into `2026-05-04-first-day.md`.
-- Pax returned a triangulated brief on X to `Deliverables/...`.
-- Larry consolidated two duplicate facts about Y into `[[<canonical-file>]]`.
+- Radar captured the dinner notes into `2026-05-04-first-day.md`.
+- B.J. returned a triangulated brief on X to `Deliverables/...`.
+- Hawkeye consolidated two duplicate facts about Y into `[[<canonical-file>]]`.
 
 ## Decisions made
 
@@ -37,7 +37,7 @@ decisions. Each decision states the question and the resolution.
 
 Things the team learned that are worth remembering across sessions but are not
 yet ready to graduate to an SOP, Workstream, or Guideline. If an insight here
-keeps showing up across multiple session logs, Larry graduates it.
+keeps showing up across multiple session logs, Hawkeye graduates it.
 
 - ...
 
@@ -56,8 +56,8 @@ For close-session entries: this is what got swept into the user's working
 memory or flagged for follow-up. Never let an open thread die silently — if
 it's truly dead, write that explicitly here and close it.
 
-- [ ] Follow up with Pax on the Y comparison after {{USER_NAME}} reviews v1.
-- [ ] {{USER_NAME}} to confirm whether Z gets renamed before v1.3.
+- [ ] Follow up with B.J. on the Y comparison after Jeff reviews v1.
+- [ ] Jeff to confirm whether Z gets renamed before v1.3.
 
 ## Next steps
 
@@ -69,4 +69,4 @@ short. Not a wishlist.
 ## Cross-links
 
 - `[[<previous-session-log-slug>]]` — reference to the closest related prior
-  session log, if any. Larry adds this on close-session.
+  session log, if any. Hawkeye adds this on close-session.
