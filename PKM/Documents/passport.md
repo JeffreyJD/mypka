@@ -1,20 +1,41 @@
-# Passport
+---
+name: US Passport — Jeffrey James Davis
+type: government-id
+status: active
+issuer: U.S. Department of State
+issue_date: 2026-06-04
+expiry_date: 2036-06-03
+renewal_trigger: 2035-09-03
+tags:
+  - identity
+  - travel
+---
 
-> [!example] Seeded course sample
-> This is a worked example the myICOR myPKA course walks through — it shows the canonical shape to follow. Keep it as a reference and adapt it, or replace its contents with your own.
+# US Passport — Jeffrey James Davis
 
-**Document name:** Passport
-**Type:** government-issued identity document
+| Field | Value |
+|---|---|
+| Full name | DAVIS, JEFFREY JAMES |
+| Date of birth | 23 April 1966 |
+| Place of birth | Pennsylvania, U.S.A. |
+| Passport number | Stored in password manager — not recorded here (GL-002 rule 7) |
+| Issue date | 04 June 2026 |
+| Expiry date | 03 June 2036 |
+| Issuing authority | U.S. Department of State |
 
-**Location, physical:** top drawer of the home office desk, in the document folder labeled "ID."
+**Photo on file:** ![[Images/2026/06/2026-06-15-passport.jpg]]
 
-**Location, digital:** scanned PDF stored in the encrypted vault under `documents/identity/`. A photo of the data page is also in my password manager's secure notes.
+## Physical location
 
-**Expiry:** check the data page. Renewal trigger fires nine months before expiry, because some destinations refuse entry if the passport expires within six months of arrival.
+Top drawer of the home office desk, in the document folder labeled "ID."
 
-**Renewal trigger:**
-- nine months before expiry, start the renewal
-- six months before expiry, renewal must be submitted
-- if I'm planning international travel, check expiry before booking, every time
+## Renewal rules
 
-**Notes:** keep the old passport after renewal. Some visa records sit inside it and may be needed later.
+- Start renewal **9 months before expiry** → trigger date: **2035-09-03**
+- Must be submitted by 6 months before expiry → **2036-03-03**
+- Many destinations deny entry if passport expires within 6 months of arrival — check before booking any international travel
+- Keep prior passport after renewal (visa records may be inside)
+
+## Notes
+
+Newly issued 2026-06-04. Photographed 2026-06-15 ahead of Florida trip (2026-06-17). Prior passport retired.
