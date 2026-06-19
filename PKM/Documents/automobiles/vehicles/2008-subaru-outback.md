@@ -20,10 +20,10 @@
 
 | Field | Value |
 |---|---|
-| Odometer | 149,830 mi (as of 2026-06-12) |
-| Last service | 2026-05-29 (major owner-performed service) |
-| Next oil change due | [NEEDED — check date/mileage of 2026-05-29 change] |
-| Active issues | Vacuum/intake air leak — rough idle/stall at low speed (see Known Issues) |
+| Odometer | 159,000 mi (as of 2026-06-15) |
+| Last service | 2026-06-15 (fuel pump replacement) |
+| Next oil change due | ~164,000 mi or ~2026-11-29 (5,000 mi / 6 mo from 2026-05-29 change) |
+| Active issues | Cruise control light blinking — scan needed (Scan 103); misfire codes reported on scan (Jeff reports "cylinders 4,5,6" — verify P0XXX codes, EJ253 is 4-cyl only); idle relearn not yet performed; ignition coil set ordered |
 
 ## Registration and Insurance
 
@@ -58,7 +58,8 @@
 
 | Date | Mileage | Service | DIY/Shop | Notes |
 |---|---|---|---|---|
-| 2026-05-29 | ~149,830 | Spark plugs (all 4), brake pads + rotors (all 4), front wheel bearing hubs, passenger front axle, front brake dust shields, full exhaust replacement (front pipe back), engine oil + filter, engine air filter, cabin air filter | DIY | Battery disconnected during plug job — idle relearn NOT performed |
+| 2026-06-15 | 159,000 | Fuel pump replacement | DIY | Car now running; cruise control light blinking — scan needed |
+| 2026-05-29 | ~149,830 (scanner) / actual odometer unknown | Spark plugs (all 4), brake pads + rotors (all 4), front wheel bearing hubs, passenger front axle, front brake dust shields, full exhaust replacement (front pipe back), engine oil + filter, engine air filter, cabin air filter | DIY | Battery disconnected during plug job — idle relearn NOT performed; scanner mileage was off — actual odometer reads 159,000 as of 2026-06-15 |
 | — | — | Prior history | — | [NEEDED — drop receipts in Team Inbox] |
 
 ## Known Issues / Watch Items
