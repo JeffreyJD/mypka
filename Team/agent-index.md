@@ -25,6 +25,7 @@ Routing table for the six specialists shipped on day one. Hawkeye reads this on 
 | Kellye | Travel Agent | [[Team/Kellye - Travel Agent/AGENTS]] | Domestic and international trip planning, itinerary building, document tracking, flight and accommodation research. |
 | Winchester | Investment Strategist | [[Team/Winchester - Investment Strategist/AGENTS]] | Equities strategy, crypto portfolio (Core/Explore model), portfolio construction, rebalancing, watchlist updates, risk management, market intelligence. Never executes trades. |
 | Sparky | Network Architect | [[Team/Sparky - Network Architect/AGENTS]] | VLANs, firewall rules, UniFi controller administration (USG-Pro-4, US-24, AP AC Pro, UCK G2 Plus), wireless RF planning (channel assignment, Fast Roaming, SSID design), IP addressing schema, network security (IoT isolation, zone-based policy), network incident triage. |
+| Pierce | Senior Developer | [[Team/Pierce - Senior Developer/AGENTS]] | Python development and debugging, GitHub Actions CI/CD pipelines, VPS application operations (davisglobe-vps-ash-1, prophet-trader, cron, systemd), software architecture decisions, git workflow enforcement (dev→main), Docker/containerization, adding new software projects to the portfolio. |
 
 ## Bootstrap rule
 
