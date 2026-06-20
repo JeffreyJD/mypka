@@ -1,5 +1,14 @@
+# OS / editor
 .DS_Store
 __MACOSX/
 *.swp
 .obsidian/workspace*
 .obsidian/cache
+Thumbs.db
+desktop.ini
+
+# Personal knowledge — stays local + Google Drive only
+PKM/
+Documents/
+Deliverables/
+Team Inbox/
