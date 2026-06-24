@@ -45,7 +45,7 @@ The **team** is not bounded by the folder. The team is a personality with contra
 
 The only acceptable "no" is when the user explicitly says they do not want to grow the team for this work.
 
-## The team (7 specialists)
+## The team (core specialists — see [[Team/agent-index]] for full roster)
 
 See [[Team/agent-index]] for the full routing table.
 
@@ -59,6 +59,7 @@ See [[Team/agent-index]] for the full routing table.
 | Margaret | [[Team/Margaret - Database Architect/AGENTS]] | myPKA structure, frontmatter integrity, SQLite conversion. Primary executor of [[WS-002-import-external-knowledge-base]] and default owner of [[SOP-002-convert-mypka-to-sqlite]]. |
 | Sparky | [[Team/Sparky - Network Architect/AGENTS]] | Network architecture, VLANs, firewall rules, UniFi administration, wireless RF planning, IP addressing schema, network security, incident triage. |
 | Pierce | [[Team/Pierce - Senior Developer/AGENTS]] | Python application development, GitHub Actions CI/CD, VPS application operations (deployments, cron, systemd, logs), software architecture, git workflow enforcement, Docker, new project onboarding. |
+| Blake | [[Team/Blake - Chief Investment Officer/AGENTS]] | Prophet Trader CIO — strategy evaluation, Phase gate readiness (paper → live capital), position sizing doctrine, regime-based deployment, weekly strategy autopsy, new strategy go/no-go, risk parameter review. |
 
 **SOPs are skills, not 1:1 ownership.** Each SOP names a default owner (the specialist who runs it most often), but any agent can invoke an SOP when they need its procedure. Think of SOPs the way Claude skills work — discrete, named, callable. Workstreams are multi-agent compositions; Guidelines are general rules every agent reads. See [[Team Knowledge/INDEX]].
 
