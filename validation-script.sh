@@ -43,14 +43,22 @@ pass() {
 }
 
 # ----------------------------------------------------------------------------
-# 1. .scaffold-version exists and is in the v2.x line
+# 1. .scaffold-version exists and is in the v2.x, v3.x, or v4.x line
 # ----------------------------------------------------------------------------
 # All v2.x releases (2.0.x, 2.1.x, ...) share the same structural requirements,
 # so any 2.x value passes this check. v2.0.0 is the six-specialist base (the
 # design trio moved into the Designer Expansion Pack); v2.1.0 added adapter-
-# generated host-native slash commands (no structural change). Bump the regex
-# to a tighter line only when a release introduces structural changes that
-# this script must enforce.
+# generated host-native slash commands (no structural change). v3.0.0 is the
+# all-in-one bundle — base 2.4.0 + Cockpit + App Developer Pack + Designer Pack
+# preinstalled (12 specialists, SOP-003..009, GL-003 filled); it is a strict
+# structural superset of v2.x (same required dirs, more agents/SOPs/guidelines),
+# so it passes the same checks. v4.0.0 is the self-updating release — it only
+# ADDS framework files (manifest.json, scripts/update-scaffold.py +
+# check-version.py, the update-scaffold slash command, the cockpit-updater
+# SPEC); it removes no required dir, agent, SOP, or guideline, so it is a strict
+# structural superset of v3.x and passes the same checks. Bump the regex to a
+# tighter line only when a release introduces structural changes that this
+# script must enforce.
 
 VERSION_FILE="$ROOT/.scaffold-version"
 if [ ! -f "$VERSION_FILE" ]; then
@@ -61,8 +69,14 @@ else
     2.*)
       pass ".scaffold-version is $VERSION (v2.x line)"
       ;;
+    3.*)
+      pass ".scaffold-version is $VERSION (v3.x all-in-one line)"
+      ;;
+    4.*)
+      pass ".scaffold-version is $VERSION (v4.x self-updating line)"
+      ;;
     *)
-      fail ".scaffold-version is '$VERSION', expected '2.x'"
+      fail ".scaffold-version is '$VERSION', expected '2.x', '3.x', or '4.x'"
       ;;
   esac
 fi
@@ -238,6 +252,193 @@ if [ -n "$TASK_FILES" ]; then
   pass "checked $TASKS_CHECKED task file(s); $TASKS_BAD with frontmatter issues"
 else
   pass "no task files yet (clean v1.10.x install)"
+fi
+
+# ----------------------------------------------------------------------------
+# 9. Agnosticism audit (v4 tool-agnostic core)
+# ----------------------------------------------------------------------------
+# Scans the PORTABLE CORE only — PKM/, Team Knowledge/, and the body of every
+# Team/*/AGENTS.md — and explicitly EXCLUDES .claude/ (host-specific shims are
+# allowed to name Claude Code constructs; the portable contract must not).
+#
+# HARD FAIL when the portable core contains a host-coupling token:
+#   - the literal ".claude/"
+#   - "subagent_type" (Claude-Code dispatch key)
+#   - a hardcoded model id baked into prose
+#   - (co-owned with Vex) ~/.claude/.credentials.json / OAuth-token reuse /
+#     a client-fingerprint header
+#   - a slash-command cited as the ONLY trigger with no natural-language trigger
+# WARN when:
+#   - a contract leans on Claude-specific reasoning behavior as load-bearing
+#   - an MCP server name appears with no "harness-config" caveat nearby
+
+echo
+echo "--- agnosticism-audit (v4 tool-agnostic core) ---"
+
+# Build the list of files that make up the portable core.
+# PKM/ and Team Knowledge/ in full; from Team/ only the per-agent AGENTS.md files.
+CORE_FILES=""
+for d in "PKM" "Team Knowledge"; do
+  if [ -d "$ROOT/$d" ]; then
+    while IFS= read -r f; do
+      CORE_FILES="$CORE_FILES
+$f"
+    done < <(find "$ROOT/$d" -type f -name '*.md' 2>/dev/null)
+  fi
+done
+if [ -d "$ROOT/Team" ]; then
+  while IFS= read -r f; do
+    CORE_FILES="$CORE_FILES
+$f"
+  done < <(find "$ROOT/Team" -mindepth 2 -maxdepth 2 -name "AGENTS.md" -type f 2>/dev/null)
+fi
+# Strip the leading blank line and any path under a .claude/ segment (belt and braces).
+CORE_FILES=$(printf '%s\n' "$CORE_FILES" | grep -v '^$' | grep -v '/\.claude/' || true)
+
+# Meta-documentation allowlist: files whose SUBJECT is the host-coupling boundary
+# itself, so they MUST cite the forbidden tokens to teach the rule. These are the
+# only files exempt wholesale. Everything else is scanned. Matched by basename.
+#   GL-005 — defines the portable-core boundary; names .claude/ as the adapter dir.
+#   GL-002 — the contract-frontmatter `model:` section documents the alias, the
+#            example provider/model-id, and the ~/.claude/.credentials.json ToS rule.
+#   SOP-001 — the hiring flow authors the per-harness shim under .claude/agents/.
+META_ALLOWLIST_RE='(GL-005-llm-agnostic-portable-core|GL-002-frontmatter-conventions|SOP-001-how-to-add-a-new-specialist)\.md$'
+
+# Per-line escape hatch: a line carrying the marker  agnosticism-audit:allow
+# is a deliberate, reviewed citation (e.g. a contract quoting a token to explain
+# why it is forbidden). The marker keeps the exemption auditable and grep-able.
+ALLOW_MARKER='agnosticism-audit:allow'
+
+# core_grep <extended-regex> — grep the portable core, print "file:line:match".
+# Returns matches on stdout (empty if none). Skips .claude/, the meta allowlist,
+# and any individual line carrying the allow marker.
+core_grep() {
+  local pattern="$1"
+  [ -z "$CORE_FILES" ] && return 0
+  printf '%s\n' "$CORE_FILES" | while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    printf '%s' "$f" | grep -qE "$META_ALLOWLIST_RE" && continue
+    grep -nE "$pattern" "$f" 2>/dev/null \
+      | grep -vF "$ALLOW_MARKER" \
+      | sed "s|^|$f:|"
+  done
+}
+
+report_hits() {
+  # report_hits <hits> <indent-label>
+  printf '%s\n' "$1" | head -10 | sed 's/^/      /' >&2
+  if [ "$(printf '%s\n' "$1" | wc -l)" -gt 10 ]; then
+    echo "      ...(truncated)" >&2
+  fi
+}
+
+AGNO_BEFORE=$FAILS
+
+# --- HARD FAIL: literal ".claude/" reference in the portable core ---
+HITS=$(core_grep '\.claude/' || true)
+if [ -n "$HITS" ]; then
+  fail "portable core references '.claude/' (host-coupling; keep host paths in shims only):"
+  report_hits "$HITS"
+else
+  pass "no '.claude/' references in portable core"
+fi
+
+# --- HARD FAIL: subagent_type (Claude-Code dispatch key) ---
+HITS=$(core_grep 'subagent_type' || true)
+if [ -n "$HITS" ]; then
+  fail "portable core references 'subagent_type' (Claude-Code-specific dispatch key):"
+  report_hits "$HITS"
+else
+  pass "no 'subagent_type' references in portable core"
+fi
+
+# --- HARD FAIL: hardcoded model id baked into prose ---
+# Provider-pinned model slugs (claude-*, gpt-*, gemini-*, us.anthropic.*, anthropic/claude-*).
+# The portable contract should use the alias form (reasoning|balanced|fast) per GL-002.
+HITS=$(core_grep '(claude-[0-9a-z]|gpt-[0-9]|gemini-[0-9]|us\.anthropic\.|anthropic/claude-|opus-[0-9]|sonnet-[0-9]|haiku-[0-9])' || true)
+if [ -n "$HITS" ]; then
+  fail "portable core contains a hardcoded model id (use the model: alias reasoning|balanced|fast per GL-002):"
+  report_hits "$HITS"
+else
+  pass "no hardcoded model ids in portable core"
+fi
+
+# --- HARD FAIL (co-owned with Vex): credential / OAuth-token reuse ---
+HITS=$(core_grep '(\.claude/\.credentials\.json|credentials\.json|OAuth[ -]?token reuse|subscription[ -]?(OAuth|token)|x-app|client-fingerprint|anthropic-?client)' || true)
+if [ -n "$HITS" ]; then
+  fail "portable core references credential/OAuth-token reuse or a client-fingerprint header (Vex co-owned, ToS INVARIANT):"
+  report_hits "$HITS"
+else
+  pass "no credential/OAuth-token-reuse references in portable core"
+fi
+
+# --- HARD FAIL: slash-command cited as the ONLY trigger ---
+# A line that mentions a /slash-command but contains no natural-language trigger
+# alongside it. We flag lines naming a slash command that ALSO assert it is the
+# sole path ("only", "must use", "run /x to"). Conservative: only flags when a
+# slash command appears with an exclusivity word and no "or"/"also"/"trigger".
+HITS=$(core_grep '/(close-session|larry|process-inbox|clarify|delegate)[^a-z]' \
+  | grep -iE '(only|must (run|use)|sole|exclusively)' \
+  | grep -ivE '(natural[ -]language|trigger|also|or say|phrase)' || true)
+if [ -n "$HITS" ]; then
+  fail "portable core cites a slash-command as the ONLY trigger (pair it with a natural-language trigger):"
+  report_hits "$HITS"
+else
+  pass "no slash-command-only triggers in portable core"
+fi
+
+# --- WARN: Claude-specific reasoning behavior as load-bearing ---
+HITS=$(core_grep '(extended thinking|interleaved thinking|thinking budget|Claude-specific|Anthropic-specific) (is |as )?(required|load-bearing|needed|relied)' || true)
+if [ -n "$HITS" ]; then
+  warn "portable core may assume Claude-specific reasoning behavior as load-bearing:"
+  report_hits "$HITS"
+else
+  pass "no load-bearing Claude-specific reasoning assumptions detected"
+fi
+
+# --- WARN: a specific MCP server NAME without a "harness-config" caveat ---
+# Targets a *named* MCP server (e.g. "supabase MCP server", "FooMCP",
+# "mcp__<name>__"), not the bare acronym in generic prose about installing MCP.
+# A named server is a harness-config detail; it should carry a caveat that it is
+# only available when the host has wired it.
+HITS=$(core_grep '(mcp__[a-z0-9_]+|[A-Za-z0-9-]+ MCP server|[A-Za-z0-9]+MCP)' \
+  | grep -ivE 'harness[- ]config|host[- ]config|if (available|configured|wired|present)|when (available|configured|wired)|optional|caveat|where (available|configured)|any [A-Za-z -]*MCP|a new MCP|an MCP server|install MCP|install a MCP|install an MCP' || true)
+if [ -n "$HITS" ]; then
+  warn "named MCP server reference(s) in portable core without a 'harness-config' caveat:"
+  report_hits "$HITS"
+else
+  pass "named MCP references (if any) carry a harness-config caveat"
+fi
+
+if [ "$FAILS" -eq "$AGNO_BEFORE" ]; then
+  pass "agnosticism-audit: portable core is host-agnostic"
+fi
+
+# ----------------------------------------------------------------------------
+# 10. SSOT consistency: manifest.json present and scaffold_version == VERSION
+# ----------------------------------------------------------------------------
+# Light, transitional gate. WARN (never hard-fail) while v4 is still being
+# assembled — manifest.json may not have landed yet.
+
+MANIFEST="$ROOT/manifest.json"
+VERSION_SSOT_FILE="$ROOT/VERSION"
+if [ ! -f "$MANIFEST" ]; then
+  warn "manifest.json not found at $MANIFEST (transitional build — expected once v4 lands)"
+else
+  MANIFEST_VER=$(grep -oE '"scaffold_version"[[:space:]]*:[[:space:]]*"[^"]*"' "$MANIFEST" \
+    | head -n1 | sed -E 's/.*"scaffold_version"[[:space:]]*:[[:space:]]*"([^"]*)".*/\1/')
+  if [ -z "$MANIFEST_VER" ]; then
+    warn "manifest.json has no parseable scaffold_version field"
+  elif [ ! -f "$VERSION_SSOT_FILE" ]; then
+    warn "VERSION file not found at $VERSION_SSOT_FILE — cannot cross-check manifest scaffold_version ($MANIFEST_VER)"
+  else
+    VERSION_VALUE=$(head -n1 "$VERSION_SSOT_FILE" | tr -d '[:space:]')
+    if [ "$MANIFEST_VER" = "$VERSION_VALUE" ]; then
+      pass "manifest.json scaffold_version ($MANIFEST_VER) matches VERSION ($VERSION_VALUE)"
+    else
+      warn "manifest.json scaffold_version ($MANIFEST_VER) != VERSION ($VERSION_VALUE) — SSOT drift"
+    fi
+  fi
 fi
 
 # ----------------------------------------------------------------------------
