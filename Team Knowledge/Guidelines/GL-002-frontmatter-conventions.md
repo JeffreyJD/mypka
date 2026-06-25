@@ -416,6 +416,37 @@ Notes:
 - Not every package on every machine — only software whose loss, renewal, or license you need to track. OS-level inventory belongs in the Host note's body.
 - Body section conventions: `## What I use it for`, `## Setup notes`, `## Open questions`.
 
+## Specialist contract fields
+
+The schemas above govern PKM **entity notes**. Specialist **contracts** carry their own small set of frontmatter keys (`agent_version`, `agent_status`, `owner`, etc.). This section documents one optional contract-level field that is part of the v4 tool-agnostic core: `model`.
+
+### `model` - optional
+
+| Property | Value |
+|---|---|
+| Field name | `model` |
+| Required? | **Optional.** Omit to inherit the session/harness default. |
+| Applies to | Specialist contracts (`Team/<Name> - <Role>/AGENTS.md` frontmatter) and their host shims (`.claude/agents/<slug>.md`). |
+| Type | Portable tier alias - one of `reasoning`, `balanced`, `fast`. An explicit `provider/model-id` string is also accepted (escape hatch, discouraged - see below). |
+
+**Default is omit-to-inherit.** When `model` is absent, the specialist runs on whatever model the session or harness has selected. Most specialists should leave it unset. Set it only when a specialist's work has a clear, stable tier need.
+
+**The value is a portable tier alias, not a concrete model name.** The contract stays provider-neutral; the harness adapter resolves the alias to a real model.
+
+| Alias | Meaning | Use for |
+|---|---|---|
+| `reasoning` | Deepest reasoning, highest capability | Architect-grade work: schema design, security audits, multi-step planning. |
+| `balanced` | The default specialist tier | Most specialist work. Good capability at sensible cost. |
+| `fast` | Cheapest, highest-throughput | High-volume, low-judgment work: bulk formatting, simple extraction, triage fan-out. |
+
+**The adapter owns alias-to-model resolution, not the contract.** A harness adapter maps each alias to a concrete model for that provider. For example, a Claude Code adapter maps `reasoning` to an Opus-class model, `balanced` to Sonnet, and `fast` to Haiku, and writes the resolved value into the host shim. The portable contract never names the concrete model; only the generated shim does. This keeps one contract runnable across any provider.
+
+**OpenRouter is the supported BYO-key router.** A member who routes through OpenRouter supplies their own OpenRouter key and points the harness at OpenRouter's Anthropic-compatible endpoint via the `ANTHROPIC_BASE_URL` environment variable. The alias-to-slug mapping for OpenRouter (e.g. which OpenRouter model slug `balanced` resolves to) lives in the adapter and the member's harness config, never in the contract. BYO key, member's own account - this is the supported path.
+
+**Escape hatch: explicit `provider/model-id` is permitted but flagged.** You may pin a concrete model with an explicit `provider/model-id` string (e.g. `anthropic/claude-opus-4`). The agnosticism-audit in `validation-script.sh` flags any such value as a **coupling warning**, because it pins a provider into the portable core and breaks the run-anywhere contract. Prefer the alias form. Reach for the explicit string only when a specialist genuinely depends on one specific model's behavior, and accept the warning as the documented record of that coupling.
+
+> **ToS INVARIANT (Lex).** If `model` resolves to an Anthropic model **and our own code makes the call** (not a first-party Anthropic client such as the Claude apps or Claude Code itself), that call MUST authenticate with an Anthropic API key, AWS Bedrock, or Google Vertex - **never** a subscription OAuth token. Never reuse `~/.claude/.credentials.json` or any subscription-session credential for programmatic calls. Routing the same call via OpenRouter is fine because it uses the member's own OpenRouter key (BYO). This invariant is non-negotiable and is enforced (co-owned with Vex) by the agnosticism-audit, which hard-fails on any reference to `~/.claude/.credentials.json` or OAuth-token reuse in the portable core.
+
 ## How to extend this Guideline
 
 Your myPKA grows. New fields will surface. Two acceptable extension paths:

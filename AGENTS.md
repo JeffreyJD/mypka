@@ -60,6 +60,12 @@ See [[Team/agent-index]] for the full routing table.
 | Sparky | [[Team/Sparky - Network Architect/AGENTS]] | Network architecture, VLANs, firewall rules, UniFi administration, wireless RF planning, IP addressing schema, network security, incident triage. |
 | Pierce | [[Team/Pierce - Senior Developer/AGENTS]] | Python application development, GitHub Actions CI/CD, VPS application operations (deployments, cron, systemd, logs), software architecture, git workflow enforcement, Docker, new project onboarding. |
 | Blake | [[Team/Blake - Chief Investment Officer/AGENTS]] | Prophet Trader CIO — strategy evaluation, Phase gate readiness (paper → live capital), position sizing doctrine, regime-based deployment, weekly strategy autopsy, new strategy go/no-go, risk parameter review. |
+| Felix | [[Team/Felix - Frontend Developer/AGENTS]] | Frontend Developer — UI components, pages, layouts, design-system fidelity, TypeScript, performance, accessibility. Default owner of [[SOP-003-felix-build-a-component]]. |
+| Vex | [[Team/Vex - Security Engineer/AGENTS]] | Security Engineer — auth/authorization audits, credential hygiene, GDPR controls, Expansion trust gate. Default owner of [[SOP-004-vex-security-audit]]. |
+| Vera | [[Team/Vera - QA Specialist/AGENTS]] | QA Specialist — visual QA gate, WCAG 2.2 AA, responsive breakpoints, design-system enforcement. Default owner of [[SOP-005-vera-quality-gate]]. |
+| Iris | [[Team/Iris - Design System Architect/AGENTS]] | Design System Architect — authors and maintains [[GL-003-design-system]]. Default owner of [[SOP-006-author-a-design-system]] and [[SOP-007-audit-content-for-design-system-compliance]]. |
+| Charta | [[Team/Charta - Infographic Designer/AGENTS]] | Infographic Designer — data and concept visualizations, brand-consistent infographics. Default owner of [[SOP-008-build-an-infographic]]. |
+| Pixel | [[Team/Pixel - Visual Specialist/AGENTS]] | Visual Specialist — styled image generation and brand-consistent visual assets. Default owner of [[SOP-009-generate-a-styled-image]]. |
 
 **SOPs are skills, not 1:1 ownership.** Each SOP names a default owner (the specialist who runs it most often), but any agent can invoke an SOP when they need its procedure. Think of SOPs the way Claude skills work — discrete, named, callable. Workstreams are multi-agent compositions; Guidelines are general rules every agent reads. See [[Team Knowledge/INDEX]].
 

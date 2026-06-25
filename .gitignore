@@ -12,3 +12,8 @@ PKM/
 Documents/
 Deliverables/
 Team Inbox/
+
+# Generated runtime DB (rebuilt from markdown on every Cockpit launch)
+mypka.db
+mypka.db-shm
+mypka.db-wal

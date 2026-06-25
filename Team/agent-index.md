@@ -1,6 +1,6 @@
 # Team - Agent Index
 
-Routing table for the six specialists shipped on day one. Hawkeye reads this on every request to decide who handles what.
+Routing table for specialists. Hawkeye reads this on every request to decide who handles what.
 
 | Specialist | Role | Folder | Routes to them when |
 |---|---|---|---|
@@ -27,6 +27,12 @@ Routing table for the six specialists shipped on day one. Hawkeye reads this on 
 | Blake | Chief Investment Officer | [[Team/Blake - Chief Investment Officer/AGENTS]] | Prophet Trader strategy evaluation, Phase gate readiness (paper → live capital), position sizing doctrine, regime-based deployment decisions, weekly strategy autopsy, new strategy go/no-go, risk parameter review. Scope: Prophet Trader only — personal portfolio is Winchester's domain. |
 | Sparky | Network Architect | [[Team/Sparky - Network Architect/AGENTS]] | VLANs, firewall rules, UniFi controller administration (USG-Pro-4, US-24, AP AC Pro, UCK G2 Plus), wireless RF planning (channel assignment, Fast Roaming, SSID design), IP addressing schema, network security (IoT isolation, zone-based policy), network incident triage. |
 | Pierce | Senior Developer | [[Team/Pierce - Senior Developer/AGENTS]] | Python development and debugging, GitHub Actions CI/CD pipelines, VPS application operations (davisglobe-vps-ash-1, prophet-trader, cron, systemd), software architecture decisions, git workflow enforcement (dev→main), Docker/containerization, adding new software projects to the portfolio. |
+| Felix | Frontend Developer | [[Team/Felix - Frontend Developer/AGENTS]] | Build UI components, pages, layouts; design-system fidelity; TypeScript; performance; accessibility; integrates with what Klinger wires. Default owner of [[SOP-003-felix-build-a-component]]. |
+| Vex | Security Engineer | [[Team/Vex - Security Engineer/AGENTS]] | Application-layer security audits, auth/authorization policy review, credential hygiene, GDPR technical controls, Expansion trust-tier gate (WS-003 §2). Default owner of [[SOP-004-vex-security-audit]]. |
+| Vera | QA Specialist | [[Team/Vera - QA Specialist/AGENTS]] | Visual QA gate — design-system enforcement, WCAG 2.2 AA accessibility, responsive breakpoint verification, structured pass/fail reports. Default owner of [[SOP-005-vera-quality-gate]]. |
+| Iris | Design System Architect | [[Team/Iris - Design System Architect/AGENTS]] | Authors and maintains [[GL-003-design-system]]; tokens, typography, component inventory, animation rules; default owner of [[SOP-006-author-a-design-system]] and [[SOP-007-audit-content-for-design-system-compliance]]. |
+| Charta | Infographic Designer | [[Team/Charta - Infographic Designer/AGENTS]] | Turns data and concepts into clear, branded infographics; reads GL-003 for style; default owner of [[SOP-008-build-an-infographic]]. |
+| Pixel | Visual Specialist | [[Team/Pixel - Visual Specialist/AGENTS]] | Styled image generation, visual compositions, brand-consistent assets; routes image-gen API wiring to Klinger when needed. Default owner of [[SOP-009-generate-a-styled-image]]. |
 
 ## Bootstrap rule
 
