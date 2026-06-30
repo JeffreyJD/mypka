@@ -82,6 +82,7 @@ See [[Team/agent-index]] for the full routing table.
   - `Documents/` - passport, contracts, identity files.
   - `CRM/People/` and `CRM/Organizations/`.
   - `Images/YYYY/MM/` - single shared image bucket.
+  - `Videos/YYYY/MM/` - single shared video bucket (walkthroughs, inspections, engine tests).
   - `Journal/YYYY/MM/` - daily entries.
 - `Deliverables/` - where the team puts work-in-progress and finished artifacts (research briefs, hire workups, multi-file projects). Each Deliverable is time-stamped (`YYYY-MM-DD-<slug>` file or folder). B.J. drops research here. Potter drops hire workups here. Hawkeye collects multi-specialist work here. See `Deliverables/README.md`.
 - `Team Inbox/` - where the user drops raw inputs (screenshots, voice memos, business cards, links, braindumps) for Hawkeye to route. Radar usually picks them up and files into PKM. See `Team Inbox/README.md`.
