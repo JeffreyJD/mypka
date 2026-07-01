@@ -3,7 +3,7 @@
 - **Owner:** the agent finishing the task (for done) or the user/Hawkeye (for cancel)
 - **Triggered by:** task work shipping or being abandoned
 - **Output:** task file archived in `done/<YYYY>/<MM>/` or `cancelled/<YYYY>/<MM>/`; every deliverable in `linked_deliverables` archived alongside
-- **References:** [[SOP-rebuild-task-index]], [[SOP-write-journal-entry]], [[GL-004-task-resource-linking]], [[SOP-002-convert-mypka-to-sqlite]]
+- **References:** [[SOP-013-rebuild-task-index]], [[SOP-016-write-journal-entry]], [[GL-004-task-resource-linking]], [[SOP-002-convert-mypka-to-sqlite]]
 
 ## Purpose
 
@@ -78,7 +78,7 @@ Both terminal. Once a task is in `done/` or `cancelled/`, do not move it back. I
    - 2026-05-10 17:42 (<your-name>) — done: <one-line summary>
    ```
 
-6. **If you learned something durable, write a journal entry.** See [[SOP-write-journal-entry]]. Link it from the `## Outcome` section, and add the entry's basename to `linked_journal_entries:` in this task's frontmatter (so future readers of this task get the lesson).
+6. **If you learned something durable, write a journal entry.** See [[SOP-016-write-journal-entry]]. Link it from the `## Outcome` section, and add the entry's basename to `linked_journal_entries:` in this task's frontmatter (so future readers of this task get the lesson).
 
 7. **Append the close to the linked session log.** If `linked_session_logs` includes the current session, no extra step. If you closed during a different session, add this session's basename to the array. Continuity needs the session log to know the task closed in this session.
 

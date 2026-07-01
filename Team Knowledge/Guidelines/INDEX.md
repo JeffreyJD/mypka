@@ -9,10 +9,12 @@ Filename pattern: `GL-NNN-<title>.md`.
 | GL | Title | Description |
 |---|---|---|
 | GL-001 | [[GL-001-file-naming-conventions]] | Kebab-case rules, ISO date prefix on date-driven files, slug rules, image filename pattern. |
-| GL-002 | [[GL-002-frontmatter-conventions]] | YAML frontmatter field schemas for all 8 entity types, typing rules, foreign-key convention. Aligns with [[SOP-002-convert-mypka-to-sqlite]]. |
-| GL-004 | [[GL-004-task-resource-linking]] | One-way Task → Resource linking rule, seven-array task frontmatter contract, `linked_deliverables` slug format, archive-on-close cascade. Read by [[SOP-create-task]], [[SOP-claim-task]], [[SOP-close-task]]. |
+| GL-002 | [[GL-002-frontmatter-conventions]] | YAML frontmatter field schemas for all 12 entity types, typing rules, foreign-key convention. Aligns with [[SOP-002-convert-mypka-to-sqlite]]. |
+| GL-003 | [[GL-003-design-system]] | Design-system / visual-identity SSOT — color, type, spacing, voice tokens that Iris authors and Charta/Pixel/Vera read from. Installed with v4.1.1 (Designer Pack). |
+| GL-004 | [[GL-004-task-resource-linking]] | One-way Task → Resource linking rule, seven-array task frontmatter contract, `linked_deliverables` slug format, archive-on-close cascade. Read by [[SOP-010-create-task]], [[SOP-011-claim-task]], [[SOP-012-close-task]]. |
+| GL-005 | [[GL-005-llm-agnostic-portable-core]] | The portable-core boundary: harness-agnostic core (`PKM/`, `Team Knowledge/`, the body of every `Team/*/AGENTS.md`) vs the per-harness adapter layer (`.claude/`, future `.codex/`, `.cursor/`). No harness names, host tool names, slash-command-only triggers, or hardcoded models in the core. Installed with v4.1.1. |
 
-*Reserved:* GL-003 — the design-system Guideline (the visual identity SSOT) ships with the Designer Expansion Pack, not the base scaffold. Installing the pack adds `GL-003-design-system.md` to this set.
+*Reserved:* none. Next free Guideline slot is GL-006.
 
 ## When to write a new Guideline
 

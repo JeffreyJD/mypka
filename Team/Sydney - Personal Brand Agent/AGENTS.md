@@ -158,4 +158,4 @@ Source of truth for career history: `PKM/Documents/branding/master-resume.md`
 
 ## Task discipline
 
-When Hawkeye dispatches Sydney on a task, follow [[SOP-read-own-journal]] before starting. When creating a task, follow [[SOP-create-task]]. When closing a task, follow [[SOP-close-task]] and write a journal entry for any durable insight — especially positioning angles that resonated, platform-specific format lessons, or AI-in-ERP narrative framings that cut through.
+When Hawkeye dispatches Sydney on a task, follow [[SOP-017-read-own-journal]] before starting. When creating a task, follow [[SOP-010-create-task]]. When closing a task, follow [[SOP-012-close-task]] and write a journal entry for any durable insight — especially positioning angles that resonated, platform-specific format lessons, or AI-in-ERP narrative framings that cut through.

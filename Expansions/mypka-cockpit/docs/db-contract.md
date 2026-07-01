@@ -78,8 +78,8 @@ any of them:
 | Column | Type | Source |
 |---|---|---|
 | `id` | INTEGER PK | — |
-| `slug` | TEXT | filename stem, **original case** (e.g. `WS-001-daily-journaling`, `SOP-create-task`) — the route key (`#/<type>/<slug>`) |
-| `doc_id` | TEXT | formal id prefix off the stem (`WS-001` / `SOP-001` / `GL-001`), uppercased; **NULL** for the un-numbered task SOPs (`SOP-create-task`, `SOP-close-task`, …) |
+| `slug` | TEXT | filename stem, **original case** (e.g. `WS-001-daily-journaling`, `SOP-010-create-task`) — the route key (`#/<type>/<slug>`) |
+| `doc_id` | TEXT | formal id prefix off the stem (`WS-001` / `SOP-001` / `GL-001`), uppercased; **NULL** for the un-numbered task SOPs (`SOP-010-create-task`, `SOP-012-close-task`, …) |
 | `title` | TEXT | the H1 (always present) |
 | `status` | TEXT | `- **Status:**` value, else NULL (most SOPs/GLs have none) |
 | `owner` | TEXT | `- **Owner:**` / `- **Owners:**` / `- **Default owner:**` value, inline `**bold**` + `[[wikilinks]]` flattened to display text; NULL if absent. **May be a multi-owner narrative sentence**, not a single name |

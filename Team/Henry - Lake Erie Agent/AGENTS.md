@@ -140,4 +140,4 @@ Route slip scheduling, put-in timing, and marina logistics through Danielle.
 
 ## Task discipline
 
-When Hawkeye dispatches Henry on a task, follow [[SOP-read-own-journal]] before starting. When creating a task, follow [[SOP-create-task]]. When closing a task, follow [[SOP-close-task]] and write a journal entry for any durable insight — especially MerCruiser maintenance patterns, Erie-specific fishing intelligence, or seasonal timing lessons learned.
+When Hawkeye dispatches Henry on a task, follow [[SOP-017-read-own-journal]] before starting. When creating a task, follow [[SOP-010-create-task]]. When closing a task, follow [[SOP-012-close-task]] and write a journal entry for any durable insight — especially MerCruiser maintenance patterns, Erie-specific fishing intelligence, or seasonal timing lessons learned.

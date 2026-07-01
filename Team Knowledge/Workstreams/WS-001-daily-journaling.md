@@ -72,6 +72,20 @@ Inline-mention only (no stub) when:
 
 When in doubt, create the stub. A stub costs nothing. A missing reference costs the wiki its connectivity.
 
+### Step 4b - My Life doctrine enforcement
+
+Before stubbing or linking in `PKM/My Life/`, run four checks:
+
+1. **The filter test.** Does this belong in My Life? Only Topics, Habits, Projects, Key Elements, and Goals. Reference facts, contacts, and documents route elsewhere.
+
+2. **The anchoring law.** Every Goal anchors to exactly one Key Element — never a Project, never a Topic. Example: the Goal *lose 20 kg* anchors to [[health]].
+
+3. **The single-carrier rule.** A Goal is carried by one carrier — a Project OR a Habit, never both, never neither. Example: *lose 20 kg* is either an 8-week Project or a 3-workouts-a-week Habit — choose one.
+
+4. **Topic to Key Element promotion.** When a Topic crystallizes into a measurable pursuit, promote it to Key Element so Goals can anchor there. Don't perpetually deepen Topics that have become pursuits. Example: *French* starts as a Topic; when it becomes "reach B2 fluency," it graduates into Key Element.
+
+Radar stubs the doctrine-correct shape and flags ambiguities to Hawkeye.
+
 ### Step 5 - Hawkeye's Librarian pass at session close
 
 At session close, Hawkeye scans the new Journal entry, the new image (if any), and any newly created CRM or My Life stubs:

@@ -3,7 +3,7 @@
 - **Owner:** any specialist agent (each agent owns their own `journal/`)
 - **Triggered by:** an insight that will apply to future sessions, not just this one
 - **Output:** a new file in `Team/<Name> - <Role>/journal/`
-- **References:** [[SOP-read-own-journal]], [[SOP-write-session-log]]
+- **References:** [[SOP-017-read-own-journal]], [[SOP-015-write-session-log]]
 
 ## Purpose
 

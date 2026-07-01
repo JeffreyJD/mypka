@@ -4,17 +4,17 @@ id: tsk-2026-05-10-001
 title: "Welcome — read this and then close me"
 
 # Ownership & priority
-assignee: larry
+assignee: hawkeye
 priority: 4
 
 # Status
-status: open
+status: done
 blocked_reason: null
 blocked_by: null
 
 # Time
 created: 2026-05-10T12:00:00Z
-updated: 2026-05-10T12:00:00Z
+updated: 2026-06-30T00:00:00Z
 due: null
 
 # Provenance
@@ -23,7 +23,7 @@ source: scaffold-seed
 parent: null
 
 # Cross-references — three populated to show the pattern
-linked_sops: [SOP-create-task, SOP-claim-task, SOP-close-task, SOP-rebuild-task-index]
+linked_sops: [SOP-010-create-task, SOP-011-claim-task, SOP-012-close-task, SOP-013-rebuild-task-index]
 linked_workstreams: []
 linked_guidelines: [GL-001-file-naming-conventions, GL-004-task-resource-linking]
 linked_my_life: []
@@ -41,17 +41,17 @@ tags: [scaffold, onboarding]
 This is a seed task included with the scaffold so you can see what a real task file looks like in this folder. It's intentionally trivial — you read it, you close it. The point is to show the shape: frontmatter with required cross-reference arrays, body with "Context one click away," updates, outcome.
 
 ## Context one click away
-- Procedure for creating tasks: [[SOP-create-task]]
-- Procedure for claiming this: [[SOP-claim-task]]
-- Procedure for closing this: [[SOP-close-task]]
-- Procedure for keeping the index fresh: [[SOP-rebuild-task-index]]
+- Procedure for creating tasks: [[SOP-010-create-task]]
+- Procedure for claiming this: [[SOP-011-claim-task]]
+- Procedure for closing this: [[SOP-012-close-task]]
+- Procedure for keeping the index fresh: [[SOP-013-rebuild-task-index]]
 - Naming standards: [[GL-001-file-naming-conventions]]
 - Linking rule: [[GL-004-task-resource-linking]]
 
 ## Success criteria
 - You read this file and understand the resumption-point principle: a task is a place to pick up from, with all relevant context one wikilink away.
-- You read [[SOP-create-task]] and [[SOP-close-task]] to see the lifecycle.
-- You close this task via [[SOP-close-task]] (which moves it to `done/2026/05/` and writes an outcome).
+- You read [[SOP-010-create-task]] and [[SOP-012-close-task]] to see the lifecycle.
+- You close this task via [[SOP-012-close-task]] (which moves it to `done/2026/05/` and writes an outcome).
 
 ## Notes for newcomers
 - Task ids follow `tsk-YYYY-MM-DD-NNN`. NNN is a per-day counter.
@@ -62,6 +62,7 @@ This is a seed task included with the scaffold so you can see what a real task f
 
 ## Updates
 - 2026-05-10 12:00 (scaffold) — created as scaffold seed task
+- 2026-06-30 00:00 (hawkeye) — closed during June 2026 system health check. Linked SOP slugs updated from unnumbered to SOP-010–013.
 
 ## Outcome
-_(filled when you close this — see [[SOP-close-task]])_
+Scaffold seed task reviewed and closed as part of the June 2026 system health check. No deliverables. Task lifecycle SOPs (SOP-010, SOP-011, SOP-012) authored in the same session; rebuild-task-index (SOP-013) remains to be authored.

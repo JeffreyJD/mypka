@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 All notable changes to the myPKA scaffold are tracked here. Versions follow semver: MAJOR for breaking structural changes, MINOR for additions, PATCH for fixes.
 
@@ -252,13 +252,13 @@ Existing vaults need no action. Local version history is opt-in and can be turne
 - **`GL-004-task-resource-linking.md`** in `Team Knowledge/Guidelines/`. The canonical rule: task → resource, never the reverse. Defines what counts as a resource, the seven-array frontmatter contract, the `linked_deliverables` slug format (`<folder-slug>/<file-slug>` or `<folder-slug>`), the archive-on-close cascade, the sharing escape hatch for deliverables referenced by multiple tasks, and the orphan-deliverable rule.
 - **`linked_deliverables: []`** field in `Team Knowledge/tasks/_template.md`. The seventh `linked_*` array. The template's `## Context one click away` body section gains a `Working artifacts:` sub-bullet group that mirrors the array.
 - **`Deliverables/_archive/.gitkeep`** — seeds the archive folder so it ships in the scaffold on first clone.
-- **Lifecycle section in `Deliverables/README.md`** — documents the archive-on-close cascade, the orphan-deliverable rule, and the shared-deliverable behavior. Wikilinks to GL-004 and SOP-close-task.
+- **Lifecycle section in `Deliverables/README.md`** — documents the archive-on-close cascade, the orphan-deliverable rule, and the shared-deliverable behavior. Wikilinks to GL-004 and SOP-012-close-task.
 
 ### Changed
 
-- **`Team Knowledge/SOPs/SOP-create-task.md`** bumped to v1.1. Step 4's cross-reference walk table gains a `linked_deliverables` row. "Six linked_* arrays" copy bumps to "seven" throughout (inputs table, step 4 paragraph, step 5 bullet, common-mistakes section). A second worked example shows a task with `linked_deliverables` populated (the minimal mux-webhook example stays as-is for the empty-arrays case). References list adds `[[GL-004-task-resource-linking]]`.
-- **`Team Knowledge/SOPs/SOP-close-task.md`** bumped to v1.1. New §A.3 pre-flight step: check deliverable sharing across other open/in-progress tasks before archiving. New §A.8 / §B.5 archive steps: move each `linked_deliverables` folder to `Deliverables/_archive/<YYYY>/<MM>/`. The "move the folder, not the file" rule is documented. The `## Outcome` shape gains an `Archived deliverables:` line. A second worked example walks the archive-on-close path; the original mux-webhook example stays as the no-deliverables case. References list adds `[[GL-004-task-resource-linking]]` and `[[SOP-002-convert-mypka-to-sqlite]]`.
-- **`Team Knowledge/SOPs/SOP-claim-task.md`** — small update. Pre-flight read list adds `linked_deliverables` ("the working artifacts already in flight — skipping them means re-doing what's already done"). References list adds `[[GL-004-task-resource-linking]]`. Common-mistakes section notes that skipping `linked_deliverables` in pre-flight is a resumption hazard.
+- **`Team Knowledge/SOPs/SOP-010-create-task.md`** bumped to v1.1. Step 4's cross-reference walk table gains a `linked_deliverables` row. "Six linked_* arrays" copy bumps to "seven" throughout (inputs table, step 4 paragraph, step 5 bullet, common-mistakes section). A second worked example shows a task with `linked_deliverables` populated (the minimal mux-webhook example stays as-is for the empty-arrays case). References list adds `[[GL-004-task-resource-linking]]`.
+- **`Team Knowledge/SOPs/SOP-012-close-task.md`** bumped to v1.1. New §A.3 pre-flight step: check deliverable sharing across other open/in-progress tasks before archiving. New §A.8 / §B.5 archive steps: move each `linked_deliverables` folder to `Deliverables/_archive/<YYYY>/<MM>/`. The "move the folder, not the file" rule is documented. The `## Outcome` shape gains an `Archived deliverables:` line. A second worked example walks the archive-on-close path; the original mux-webhook example stays as the no-deliverables case. References list adds `[[GL-004-task-resource-linking]]` and `[[SOP-002-convert-mypka-to-sqlite]]`.
+- **`Team Knowledge/SOPs/SOP-011-claim-task.md`** — small update. Pre-flight read list adds `linked_deliverables` ("the working artifacts already in flight — skipping them means re-doing what's already done"). References list adds `[[GL-004-task-resource-linking]]`. Common-mistakes section notes that skipping `linked_deliverables` in pre-flight is a resumption hazard.
 - **`Team Knowledge/tasks/open/EXAMPLE-tsk-2026-05-10-001-welcome-to-tasks.md`** — seeded teaching task updated to the seven-array shape (`linked_deliverables: []` added; `GL-004` added to `linked_guidelines`; "six arrays" copy in the body bumped to "seven"; an additional `Linking rule: [[GL-004-task-resource-linking]]` bullet appears in `## Context one click away`).
 - **`Team Knowledge/Guidelines/INDEX.md`** — gains a row for GL-004 between GL-002 and the reserved-GL-003 note. The reserved note for GL-003 (Designer Expansion Pack) is unchanged.
 
@@ -266,7 +266,7 @@ Existing vaults need no action. Local version history is opt-in and can be turne
 
 **Existing scaffold users with active tasks need a one-line frontmatter addition per task** to bring them up to the seven-array shape. A one-shot grep + sed pattern is suggested in the migration prompt exposed as the "upgrade" button in the myPKA course at https://myicor.com.
 
-Tasks already in `done/` or `cancelled/` are historical record and do not need migration. The walk in [[SOP-create-task]] step 4 starts using all seven slots immediately from v2.2.0 onward.
+Tasks already in `done/` or `cancelled/` are historical record and do not need migration. The walk in [[SOP-010-create-task]] step 4 starts using all seven slots immediately from v2.2.0 onward.
 
 Resources written before v2.2.0 may carry a pre-GL-004 `linked_tasks` field. Per the new one-way rule, that field is retired — remove it on touch. New writes never add it.
 
@@ -374,12 +374,12 @@ Wires v1.10.0's task system and journal SOPs into the agent contracts. v1.10.0 s
 
 ### Changed
 
-- `Team/Hawkeye - Orchestrator/AGENTS.md` — adds `## Session boot — task-walk first` before `## Three duties`. Hawkeye now walks `Team Knowledge/tasks/open/` + `tasks/in-progress/` per [[SOP-list-open-tasks]] at every session boot and surfaces open priority-1 / in-progress / blocked / stale items in the greeting. Tom no longer has to ask "what's open?" — the team picks up where it left off automatically.
-- `Team/Hawkeye - Orchestrator/AGENTS.md` — Duty 1 step 4 (Brief) now requires Hawkeye to create a task via [[SOP-create-task]] before delegating any work that won't finish in-turn, populating all six `linked_*` arrays. The specialist resumes from the task file, not from chat scrollback.
+- `Team/Hawkeye - Orchestrator/AGENTS.md` — adds `## Session boot — task-walk first` before `## Three duties`. Hawkeye now walks `Team Knowledge/tasks/open/` + `tasks/in-progress/` per [[SOP-014-list-open-tasks]] at every session boot and surfaces open priority-1 / in-progress / blocked / stale items in the greeting. Tom no longer has to ask "what's open?" — the team picks up where it left off automatically.
+- `Team/Hawkeye - Orchestrator/AGENTS.md` — Duty 1 step 4 (Brief) now requires Hawkeye to create a task via [[SOP-010-create-task]] before delegating any work that won't finish in-turn, populating all six `linked_*` arrays. The specialist resumes from the task file, not from chat scrollback.
 - All 8 specialist AGENTS.md (Potter, B.J., Radar, Klinger, Margaret, Charta, Pixel, Iris) — adds a shared `## Task discipline (v1.10.1)` section right after the agent's "When Hawkeye routes to <Name>" section. The block wires three behaviors at dispatch:
-  1. Read your `linked_journal_entries` and the matching files in `Team/<your-name>/journal/` per [[SOP-read-own-journal]] before starting work. Auditable via a `## Updates` line that names the priors you carried.
-  2. When you create a task, populate all six `linked_*` arrays per [[SOP-create-task]].
-  3. When you close a task, write the `## Outcome` and, if there's a durable lesson, write a journal entry per [[SOP-write-journal-entry]] and link it from the closed task.
+  1. Read your `linked_journal_entries` and the matching files in `Team/<your-name>/journal/` per [[SOP-017-read-own-journal]] before starting work. Auditable via a `## Updates` line that names the priors you carried.
+  2. When you create a task, populate all six `linked_*` arrays per [[SOP-010-create-task]].
+  3. When you close a task, write the `## Outcome` and, if there's a durable lesson, write a journal entry per [[SOP-016-write-journal-entry]] and link it from the closed task.
 - `validation-script.sh` — version check loosened from a hard `1.10.0` literal to a `1.10.x` glob so v1.10.x patch releases pass the same structural check. v1.10.0 folders still pass.
 
 ### Migration
@@ -408,14 +408,14 @@ Adds task management, per-agent journals, and an LLM-readable migration changelo
 - `CHANGELOG-MIGRATION.md` — machine-actionable upgrade spec. Per-version sections with numbered, idempotent recipes any LLM can follow to upgrade an older myPKA folder. Includes a validation script that exits 0 on a structurally valid migration.
 - `validation-script.sh` — bash script at the repo root that verifies a folder is v1.10.0-compliant. Exits 0 on success, 1 on failure.
 - New SOPs in `Team Knowledge/SOPs/`:
-  - `SOP-create-task.md` — confronts all six cross-reference arrays at creation.
-  - `SOP-claim-task.md` — atomic claim via `git mv`. Loser retries on a re-list.
-  - `SOP-close-task.md` — moves to `done/` with outcome filled in. Surfaces open sub-tasks for explicit decision.
-  - `SOP-list-open-tasks.md` — folder walk that Hawkeye runs at session boot.
-  - `SOP-rebuild-task-index.md` — awk-based, sub-500ms target on 1,000 tasks.
-  - `SOP-write-journal-entry.md` — trigger test, body shape, supersession rules.
-  - `SOP-read-own-journal.md` — what each agent runs before starting work on a task.
-  - `SOP-write-session-log.md` — extended to reference any tasks created or touched.
+  - `SOP-010-create-task.md` — confronts all six cross-reference arrays at creation.
+  - `SOP-011-claim-task.md` — atomic claim via `git mv`. Loser retries on a re-list.
+  - `SOP-012-close-task.md` — moves to `done/` with outcome filled in. Surfaces open sub-tasks for explicit decision.
+  - `SOP-014-list-open-tasks.md` — folder walk that Hawkeye runs at session boot.
+  - `SOP-013-rebuild-task-index.md` — awk-based, sub-500ms target on 1,000 tasks.
+  - `SOP-016-write-journal-entry.md` — trigger test, body shape, supersession rules.
+  - `SOP-017-read-own-journal.md` — what each agent runs before starting work on a task.
+  - `SOP-015-write-session-log.md` — extended to reference any tasks created or touched.
 
 ### Changed
 

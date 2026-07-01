@@ -3,7 +3,7 @@
 - **Owner:** the agent picking up the task
 - **Triggered by:** an agent starting work on an open task, hitting a blocker mid-work, or recording that a blocker has cleared
 - **Output:** task file moved from `open/` to `in-progress/` (claim), or frontmatter updated in place (block/unblock)
-- **References:** [[SOP-rebuild-task-index]], [[SOP-close-task]], [[SOP-read-own-journal]], [[GL-004-task-resource-linking]]
+- **References:** [[SOP-013-rebuild-task-index]], [[SOP-012-close-task]], [[SOP-017-read-own-journal]], [[GL-004-task-resource-linking]]
 
 ## Purpose
 
@@ -36,7 +36,7 @@ This is the resumption move. Skip it and you start cold. See [[GL-004-task-resou
    ```bash
    ls "Team Knowledge/tasks/open/<id>-*.md"
    ```
-   If it's not there, someone else already claimed it. Re-run [[SOP-list-open-tasks]].
+   If it's not there, someone else already claimed it. Re-run [[SOP-014-list-open-tasks]].
 
 2. **Move the file.**
    ```bash
@@ -60,7 +60,7 @@ This is the resumption move. Skip it and you start cold. See [[GL-004-task-resou
 
    This makes the resumption surface auditable. Future-you (or anyone resuming again) sees what priors were carried.
 
-6. **Rebuild the index.** Run [[SOP-rebuild-task-index]].
+6. **Rebuild the index.** Run [[SOP-013-rebuild-task-index]].
 
 ## §B — Record a block
 
@@ -81,7 +81,7 @@ You're working a task in `in-progress/` and hit something you can't resolve righ
 
    `blocked_reason` must be a single sentence with a concrete unblock condition. "Blocked, will revisit" is a smell — either the unblock is concrete, or the task should be cancelled.
 
-3. **If the blocker is itself a task** (someone else's open work), create that task via [[SOP-create-task]] and reference it in `blocked_by`:
+3. **If the blocker is itself a task** (someone else's open work), create that task via [[SOP-010-create-task]] and reference it in `blocked_by`:
    ```yaml
    blocked_by: tsk-2026-05-10-002-rotate-vercel-secret
    ```
@@ -129,13 +129,13 @@ No file move. The task stays in `open/`.
 
 ## Worked example (claim)
 
-Klinger runs [[SOP-list-open-tasks]] and sees:
+Klinger runs [[SOP-014-list-open-tasks]] and sees:
 
 ```
 [priority 1] tsk-2026-05-09-001-mux-webhook-401 — assignee: klinger
 ```
 
-Pre-flight: opens the file, reads `linked_sops: [SOP-claim-task]`, `linked_session_logs: [2026-05-09-22-30_larry_video-launch-coordination]`, `linked_journal_entries: []`, `linked_deliverables: []`. Walks the session log to recover the launch context.
+Pre-flight: opens the file, reads `linked_sops: [SOP-011-claim-task]`, `linked_session_logs: [2026-05-09-22-30_larry_video-launch-coordination]`, `linked_journal_entries: []`, `linked_deliverables: []`. Walks the session log to recover the launch context.
 
 Claims:
 
@@ -150,7 +150,7 @@ Edits the file: `status: in-progress`, `updated: 2026-05-10T09:15:00Z`. Appends:
 - 2026-05-10 09:15 (klinger) — picked up, investigating; loaded launch context from [[2026-05-09-22-30_larry_video-launch-coordination]]
 ```
 
-Runs [[SOP-rebuild-task-index]]. Reports back: `Claimed [[tsk-2026-05-09-001-mux-webhook-401]], digging in.`
+Runs [[SOP-013-rebuild-task-index]]. Reports back: `Claimed [[tsk-2026-05-09-001-mux-webhook-401]], digging in.`
 
 ## Common mistakes
 

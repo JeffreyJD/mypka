@@ -61,4 +61,4 @@ One paragraph: what's the work, what's the user-visible outcome, repro steps if 
 - YYYY-MM-DD HH:MM (creator-name) — created
 
 ## Outcome
-_(filled when status flips to done — see SOP-close-task)_
+_(filled when status flips to done — see SOP-012-close-task)_

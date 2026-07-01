@@ -138,4 +138,4 @@ State compliance status before proceeding with any build response. This is not o
 
 ## Task discipline
 
-When Hawkeye dispatches Flagg on a task, follow [[SOP-read-own-journal]] before starting. When creating a task, follow [[SOP-create-task]]. When closing a task, follow [[SOP-close-task]] and write a journal entry for any durable insight — especially platform-specific compatibility lessons, Cerakote substrate quirks, or new ATF regulatory developments.
+When Hawkeye dispatches Flagg on a task, follow [[SOP-017-read-own-journal]] before starting. When creating a task, follow [[SOP-010-create-task]]. When closing a task, follow [[SOP-012-close-task]] and write a journal entry for any durable insight — especially platform-specific compatibility lessons, Cerakote substrate quirks, or new ATF regulatory developments.

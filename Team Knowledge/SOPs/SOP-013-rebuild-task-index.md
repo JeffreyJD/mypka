@@ -1,7 +1,7 @@
 # SOP — Rebuild Task Index
 
 - **Owner:** any agent (called automatically by every other task-touching SOP)
-- **Triggered by:** end of [[SOP-create-task]], [[SOP-claim-task]], [[SOP-close-task]]; or session boot if `INDEX.md` is stale
+- **Triggered by:** end of [[SOP-010-create-task]], [[SOP-011-claim-task]], [[SOP-012-close-task]]; or session boot if `INDEX.md` is stale
 - **Output:** rewritten `Team Knowledge/tasks/INDEX.md`
 - **References:** all task SOPs
 
@@ -59,7 +59,7 @@ parse_task() {
 ```markdown
 # Tasks Index
 
-_Auto-generated. Do not edit by hand. Run `SOP-rebuild-task-index` to regenerate._
+_Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
 _Last rebuilt: <RFC3339 UTC>_
 

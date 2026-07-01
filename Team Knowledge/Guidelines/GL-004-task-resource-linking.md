@@ -55,7 +55,7 @@ linked_journal_entries: []         # prior learning relevant to the assignee
 linked_deliverables: []            # Deliverables that hold the working artifacts for this task
 ```
 
-Empty arrays are valid. **The discipline is walking all seven slots when creating, claiming, blocking, unblocking, or closing the task** — not finding something to put in every slot. See [[SOP-create-task]] step 4 for the walk.
+Empty arrays are valid. **The discipline is walking all seven slots when creating, claiming, blocking, unblocking, or closing the task** — not finding something to put in every slot. See [[SOP-010-create-task]] step 4 for the walk.
 
 ### What the resource side never carries
 
@@ -88,7 +88,7 @@ Each entry in a `linked_*` array is a **bare basename / folder-slug**, never a p
 
 | Field | Slug format | Source |
 |---|---|---|
-| `linked_sops` | `SOP-NNN-<slug>` or unnumbered procedural name (e.g. `SOP-create-task`) | The SOP's basename without `.md` |
+| `linked_sops` | `SOP-NNN-<slug>` or unnumbered procedural name (e.g. `SOP-010-create-task`) | The SOP's basename without `.md` |
 | `linked_workstreams` | `WS-NNN-<slug>` | The Workstream's basename without `.md` |
 | `linked_guidelines` | `GL-NNN-<slug>` | The Guideline's basename without `.md` |
 | `linked_my_life` | `<slug>` | Bare slug (e.g. `ai-tooling`) |
@@ -113,7 +113,7 @@ The frontmatter `linked_*` arrays are for machine reading. The task body's `## C
 ```markdown
 ## Context one click away
 
-- Procedure: [[SOP-create-task]]
+- Procedure: [[SOP-010-create-task]]
 - Guideline: [[GL-004-task-resource-linking]]
 - Working artifacts:
   - [[workup]]
@@ -124,7 +124,7 @@ The frontmatter `linked_*` arrays are for machine reading. The task body's `## C
 
 ## The archive-on-close rule
 
-When a task moves to `done/` or `cancelled/`, every deliverable in `linked_deliverables` moves to `Deliverables/_archive/YYYY/MM/<original-folder>/`. The procedure is in [[SOP-close-task]] §A.8 and §B.5; the rationale lives here.
+When a task moves to `done/` or `cancelled/`, every deliverable in `linked_deliverables` moves to `Deliverables/_archive/YYYY/MM/<original-folder>/`. The procedure is in [[SOP-012-close-task]] §A.8 and §B.5; the rationale lives here.
 
 ### Disclosure: this is a myPKA invariant, not borrowed prior art
 
@@ -139,7 +139,7 @@ If you copy this Guideline to a scaffold that does not maintain a SQLite mirror,
 
 ### The sharing escape hatch
 
-A deliverable may be referenced by multiple tasks (e.g., a recurring hire-research brief reused by a later hire). Before archiving any deliverable on close, [[SOP-close-task]] §A.3 runs a mandatory sharing check:
+A deliverable may be referenced by multiple tasks (e.g., a recurring hire-research brief reused by a later hire). Before archiving any deliverable on close, [[SOP-012-close-task]] §A.3 runs a mandatory sharing check:
 
 ```bash
 for d in <linked_deliverables>; do
@@ -163,17 +163,17 @@ This is correct behavior. The deliverable is shared input; archiving it on the f
 
 ## When this Guideline gets read
 
-- [[SOP-create-task]] step 4 — the cross-reference walk covers seven slots.
-- [[SOP-claim-task]] pre-flight — the claiming agent reads `linked_deliverables` to know what working artifacts already exist.
-- [[SOP-close-task]] §A.8 / §B.5 — the archival ritual reads `linked_deliverables` to know what to move.
-- [[SOP-rebuild-task-index]] — may surface `linked_deliverables` counts as a quality signal (optional).
+- [[SOP-010-create-task]] step 4 — the cross-reference walk covers seven slots.
+- [[SOP-011-claim-task]] pre-flight — the claiming agent reads `linked_deliverables` to know what working artifacts already exist.
+- [[SOP-012-close-task]] §A.8 / §B.5 — the archival ritual reads `linked_deliverables` to know what to move.
+- [[SOP-013-rebuild-task-index]] — may surface `linked_deliverables` counts as a quality signal (optional).
 - Anyone writing a session log, journal entry, deliverable, SOP, WS, or GL — to confirm they MUST NOT add a `linked_tasks` field on the resource side.
 
 ## Cross-references
 
 - [[GL-001-file-naming-conventions]] — slug rules. `linked_deliverables` slugs follow GL-001's kebab-case + ISO-date-prefix rule.
 - [[GL-002-frontmatter-conventions]] §4 — foreign keys store slugs, not titles. GL-004 extends the same principle to task `linked_*` arrays.
-- [[SOP-create-task]], [[SOP-claim-task]], [[SOP-close-task]], [[SOP-rebuild-task-index]] — the four task SOPs that read this rule.
+- [[SOP-010-create-task]], [[SOP-011-claim-task]], [[SOP-012-close-task]], [[SOP-013-rebuild-task-index]] — the four task SOPs that read this rule.
 - [[SOP-002-convert-mypka-to-sqlite]] — the optional mirror regen procedure. The archive-on-close rule's sharing check is cheaper against a current mirror.
 
 ## Updates to this Guideline

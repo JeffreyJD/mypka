@@ -1288,8 +1288,8 @@ label is NULL.
 | Column | Type | Source / notes |
 |---|---|---|
 | `id` | INTEGER PK | — |
-| `slug` | TEXT | filename stem, **original case** (`WS-001-daily-journaling`, `SOP-create-task`). The route key: `#/<type>/<slug>` |
-| `doc_id` | TEXT | formal id off the stem (`WS-001`/`SOP-001`/`GL-001`), uppercased; **NULL** for un-numbered task SOPs (`SOP-create-task`, `SOP-close-task`, `SOP-read-own-journal`, …) |
+| `slug` | TEXT | filename stem, **original case** (`WS-001-daily-journaling`, `SOP-010-create-task`). The route key: `#/<type>/<slug>` |
+| `doc_id` | TEXT | formal id off the stem (`WS-001`/`SOP-001`/`GL-001`), uppercased; **NULL** for un-numbered task SOPs (`SOP-010-create-task`, `SOP-012-close-task`, `SOP-017-read-own-journal`, …) |
 | `title` | TEXT | the H1 (always present) |
 | `status` | TEXT | `- **Status:**`, else NULL. Only WS-00x + a few SOPs carry it (e.g. `Active (since v1.4.0)`) |
 | `owner` | TEXT | `- **Owner:**`/`- **Owners:**`/`- **Default owner:**`, with inline `**bold**` + `[[wikilinks]]` flattened. **May be a multi-owner narrative sentence**, not one name |

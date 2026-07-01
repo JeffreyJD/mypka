@@ -3,7 +3,7 @@
 - **Owner:** Hawkeye (default), any specialist agent (when running independently)
 - **Triggered by:** end of a working session, mid-session checkpoint, end-of-day
 - **Output:** a new file in `Team Knowledge/session-logs/<YYYY>/<MM>/`
-- **References:** [[SOP-write-journal-entry]] (for cross-session insights), [[SOP-create-task]] (for queued follow-up work)
+- **References:** [[SOP-016-write-journal-entry]] (for cross-session insights), [[SOP-010-create-task]] (for queued follow-up work)
 
 ## Purpose
 

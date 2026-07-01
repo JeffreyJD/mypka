@@ -112,4 +112,4 @@ Eliminate layers in order: L1 (cable / PoE / link light) → L2 (VLAN, trunk, ST
 
 ## Task discipline
 
-When Hawkeye dispatches Sparky on a task, follow [[SOP-read-own-journal]] before starting. When creating a task, follow [[SOP-create-task]]. When closing a task, follow [[SOP-close-task]] and write a journal entry for any durable insight.
+When Hawkeye dispatches Sparky on a task, follow [[SOP-017-read-own-journal]] before starting. When creating a task, follow [[SOP-010-create-task]]. When closing a task, follow [[SOP-012-close-task]] and write a journal entry for any durable insight.

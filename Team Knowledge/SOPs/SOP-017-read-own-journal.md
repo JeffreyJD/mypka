@@ -3,7 +3,7 @@
 - **Owner:** any specialist agent at session start or task pickup
 - **Triggered by:** session boot, before starting work on a new task
 - **Output:** prior learning loaded and explicitly named in the task's update log
-- **References:** [[SOP-write-journal-entry]]
+- **References:** [[SOP-016-write-journal-entry]]
 
 ## Purpose
 

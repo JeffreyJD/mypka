@@ -1,5 +1,7 @@
 # myPKA Expansions — Installed
 
+All three ship preinstalled in this bundle. The two agent packs are also merged into `Team/`, `Team Knowledge/SOPs/`, and `Team Knowledge/Guidelines/`; their folders remain here as the self-describing install record (and as the à-la-carte upgrade source for existing scaffolds).
+
 | Name | Type | Version | What it does | Source | Installed |
 |---|---|---|---|---|---|
 | App Developer Pack | agent_pack | 1.0.1 | Adds Felix (Frontend), Vex (Security), Vera (QA) — SOPs 003–005 | myICOR | 2026-06-24 |

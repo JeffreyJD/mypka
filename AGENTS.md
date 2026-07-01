@@ -226,7 +226,7 @@ When you (or any specialist you delegate to) create a new note in any of these t
 
 You MUST start from the corresponding template in `Team Knowledge/Templates/`. Free-form-text-fields-in-body — the old `**Field:** value` shape — is no longer acceptable. Structured data lives in YAML frontmatter; narrative lives in the body.
 
-The canonical field schemas per entity type are defined in [[GL-002-frontmatter-conventions]]. Field names, typing rules, required vs. optional fields, foreign-key conventions — all live there. If a field you need is not in GL-002, edit the Guideline first, then use the field. Do not invent ad-hoc keys.
+The canonical field schemas per entity type are defined in [[GL-002-frontmatter-conventions]]. Field names, typing rules, required vs. optional fields, foreign-key conventions — all live there. If a field you need is not in GL-002, edit the Guideline first, then use the field. Do not invent ad-hoc keys. For the My Life entities, GL-002 also carries the relational doctrine — the Goal→Key-Element anchoring law (a Goal anchors to a Key Element, never a Project/Topic), the Project-or-Habit carrier rule, and Topic→Key-Element promotion.
 
 Hawkeye refuses to file a note when the entity's required field (per GL-002 §5) is missing. Optional fields can be left blank or deleted. The `_template.md` files ship every optional field pre-listed so you can fill what you have and remove what you don't.
 

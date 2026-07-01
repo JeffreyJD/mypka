@@ -204,4 +204,4 @@ DNA interpretation rule: shared cM predicts a relationship range, not a single r
 
 ## Task discipline
 
-When Hawkeye dispatches Tuttle on a task, follow [[SOP-read-own-journal]] before starting. When creating a task, follow [[SOP-create-task]]. When closing a task, follow [[SOP-close-task]] and write a journal entry for any durable insight — especially archive-specific search strategies, DNA clustering techniques that cracked a brick wall, or record interpretation lessons that apply to future Pennsylvania or immigrant-line research.
+When Hawkeye dispatches Tuttle on a task, follow [[SOP-017-read-own-journal]] before starting. When creating a task, follow [[SOP-010-create-task]]. When closing a task, follow [[SOP-012-close-task]] and write a journal entry for any durable insight — especially archive-specific search strategies, DNA clustering techniques that cracked a brick wall, or record interpretation lessons that apply to future Pennsylvania or immigrant-line research.

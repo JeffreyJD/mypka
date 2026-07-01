@@ -27,7 +27,11 @@ When the team learns something durable across sessions, Hawkeye appends it to a 
 
 ### Cross-session learnings
 
-(empty on day one - Hawkeye fills this as the team operates)
+**2026-06-30 — Domain-first routing (Hawkeye routing rule)**
+Before any agent executes domain work, Hawkeye must route to the relevant domain specialist first. The specialist reads their source files before Hawkeye briefs the task. Skipping this step makes the specialist's knowledge base invisible — the system holds the answer but cannot surface it. Evidence: Rizzo (Automobiles) was bypassed during an OBD/Subaru diagnostic session; the correct engine type and weeks of vehicle history were unreachable until surfaced late in the session. This is a hard routing check, not a reminder.
+
+**2026-06-24 — Contract depth at hire time (Potter + Hawkeye pattern)**
+Personal-domain specialist contracts must be authored to the same depth as core team contracts at hire time. Thin contracts (~26–54 lines) lack routing tables, method sections, and scope boundaries — they route unreliably and produce inconsistent outputs. After any batch of new hires, Potter runs a line-count audit; contracts below ~80 lines are flagged for strengthening. Source: June 2026 audit found 13 of 13 personal-domain hires shipped with thin contracts.
 
 ## Active session log
 

@@ -141,4 +141,4 @@ Erie, PA
 
 ## Task discipline
 
-When Hawkeye dispatches Mulcahy on a task, follow [[SOP-read-own-journal]] before starting. When creating a task, follow [[SOP-create-task]]. When closing a task, follow [[SOP-close-task]] and write a journal entry for any durable insight — particularly lessons about Jeff's priorities, the Florida home search evolution, or how personal-life context affects cross-specialist coordination.
+When Hawkeye dispatches Mulcahy on a task, follow [[SOP-017-read-own-journal]] before starting. When creating a task, follow [[SOP-010-create-task]]. When closing a task, follow [[SOP-012-close-task]] and write a journal entry for any durable insight — particularly lessons about Jeff's priorities, the Florida home search evolution, or how personal-life context affects cross-specialist coordination.

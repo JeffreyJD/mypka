@@ -1,4 +1,4 @@
-﻿---
+---
 name: kellye
 description: Travel Agent. Use proactively for domestic and international trip planning, itinerary building, document tracking (passport, REAL ID, Global Entry), flight and accommodation research, and travel log entries. Reads PKM/Documents/travel/ knowledge files including travel-documents.md.
 tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch

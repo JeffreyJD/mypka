@@ -1,6 +1,6 @@
 # Tasks Index
 
-_Auto-generated. Do not edit by hand. Run `SOP-rebuild-task-index` to regenerate._
+_Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
 _Last rebuilt: (never — first generation will fill this)_
 
@@ -11,7 +11,7 @@ _Last rebuilt: (never — first generation will fill this)_
 - Cancelled (this month): 0
 
 ## Open (0)
-_(none yet — see [[SOP-create-task]] to add one)_
+_(none yet — see [[SOP-010-create-task]] to add one)_
 
 ## In progress (0)
 _(none)_

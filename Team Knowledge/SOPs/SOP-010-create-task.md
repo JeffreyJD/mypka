@@ -3,7 +3,7 @@
 - **Owner:** any agent
 - **Triggered by:** an agent or the user identifying a unit of work that won't finish this turn and should be picked up later
 - **Output:** a new file in `Team Knowledge/tasks/open/`
-- **References:** [[SOP-rebuild-task-index]], [[SOP-claim-task]], [[GL-001-file-naming-conventions]], [[GL-004-task-resource-linking]]
+- **References:** [[SOP-013-rebuild-task-index]], [[SOP-011-claim-task]], [[GL-001-file-naming-conventions]], [[GL-004-task-resource-linking]]
 
 ## Purpose
 
@@ -112,7 +112,7 @@ The `## Context one click away` section in the body must mirror the frontmatter 
 
 ### 7. Rebuild the index
 
-Run [[SOP-rebuild-task-index]]. Always.
+Run [[SOP-013-rebuild-task-index]]. Always.
 
 ### 8. Report back
 
@@ -139,7 +139,7 @@ FILENAME=tsk-2026-05-09-001-mux-webhook-401.md
 
 Step 4 — Hawkeye walks the cross-references:
 
-- `linked_sops` — `[SOP-claim-task]` (Klinger will follow this when picking up).
+- `linked_sops` — `[SOP-011-claim-task]` (Klinger will follow this when picking up).
 - `linked_workstreams` — `[]` (no active workstream covers this; it's a one-off fire).
 - `linked_guidelines` — `[]` (no standards apply; it's a config drift fix).
 - `linked_my_life` — `[]` (this is internal infrastructure, not user life context).
@@ -164,7 +164,7 @@ due: null
 created_by: larry
 source: larry-session-2026-05-09
 parent: null
-linked_sops: [SOP-claim-task]
+linked_sops: [SOP-011-claim-task]
 linked_workstreams: []
 linked_guidelines: []
 linked_my_life: []
@@ -180,7 +180,7 @@ tags: [infrastructure, mux, urgent]
 The mux-webhook endpoint started returning 401 mid-launch. Suspected MUX_WEBHOOK_SECRET rotation that didn't propagate to the Vercel env var. User-visible impact: Mux callbacks for video processing aren't being delivered.
 
 ## Context one click away
-- Procedure: [[SOP-claim-task]]
+- Procedure: [[SOP-011-claim-task]]
 - Birthed in: [[2026-05-09-22-30_larry_video-launch-coordination]]
 
 ## Success criteria
@@ -195,7 +195,7 @@ The mux-webhook endpoint started returning 401 mid-launch. Suspected MUX_WEBHOOK
 _(filled when status flips to done)_
 ```
 
-Then `SOP-rebuild-task-index` and report: `Created [[tsk-2026-05-09-001-mux-webhook-401]] (priority 1, assignee klinger). Cross-refs: 2/7 populated (linked_sops, linked_session_logs).`
+Then `SOP-013-rebuild-task-index` and report: `Created [[tsk-2026-05-09-001-mux-webhook-401]] (priority 1, assignee klinger). Cross-refs: 2/7 populated (linked_sops, linked_session_logs).`
 
 ## Worked example (with `linked_deliverables` populated)
 
@@ -219,10 +219,10 @@ created_by: klinger
 source: larry-brief-2026-05-12
 parent: null
 linked_sops:
-  - SOP-create-task
-  - SOP-claim-task
-  - SOP-close-task
-  - SOP-write-session-log
+  - SOP-010-create-task
+  - SOP-011-claim-task
+  - SOP-012-close-task
+  - SOP-015-write-session-log
 linked_workstreams:
   - WS-003-install-an-expansion
 linked_guidelines:
@@ -244,8 +244,8 @@ The body's `## Context one click away` block mirrors:
 
 ```markdown
 - Procedure (install): [[WS-003-install-an-expansion]]
-- Procedure (task moves): [[SOP-claim-task]], [[SOP-close-task]]
-- Procedure (session-log at install): [[SOP-write-session-log]]
+- Procedure (task moves): [[SOP-011-claim-task]], [[SOP-012-close-task]]
+- Procedure (session-log at install): [[SOP-015-write-session-log]]
 - Guideline: [[GL-004-task-resource-linking]]
 - Most recent context: [[2026-05-12-23-15_nolan_shim-tool-allowlist-audit]]
 - Working artifacts:

@@ -150,4 +150,4 @@ Zale is NOT routed for:
 
 ## Task discipline
 
-When Hawkeye dispatches Zale on a task, follow [[SOP-read-own-journal]] before starting. When creating a task, follow [[SOP-create-task]]. When closing a task, follow [[SOP-close-task]] and write a journal entry for any durable insight — especially Erie PA code specifics, CNC cabinet lessons, or sequencing errors that were caught during planning.
+When Hawkeye dispatches Zale on a task, follow [[SOP-017-read-own-journal]] before starting. When creating a task, follow [[SOP-010-create-task]]. When closing a task, follow [[SOP-012-close-task]] and write a journal entry for any durable insight — especially Erie PA code specifics, CNC cabinet lessons, or sequencing errors that were caught during planning.

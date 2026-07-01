@@ -1,4 +1,4 @@
-﻿---
+---
 name: frank
 description: Property Rentals Manager. Use proactively for rental property management — tenant matters, lease questions, rent tracking, maintenance coordination, rental financials, and landlord-tenant compliance in applicable jurisdictions. Reads PKM/Documents/rentals/ knowledge files.
 tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch

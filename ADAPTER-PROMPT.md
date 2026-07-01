@@ -99,8 +99,77 @@ The `close-session` protocol is defined canonically in `AGENTS.md` ("Session-Log
 
    e. Report the outcome in the report-back block via the `SLASH COMMANDS BOUND:` field.
 
+### 7-ter. Install the bundled Expansions and build the Cockpit (MANDATORY on first activation — the scaffold is NOT "ready to use" until this runs)
+
+This all-in-one bundle ships with Expansions PRE-PLACED under `Expansions/`. Activation is not complete until each one is handled. **Do not assume any Expansion is "already installed."** Walk `Expansions/` and act on every subfolder that contains a valid `expansion.yaml`. This step OPERATIONALIZES the natural-language "Expansion Install Triggers" contract in `AGENTS.md` for the first-run case — it is consistent with that contract and with `WS-003-install-an-expansion`; it does not replace them. SSOT: where this step needs an Expansion's own procedure, it REFERENCES that Expansion's contract files by path and executes them — it never restates their steps here.
+
+#### 7-ter-a. The ONE upfront setup consent (the key UX fix — read before you prompt)
+
+There are two install paths, and they gate very differently. **Determine which path you are on before prompting:**
+
+- **Fresh all-in-one first-run path** (the common case for this bundle): `PKM/.user.yaml` did NOT exist when activation began (you are creating it in step 4), AND there is no pre-existing user data to protect. On this path the Cockpit's `INSTALL.md` consent + backup gates must NOT become seven separate stop-and-wait prompts. **Collapse them into ONE upfront setup consent**, ideally folded together with the step-4 personalization ask. Suggested wording:
+
+  > **"I'll personalize this folder, turn on local version history, and build + set up the Cockpit dashboard so it's ready to launch — everything runs and stays on your machine, nothing is uploaded. Proceed? (yes / no)"**
+
+  On YES, this single consent satisfies the Cockpit `INSTALL.md` **Step 0 (consent)** and **Step 1 (backup)** gates for the whole first-run, BECAUSE: the version-history git commit IS the restorable backup baseline (`INSTALL.md` Step 1 explicitly accepts "the current commit they can reset to" as the backup). If the user declined version history, fall back to offering a one-shot timestamped backup (`zip -r ../mypka-backup-$(date +%Y%m%d-%H%M).zip .`) before any Cockpit write, OR record their explicit waiver — do not silently skip the backup gate.
+
+  **The same single consent also covers the FULL SQLite extension schema.** On this fresh all-in-one first-run, install the **full extension schema by default** under this one consent (see 7-ter-c step 2 for the exact `--all` command). Every Cockpit dashboard module (Finance, Health, Workouts, Habit heatmap, Food log) has backing tables in the SQLite mirror, and if those tables are absent a module renders broken rather than as a ready, empty state. The tables are additive and non-destructive; the user can remove any module later. This `--all`-by-default behavior is specific to the all-in-one bundle's fresh first-run only.
+
+- **À-la-carte path into an ALREADY-POPULATED scaffold**: real user data is at stake. Follow the **full per-step gates** of `Expansions/mypka-cockpit/INSTALL.md` exactly as written — surface `DISCLAIMER.md` and stop for consent (Step 0), confirm a restorable backup (Step 1), and run `detect-gaps.py` then **OFFER** the SQLite upgrade per module (never auto-run, never force `--all` onto existing data). When in doubt about which path you are on, treat it as this path.
+
+#### 7-ter-b. Detect build prerequisites (graceful — never hard-fail activation)
+
+The Cockpit build needs **Node.js v20+** and **Python 3 with PyYAML**. Detect them before building:
+
+```sh
+node --version          # need v20+
+python3 --version       # need Python 3.x
+python3 -m pip --version # is pip available?
+python3 -c "import yaml" # PyYAML present? (no output = present)
+```
+
+**Separate AUTO-INSTALLABLE prereqs from SYSTEM-LEVEL ones.** PyYAML is pip-installable — if Python 3 and pip are already present, install it yourself. Node.js, a missing Python runtime, or a missing pip are system installs you should NOT silently force.
+
+- **All present** (Node v20+, Python 3, PyYAML importable) → build the Cockpit by default under the single consent above.
+
+- **Only PyYAML missing, but Python 3 present AND pip available** → **auto-install it; do not punt to the user.** Ask once (fold into the 7-ter-a upfront consent if possible): *"Building the Cockpit's dashboard needs PyYAML, a small Python helper library. Install it now? It runs `pip3 install --user pyyaml` and stays on your machine. (yes / no)"* On YES: run `pip3 install --user pyyaml`, verify with `python3 -c "import yaml"`, then continue the build normally. Record `COCKPIT: built — PyYAML auto-installed on consent` in the report-back. Only if the user declines OR the install fails → fall back to the graceful "built-pending" state.
+
+- **Node.js missing or too old, OR Python 3 itself absent, OR pip unavailable** → do NOT hard-fail activation. Do everything else (personalize, shims, slash commands, verify agent-packs, leave the launcher spec ready), then leave the Cockpit in a **"built-pending"** state with the exact remedy: *"The Cockpit is ready to build but needs Node.js v20+ (install from nodejs.org or `brew install node`)"* and (if applicable) *"and Python 3 with pip (install from python.org or `brew install python`)"*. Then: *"Once installed, tell me 'finish the Cockpit setup' and I'll build it."* Record `COCKPIT: pending — <missing prereq>` in the report-back.
+
+#### 7-ter-c. Walk `Expansions/` and handle each Expansion by type
+
+For each subfolder of `Expansions/` with a valid `expansion.yaml`, branch on `expansion_type`:
+
+- **Agent-packs already merged into the base** (`expansion_type: agent_pack` — e.g. `app-developer` adds Felix/Vex/Vera, `designer-pack` adds Iris/Charta/Pixel). In this all-in-one bundle their agents are ALREADY present in `Team/`, registered in `Team/agent-index.md`, and (from step 7) have shims in `.claude/agents/`. These need **verification, not a rebuild**:
+  1. Run the manifest's `post_install_validation` `file_exists` checks (e.g. `Team/Felix - Frontend Developer/AGENTS.md` exists).
+  2. Confirm each added agent is in `agent-index.md` and has a `.claude/agents/<slug>.md` shim.
+  3. Mark them installed/active and acknowledge: *"App Developer pack verified — Felix, Vex, Vera are live. Designer pack verified — Iris, Charta, Pixel are live."*
+  Record per-pack `agent-pack verified` in the report-back. If a validation check FAILS, report the specific missing file rather than claiming success.
+
+- **Runtime Expansions** (`expansion_type: runtime` — e.g. `mypka-cockpit`). **Do NOT reimplement their install and do NOT restate their steps here.** Point at the Expansion's OWN contract and EXECUTE it:
+  1. Read `Expansions/mypka-cockpit/ADAPT-EXPANSION.md` — it points to `Expansions/mypka-cockpit/INSTALL.md`, the canonical 8-step gated install contract.
+  2. Execute `INSTALL.md` top to bottom, applying the **gate-streamlining from 7-ter-a** on the fresh first-run path. In brief (authoritative detail lives in `INSTALL.md`, not here): resolve scaffold root → **SQLite extension schema** (path-dependent, see below) → **build** via `npm run install:all` + `npm run build` → **generate the per-OS launcher** from `Expansions/mypka-cockpit/launcher/GENERATE-LAUNCHER.md` → health-check.
+
+     **SQLite step — path-dependent:**
+     - **Fresh all-in-one first-run path:** install the **FULL extension schema by default**, under the single upfront consent from 7-ter-a — this is NOT a separate prompt. Run:
+       ```sh
+       python3 Expansions/mypka-cockpit/sqlite-extension/install-extensions.py "<resolved-root>/mypka.db" --all
+       ```
+       Margaret's auto-bootstrap base-creates `mypka.db` first if it is missing. Result: every dashboard module's backing tables exist out of the box. `detect-gaps.py` is not needed as a gate on this path; run it afterward only for confirmation.
+       > **SSOT note:** `INSTALL.md` remains the canonical install detail and its Step 4 is written as "offer, never automatic." For the all-in-one fresh first-run, that "offer" is reconciled to this `--all`-by-default — the single upfront consent from 7-ter-a IS the user's yes. (INSTALL.md's general wording still governs the à-la-carte path verbatim.)
+     - **À-la-carte path into an already-populated scaffold:** run `detect-gaps.py` (read-only), then **OFFER** the SQLite upgrade per module (never auto-apply, never force `--all` onto existing data), exactly as `INSTALL.md` Step 4 is written.
+
+  3. **The locally-built launcher is the deliberate distribution model — make it first-class.** No runnable launcher ships in this package. You GENERATE it on the user's machine from the reviewed text templates in `launcher/templates/`. This is an intentional anti-malware-warning posture: a downloaded launcher trips Gatekeeper/SmartScreen; one your assistant writes from a reviewed template does not. Generating the launcher at init is REQUIRED, not optional.
+  4. **HARD RULE — never auto-launch.** Build + generate the launcher + run the health-check (verify build artifacts exist; only `curl http://127.0.0.1:4317/api/health` if the user has started it). Then ANNOUNCE: *"The Cockpit is built and ready — double-click the launcher in `Expansions/mypka-cockpit/` to start it."* **You never start the server for the user.** This mirrors the `AGENTS.md` rule: Hawkeye never auto-launches a runtime Expansion.
+  Record `runtime built` (or `runtime pending-prereq`) per runtime Expansion in the report-back. On the fresh all-in-one first-run, the expected SQLite outcome is **full module schema installed (`--all`)** — note that explicitly (e.g. `runtime built — full module schema installed (--all)`).
+
+#### 7-ter-d. After the walk
+
+- Update `Expansions/INDEX.md` to reflect installed/active state, and record the Cockpit's installed state per its own convention. Do NOT edit any `AGENTS.md`.
+- If a Vex security gate is part of the install path on an à-la-carte install, honor it per `WS-003` §2. On the bundled first-run path the Expansions are the trusted myICOR-issued bundle that shipped with the scaffold; note that in the report-back rather than re-running a full audit, unless the user asks.
+
 8. Adopt Hawkeye's identity for the rest of this session.
-9. Confirm by listing the six specialists from `Team/agent-index.md` AS LARRY (e.g. "I'm Hawkeye. My team: Radar for capture, B.J. for research, Potter for hiring, Klinger for automations and external imports, Margaret for database integrity. Yours to direct, <first_name>.").
+9. Confirm by listing the six specialists from `Team/agent-index.md` as Hawkeye (e.g. "I'm Hawkeye. My team: Radar for capture, B.J. for research, Potter for hiring, Klinger for automations and external imports, Margaret for database integrity. Yours to direct, <first_name>.").
 
 ## Template for the tool-specific pointer file
 
@@ -131,7 +200,7 @@ Specialists are bound as host subagents in `.claude/agents/<slug>.md` (Claude Co
 
 ## Required report-back
 
-When you finish, report back AS LARRY with exactly these fields:
+When you finish, report back as Hawkeye with exactly these fields:
 
 - **TOOL:** (Claude Code / Codex CLI / Gemini CLI / Cursor / chat-only / other)
 - **MODEL:** (e.g. Claude Opus 4.7, GPT-5, Gemini 2.5 Pro)
@@ -141,6 +210,9 @@ When you finish, report back AS LARRY with exactly these fields:
 - **PERSONALIZATION:** confirm whether you ran the one-time `{{USER_NAME}}` substitution (yes / skipped — already personalized), the user's first name captured (or "n/a"), and the count of tokens replaced
 - **HOST SUBAGENT BINDING:** list of shim files written (one per specialist excluding Hawkeye) AND list of any pre-existing shims you skipped (per the idempotency rule), or "host does not support parallel dispatch, noted in tool-specific pointer file"
 - **SLASH COMMANDS BOUND:** the `close-session` command file written (with absolute path), or "skipped — already exists", or "host does not support slash commands, natural-language triggers noted in tool-specific pointer file"
+- **VERSION HISTORY:** (initialized git locally / declined / already a git repo / n/a — host cannot run shell commands)
+- **EXPANSIONS INSTALLED:** one line per Expansion — e.g. "App Developer pack: agent-pack verified (Felix, Vex, Vera live)" / "Designer pack: agent-pack verified (Iris, Charta, Pixel live)" / "myPKA Cockpit: runtime built — full module schema installed (--all)" or "pending-prereq — <missing prereq>"
+- **COCKPIT:** (built / built — full module schema installed (--all) / pending-prereq — <missing prereq>, remedy: <exact command>)
 - **HOW AGENTS.md WAS PRESERVED:** confirm you did not modify, rename, or replace any `AGENTS.md` file
 - **TEAM ROSTER:** six lines, one per specialist, name and role pulled from `Team/agent-index.md`
 - **IDENTITY CHECK:** answer the question "who are you?" - the first sentence of your reply must lead with "I'm Hawkeye, your team orchestrator at myPKA."

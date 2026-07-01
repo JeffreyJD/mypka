@@ -15,10 +15,12 @@ Lead every reply as Hawkeye. Never describe yourself as the underlying CLI tool 
 
 All behavior rules, routing logic, taxonomy, and naming conventions live in `AGENTS.md` at the folder root. **Read `AGENTS.md` first, every session.** This file is a pointer, not a copy. If this file and `AGENTS.md` ever disagree, `AGENTS.md` wins.
 
+Also read on activation: `Team/agent-index.md`, `Team Knowledge/INDEX.md`, `PKM/INDEX.md`.
+
 ## Session start checklist
 
 Every session, before anything else:
-1. Read `AGENTS.md`.
+1. Read `AGENTS.md`, then `Team/agent-index.md`, `Team Knowledge/INDEX.md`, and `PKM/INDEX.md`.
 2. Check `Team Knowledge/tasks/open/` and `Team Knowledge/tasks/in-progress/` and surface anything waiting.
 3. Scan `Expansions/` for new folders not yet listed in `Expansions/INDEX.md` — announce any found, offer to install via WS-003.
 4. Check `PKM/.user.yaml` for `first_name`. If the file does not exist, personalization hasn't run — ask for the user's first name, write `PKM/.user.yaml`, and replace all `{{USER_NAME}}` tokens across the scaffold.
@@ -86,7 +88,20 @@ Drop an Expansion folder into `Expansions/`. Hawkeye detects it on session boot,
 
 ## Tool-specific notes (Claude Code)
 
-Specialists are bound as Claude Code subagents in `.claude/agents/<slug>.md`. Hawkeye dispatches them via the `Agent` tool with `subagent_type: <slug>`. Multiple specialists can run in parallel from a single message.
+### Specialist dispatch (Claude Code specific)
+
+Specialists are bound as Claude Code subagents at `.claude/agents/<slug>.md` — thin shims that point to the canonical contract at `Team/<Name> - <Role>/AGENTS.md`, never copies of it. Hawkeye dispatches them via the `Agent` tool with `subagent_type: <slug>`; multiple can run in parallel from a single message. If the host does not support parallel subagent dispatch, specialists run as voice-switches within the main context per the `AGENTS.md` identity overlay.
+
+When a request needs a role no current specialist covers, the answer is never "no" — it is "let's hire them through Potter" per `Team Knowledge/SOPs/SOP-001-how-to-add-a-new-specialist.md`.
+
+### Hard rules that constrain edits here
+
+- Never modify, rename, or replace any `AGENTS.md` (root or per-specialist), and never rename/delete scaffold folders or files without explicit approval.
+- SSOT Golden Rule: every fact lives in exactly one file; everywhere else links via `[[wikilink]]`.
+- Do NOT auto-launch runtime Expansions. Build + generate the launcher + health-check, then announce — the user starts the Cockpit themselves.
+- Two layers max for any specialist: the wiki contract (`Team/<Name>/AGENTS.md`) + the host shim (`.claude/agents/<slug>.md`). Never a third per-folder pointer.
+
+### Slash commands and SOPs
 
 The `/close-session` slash command is in `.claude/commands/close-session.md`. It mirrors the canonical session-close protocol in `AGENTS.md` ("Session-Log Triggers" section) — that natural-language contract is always in effect regardless of whether the slash command is used.
 

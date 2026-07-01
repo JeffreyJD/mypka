@@ -3,7 +3,7 @@
 - **Owner:** any agent (Hawkeye runs this at every session boot)
 - **Triggered by:** session start, status check, "where did we leave off?"
 - **Output:** a printable summary of open and in-progress tasks (with blocked tasks called out)
-- **References:** [[SOP-rebuild-task-index]]
+- **References:** [[SOP-013-rebuild-task-index]]
 
 ## Purpose
 
@@ -24,7 +24,7 @@ cat "Team Knowledge/tasks/INDEX.md"
 
 Sections: Summary, Open (by priority), In progress (with blocked callouts), By assignee, Recently closed.
 
-If the index `_Last rebuilt:_` timestamp is older than the newest file in `tasks/`, run [[SOP-rebuild-task-index]] first.
+If the index `_Last rebuilt:_` timestamp is older than the newest file in `tasks/`, run [[SOP-013-rebuild-task-index]] first.
 
 ```bash
 INDEX_MTIME=$(stat -f %m "Team Knowledge/tasks/INDEX.md" 2>/dev/null || stat -c %Y "Team Knowledge/tasks/INDEX.md")
@@ -106,11 +106,11 @@ grep -rlE "^assignee: ${ME}\b" \
 
 …to find every task they own. Read the highest-priority in-progress one first (that's where you left off). Then open tasks.
 
-For each task picked up, also read the task's `linked_journal_entries` — see [[SOP-read-own-journal]] for the discipline.
+For each task picked up, also read the task's `linked_journal_entries` — see [[SOP-017-read-own-journal]] for the discipline.
 
 ## Common mistakes
 
-- Trusting the index when something just changed in the same session. Re-run [[SOP-rebuild-task-index]] if you've been editing.
+- Trusting the index when something just changed in the same session. Re-run [[SOP-013-rebuild-task-index]] if you've been editing.
 - Greppping for assignee without `\b` boundary — matches `mackenzie` if the assignee is `klinger`. Use `^assignee: klinger\b` or `^assignee: klinger$`.
 - Forgetting that blocked tasks live in `in-progress/`, not in a separate folder. Look for `blocked_reason: ` not equal to `null`.
 - Not surfacing long-blocked or long-stale tasks. The triage prompt at session boot is what keeps the queue alive.

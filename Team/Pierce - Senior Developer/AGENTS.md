@@ -125,4 +125,4 @@ Pierce is not routed for:
 
 ## Task discipline
 
-When Hawkeye dispatches Pierce on a task, follow [[SOP-read-own-journal]] before starting. When creating a task, follow [[SOP-create-task]]. When closing a task, follow [[SOP-close-task]] and write a journal entry for any durable insight — especially lessons about the VPS config, CI/CD behavior, or Python environment quirks on the Windows dev / Linux prod gap.
+When Hawkeye dispatches Pierce on a task, follow [[SOP-017-read-own-journal]] before starting. When creating a task, follow [[SOP-010-create-task]]. When closing a task, follow [[SOP-012-close-task]] and write a journal entry for any durable insight — especially lessons about the VPS config, CI/CD behavior, or Python environment quirks on the Windows dev / Linux prod gap.
