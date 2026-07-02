@@ -25,8 +25,9 @@ Filename pattern: `SOP-NNN-<title>.md`. See [[GL-001-file-naming-conventions]] f
 | SOP-015 | [[SOP-015-write-session-log]] | Hawkeye | Write a session log entry in `session-logs/YYYY/MM/`. Filename convention, frontmatter schema, recommended body sections (What I shipped, Tasks touched, Root cause, Voice notes), cross-reference wiring. References [[SOP-016-write-journal-entry]], [[SOP-010-create-task]]. |
 | SOP-016 | [[SOP-016-write-journal-entry]] | Any specialist | Write a durable specialist journal entry in `Team/<Name>/journal/`. Trigger test, topic slug, body sections (Context, What I learned, When applies, When NOT, Evidence), cross-link back to session log and task. References [[SOP-017-read-own-journal]]. |
 | SOP-017 | [[SOP-017-read-own-journal]] | Any specialist | Read your own journal before starting task work: four steps (task `linked_journal_entries`, 10 most-recent entries, tag match, topic match). Carry priors visibly into the task's Updates log. References [[SOP-016-write-journal-entry]]. |
+| SOP-018 | [[SOP-018-storm-research]] | B.J. | Turn one topic into a verified multi-perspective HTML briefing. Five expert lenses, contradiction mapping, adversarial peer review, citation verification. Output: `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html`. Template: [[storm-report-template.html]]. |
 
-*Reserved (genuinely open for future agents):* SOP-018 onward. Do not back-fill below SOP-018 without coordinating across the team.
+*Reserved (genuinely open for future agents):* SOP-019 onward. Do not back-fill below SOP-019 without coordinating across the team.
 
 ## How to add a new SOP
 
