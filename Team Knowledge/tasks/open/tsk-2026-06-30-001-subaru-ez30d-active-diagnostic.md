@@ -30,7 +30,7 @@ linked_guidelines: ["GL-001-file-naming-conventions"]
 linked_my_life: ["obd-scanner"]
 linked_session_logs: []
 linked_journal_entries: []
-linked_deliverables: ["2026-06-30-subaru-outback-obd-vlinker-reanalysis", "2026-06-30-subaru-obd-research"]
+linked_deliverables: ["2026-06-30-subaru-outback-obd-vlinker-reanalysis", "2026-06-30-subaru-obd-research", "2026-07-01-2008-subaru-outback-obd-scan-idle-driveway"]
 
 # Tagging
 tags: ["subaru", "obd", "automotive", "diagnostic", "python"]
@@ -68,11 +68,19 @@ The three threads:
 
 ## Open action items (priority order)
 
-### CRITICAL — before next drive
-- [ ] Cold check: coolant level in overflow reservoir, oil dipstick for milky residue
-- [ ] Watch cooling fans at operating temp — Fan 1 should spin before 95°C, both fans by 100°C
-- [ ] Fan relay swap test (underhood fuse box — identical relay, free swap)
-- [ ] If fans still don't activate after relay swap: do NOT drive — investigate fan motors
+### CRITICAL — before next drive (cooling system capacity fault)
+
+2026-07-01 UPDATE: Jeff confirmed both fans running throughout the session. 114°C WITH fans running = cooling flow or heat-transfer problem, not fan relay. Fan relay test items below are retired.
+
+- [x] Watch cooling fans at operating temp — CONFIRMED RUNNING by Jeff during 2026-07-01 session
+- [ ] Cold check: coolant level in overflow reservoir (engine cold, key out — do this FIRST before next start)
+- [ ] Oil dipstick: check for milky or gray appearance (head gasket check)
+- [ ] Coolant reservoir: check for oil slick or brown sludge on surface (head gasket check)
+- [ ] Replace radiator cap (~$15 DIY) — eliminate low-pressure boiling point as contributing factor
+- [ ] Replace thermostat (~$25 DIY, combine with coolant change) — eliminate partial-open stuck thermostat
+- [ ] Inspect accessory belt: glazing, cracking, fraying, tension — belt drives the water pump (belt uninspected per service record)
+- [ ] Assess water pump: pulley wobble, shaft seal weep, suspect impeller slip if all else passes
+- [ ] Perform coolant flush and refill (overdue 10k miles, use Subaru OAT blue) — degraded coolant reduces heat transfer and scales radiator passages
 
 ### HIGH — this week
 - [ ] Pierce: add PIDs 0x24, 0x25, 0x34 to `obd_scanner/cli.py` logger
@@ -90,6 +98,7 @@ The three threads:
 
 ## Updates
 
+- 2026-07-01 (rizzo) — WS-005 Step 3 complete; 25-min driveway idle log analyzed (CSV: Team Inbox/2026-07-01-17-34-2008-subaru-outback-log.csv); KEY CORRECTION: Jeff visually confirmed both cooling fans running throughout session — cooling fault is a capacity/flow problem, not fan relay. Coolant plateau at 114°C WITH fans running; dash at 3/4 toward red. STFT B1 escalating to +6.25% at hot idle (worse than prior session). Diagnostic action items updated. Deliverable: [[2026-07-01-2008-subaru-outback-obd-scan-idle-driveway]]. Vehicle file updated with corrected Known Issues, new Diagnostic Record, and new Service History entry.
 - 2026-06-30 00:00 (hawkeye) — created; born from session health check + Vlinker diagnostic session revealing three active critical threads; obd-scanner project at `C:\Users\jeff\dev\obd-scanner\` confirmed connected to PKM via [[obd-scanner]] My Life project
 
 ## Outcome

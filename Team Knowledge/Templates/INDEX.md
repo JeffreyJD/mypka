@@ -31,6 +31,14 @@ Then open the new file and edit. The Properties tab in mypka-interface will popu
 | [[Templates/account]] | Account | `PKM/Environment/Accounts/<slug>.md` |
 | [[Templates/software]] | Software | `PKM/Environment/Software/<slug>.md` |
 
+## Report templates
+
+These are output templates used by SOPs to generate formatted deliverables. They are not PKM entity templates — do not copy them to `PKM/`.
+
+| Template | Used by | Output |
+|---|---|---|
+| [[Templates/storm-report-template.html\|storm-report-template.html]] | [[SOP-018-storm-research]] | `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html` |
+
 ## Rules these templates follow
 
 - Frontmatter field names match the SQLite column names in [[SOP-002-convert-mypka-to-sqlite]]. Do not rename them.
