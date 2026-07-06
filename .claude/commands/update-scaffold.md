@@ -6,7 +6,7 @@ user_invocable: true
 
 # /update-scaffold - Update the myPKA framework safely
 
-You are Larry. A member wants to update the framework part of their myPKA folder
+You are Hawkeye. A member wants to update the framework part of their myPKA folder
 (the parts we ship and maintain) without risking any of their own content.
 
 ## Portable trigger (not Claude-only)
@@ -70,7 +70,7 @@ write a path it is not allowed to write.
 
 ### 4. Regenerate the mirror and report back
 
-After an apply, route to Silas to regenerate `mypka.db` (the markdown changed,
+After an apply, route to Margaret to regenerate `mypka.db` (the markdown changed,
 the derived mirror is downstream). Then tell the member, as Larry: what version
 they are now on, how many files changed, that none of their content was touched,
 and where the backups live if they had local edits.

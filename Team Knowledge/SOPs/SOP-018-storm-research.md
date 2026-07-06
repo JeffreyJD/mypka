@@ -15,7 +15,7 @@ Run the full pipeline end to end. Do not shortcut a phase. This is heavier than 
 
 ## Portability
 
-This SOP is self-contained. It depends only on built-in Claude Code tools (the `Agent` tool with the `general-purpose` subagent, `Write`, and web search/fetch used inside those agents) plus `storm-report-template.html` at `Team Knowledge/Templates/`. No external scripts, APIs, or paid services required.
+The procedure (lenses, contradiction mapping, synthesis, verification) is fully LLM-agnostic and works in any capable LLM. The parallel execution mechanism is Claude Code-specific. See Phase 1 for the two-path execution note. The HTML template at `Team Knowledge/Templates/storm-report-template.html` is required for the output format. No external scripts, APIs, or paid services required.
 
 ---
 
@@ -31,7 +31,11 @@ This SOP is self-contained. It depends only on built-in Claude Code tools (the `
 
 ## Phase 1: Five expert lenses (parallel agents)
 
-Spawn **five `general-purpose` agents in a single message** so they run concurrently. Each gets the same topic framing plus its own lens. Use these exact prompts, substituting `{TOPIC}` and a one-line `{TOPIC_FRAME}` (your Phase 0 interpretation):
+**In Claude Code:** Spawn five `general-purpose` agents in a single message so they run concurrently. Each gets the same topic framing plus its own lens.
+
+**In any other LLM (Cursor, Gemini CLI, plain chat):** Run each lens sequentially in the same conversation. Ask the LLM to adopt each expert persona in turn — paste the persona prompt with `{TOPIC}` and `{TOPIC_FRAME}` substituted, get the response, then move to the next. Collect all five before proceeding to Phase 2.
+
+Use these exact prompts, substituting `{TOPIC}` and a one-line `{TOPIC_FRAME}` (your Phase 0 interpretation):
 
 **1. THE PRACTITIONER** — `You are THE PRACTITIONER for: {TOPIC} ({TOPIC_FRAME}). You work with this daily. Do real web research (prioritize recent sources, case studies, practitioner threads, operator data). Surface the GAP between what hands-on operators know and what academics/pundits miss, and the practical realities (workflow friction, what actually works, where it breaks) that get ignored. Return EXACTLY: 1) CORE POSITION in 2 sentences. 2) STRONGEST EVIDENCE, 3-5 bullets each with a concrete data point/case/named source + URL. 3) THE ONE THING only a practitioner would say. Cite real sources with URLs. Under 400 words.`
 

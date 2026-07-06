@@ -14,7 +14,7 @@ blocked_by: null
 
 # Time
 created: 2026-06-30T00:00:00Z
-updated: 2026-06-30T00:00:00Z
+updated: 2026-07-04T00:00:00Z
 due: 2026-07-07
 
 # Provenance
@@ -29,8 +29,8 @@ linked_workstreams: ["WS-005-obd-scan-intake-and-fleet-triage"]
 linked_guidelines: ["GL-001-file-naming-conventions"]
 linked_my_life: ["obd-scanner"]
 linked_session_logs: []
-linked_journal_entries: []
-linked_deliverables: ["2026-06-30-subaru-outback-obd-vlinker-reanalysis", "2026-06-30-subaru-obd-research", "2026-07-01-2008-subaru-outback-obd-scan-idle-driveway"]
+linked_journal_entries: ["2026-07-01-subaru-obd-drive-analysis"]
+linked_deliverables: ["2026-06-30-subaru-outback-obd-vlinker-reanalysis", "2026-06-30-subaru-obd-research", "2026-07-01-2008-subaru-outback-obd-scan-idle-driveway", "2026-07-05-subaru-obd-drive-analysis"]
 
 # Tagging
 tags: ["subaru", "obd", "automotive", "diagnostic", "python"]
@@ -73,10 +73,10 @@ The three threads:
 2026-07-01 UPDATE: Jeff confirmed both fans running throughout the session. 114°C WITH fans running = cooling flow or heat-transfer problem, not fan relay. Fan relay test items below are retired.
 
 - [x] Watch cooling fans at operating temp — CONFIRMED RUNNING by Jeff during 2026-07-01 session
-- [ ] Cold check: coolant level in overflow reservoir (engine cold, key out — do this FIRST before next start)
-- [ ] Oil dipstick: check for milky or gray appearance (head gasket check)
-- [ ] Coolant reservoir: check for oil slick or brown sludge on surface (head gasket check)
-- [ ] Replace radiator cap (~$15 DIY) — eliminate low-pressure boiling point as contributing factor
+- [x] Cold check: coolant level in overflow reservoir — **LOW** (2026-07-05; likely contributing to 114°C readings)
+- [x] Oil dipstick: normal black color — no milky/gray appearance; head gasket NOT flagged (2026-07-05)
+- [ ] Coolant reservoir: check for oil slick or brown sludge on surface (head gasket check) — surface appearance not yet confirmed
+- [x] Replace radiator cap — **DONE 2026-07-05. OLD CAP WAS BROKEN IN THE MIDDLE — pressure valve failed. System was running at near-atmospheric pressure, dropping coolant boiling point ~50°F. THIS IS LIKELY THE PRIMARY CAUSE OF THE 114°C READINGS.**
 - [ ] Replace thermostat (~$25 DIY, combine with coolant change) — eliminate partial-open stuck thermostat
 - [ ] Inspect accessory belt: glazing, cracking, fraying, tension — belt drives the water pump (belt uninspected per service record)
 - [ ] Assess water pump: pulley wobble, shaft seal weep, suspect impeller slip if all else passes
@@ -98,6 +98,14 @@ The three threads:
 
 ## Updates
 
+- 2026-07-05 (hawkeye) — O2 sensor identification complete. Bank 2 = driver's side (left), confirmed via SubaruOutback.org forum. Two sensors on driver's side need replacement: (1) B2S1 upstream LAF — Denso 234-9047 / OEM 22641AA25A — 4-wire wideband, ~$100–150; produced zero data in drive log, P1153/P1155 stored. (2) B2S2 downstream — Denso 234-4447 / OEM 22690AA840 — 4-wire narrowband, ~$50–80; P0160, physically dead. Both are same side — replace together. B1S1 upstream still reading data; monitor 3 drive cycles before deciding on replacement. Corrected prior documentation error: upstream sensors are 4-wire (not 5-wire). OEM NA catalog number is 22641AA25A; 22641AA160 is equivalent EU/JDM revision.
+- 2026-07-05 (hawkeye) — Drive session complete (19:31–20:11, 874 rows, 70.8mph max). ROOT CAUSE OF OVERHEATING CONFIRMED: broken radiator cap + low coolant. Max coolant temp this session: 96°C (zero rows above 100°C vs. 114°C in prior sessions). LTFT normalized dramatically: B1 avg +1.76% (was +14.06%), B2 avg +0.10% (was +7.81%). Highway LTFT B1 -0.68%, B2 -1.37% — essentially stoichiometric. MIL did NOT fire; P030X not triggered. Wideband LAF B1 reading (avg 2.878V / +0.049mA at highway). Pre-drive DTC scan found 5 stored/pending codes: P1152/P1153/P1154/P1155 (LAF sensor faults, both banks) and P0160 (rear O2 Bank 2 dead). These were pre-existing. No new codes set during drive. Deliverable: [[2026-07-05-subaru-obd-drive-analysis]].
+- 2026-07-05 (hawkeye) — Pre-drive DTC scan (19:25). MIL OFF. P030X misfire NOT present — self-cleared again (consistent with load-dependent pattern). NEW: 5 codes found, all O2/LAF sensor system. Stored AND pending: P1152 (LAF sensor range/perf B1), P1153 (LAF sensor range/perf B2), P1154 (LAF sensor malfunction B1), P1155 (LAF sensor malfunction B2), P0160 (rear O2 no activity B2 sensor 2). Both upstream wideband LAF sensors faulting on both banks — likely a major contributor to the chronic lean condition. Downstream rear O2 sensor Bank 2 completely dead. Freeze frame: RPM=0, coolant=26°C, speed=0, throttle=17.3% (cold/KOEO snapshot). Cold checks complete: oil normal black (HG not flagged); coolant LOW (topped off); radiator cap BROKEN (replaced). Proceeding to drive session.
+
+
+- 2026-07-04 (rizzo) — Full SOP-020 five-phase analysis of 2026-07-01 17:34 driveway idle session (950 data rows, 25 min stationary, 17:35:02–18:00:23). File confirmed at `C:\Users\jeff\dev\obd-scanner\logs\2026-07-01-17-34-2008-subaru-outback-log.csv` (Team Inbox copy still present — needs manual delete). KEY FINDINGS: (1) MIL was OFF, dtc_count = 0 throughout entire session — the P-code that set the MIL during the 15:26 drive self-cleared between 15:52 and 17:35. Fault is load-dependent/intermittent: triggers under highway acceleration, absent at idle. This rules out static faults. (2) LTFT adapted downward: B1 15.62%→14.06%, B2 10.16%→7.81% in the first 90 seconds of the session. ECU post-drive recalibration, NOT a physical fix. Lean condition is active. (3) Fan kick-on at 17:45:56 (113°C) confirmed by data: engine load 26%→20%, MAF 4.24→3.56 g/s, RPM 715→696. Temperature still reached 114°C WITH fans running — cooling capacity fault confirmed. (4) STFT B1 at hot idle (113–114°C): sustained 3.91–5.47%, peak 5.47% at 17:48. Total B1 fuel correction at full hot idle: LTFT 14.06% + STFT ~4.5% avg = ~18.5%. (5) Diagnostic Records entry STFT value of "+6.25%" appears to be from the June 30 idle session, not this CSV; this session's actual peak is 5.47%. Vehicle file Diagnostic Sessions section updated with full SOP-020 breakdown. Rizzo journal entry written for durable insight on load-dependent MIL self-clearing.
+- 2026-07-04 (rizzo) — Hardware investigation complete (Pierce's OBD bus topology work). ELM327 (Vlinker FS USB) cannot reach the ABS/VDC K-Line bus — this is a protocol mismatch, not a software fix: ELM327 runs K-Line at 10400 baud with KWP2000 framing; Subaru SSM2 requires 9600 baud with proprietary `0x80` header; no AT command override exists. C0071 and all other ABS/VDC chassis codes remain unreadable with current hardware. MINIMUM PURCHASE TO CLOSE: SSM2 K-Line USB cable (~$30–50, eBay/AliExpress). obd-scanner `--chassis-dtcs` flag is built, SSM2Protocol class implemented (ABS DTC request frame `80 15 F0 01 B8 3E`), merged to main — awaiting hardware. FreeSSM (free, Windows) is the alternative once cable acquired. Vehicle file (## OBD Scanner Hardware Notes section) and SOP-020 (Guardrails + Phase 1.5) updated with bus topology and acquisition path. NEXT STEP: Jeff to purchase SSM2 K-Line USB cable; connect with Vlinker FS USB; run `obd-scanner --chassis-dtcs` to confirm C0071 active/inactive status.
+- 2026-07-01 (rizzo) — Drive session analysis complete. CSV: `C:\Users\jeff\dev\obd-scanner\logs\2026-07-01-15-26-2008-subaru-outback-log.csv` (992 rows, 15:27–15:52). KEY FINDINGS: (1) MIL confirmed ON at 15:32:15 during acceleration at 53 km/h — pending code reached confirmation threshold during this drive cycle; MIL stayed ON through session end. Actual DTC unknown — obd_scanner does not capture service $03 codes; Pierce fix pending. (2) CC disengagement confirmed same drive. Two simultaneous active CC cascade triggers: engine MIL + C0071 SAS/VDC (cannot isolate which or both without code read + chassis scan). (3) LTFT load-dependent pattern confirmed — textbook intake air leak: LTFT near-zero at highway load, snaps back to +15.62%/+10.16% within seconds of stopping (CSV lines 932–935). (4) Speed unit in obd_scanner is km/h not mph (bug). Vehicle file updated: Known Issues, Diagnostic Records, and new Diagnostic Sessions section added. Journal entry written: [[2026-07-01-subaru-obd-drive-analysis]]. SOP-020 created. NEXT STEPS: (1) dedicated code read scan for engine P-code identity (Innova or any OBD reader with mode $03), (2) chassis module scan to confirm C0071 active status in ABS/VDC module (Innova RepairSolutions2 all-system scan), (3) SAS replacement still pending.
 - 2026-07-01 (rizzo) — WS-005 Step 3 complete; 25-min driveway idle log analyzed (CSV: Team Inbox/2026-07-01-17-34-2008-subaru-outback-log.csv); KEY CORRECTION: Jeff visually confirmed both cooling fans running throughout session — cooling fault is a capacity/flow problem, not fan relay. Coolant plateau at 114°C WITH fans running; dash at 3/4 toward red. STFT B1 escalating to +6.25% at hot idle (worse than prior session). Diagnostic action items updated. Deliverable: [[2026-07-01-2008-subaru-outback-obd-scan-idle-driveway]]. Vehicle file updated with corrected Known Issues, new Diagnostic Record, and new Service History entry.
 - 2026-06-30 00:00 (hawkeye) — created; born from session health check + Vlinker diagnostic session revealing three active critical threads; obd-scanner project at `C:\Users\jeff\dev\obd-scanner\` confirmed connected to PKM via [[obd-scanner]] My Life project
 

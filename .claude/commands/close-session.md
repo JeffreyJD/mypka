@@ -29,7 +29,22 @@ Any LLM driving this scaffold honors those phrases without the slash command. `A
 
 ## Procedure
 
-### 1. Librarian pass (run before writing the log)
+### 1. Personal fact capture (run first, before anything else)
+
+Scan the current session for any personal facts Jeff stated that are not yet in persistent memory or PKM domain files. Personal facts include: vehicle fleet changes, family updates, addresses, account details, preferences, or any "I have / I own / I use / I traded / I bought" statements.
+
+For each fact found:
+- Write or update the relevant memory file in `C:\Users\jeff\.claude\projects\C--Users-jeff-My-Drive-myPKA\memory\`
+- Update the relevant PKM domain file (e.g., fleet-overview.md, CRM/People/, etc.)
+- Add a pointer to MEMORY.md if a new memory file was created
+
+**Rule:** A fact stated by Jeff in this session and not written to memory before session close is a fact the team will forget. Do not defer this step.
+
+If no new personal facts were stated, note "No new personal facts this session" and proceed.
+
+---
+
+### 2. Librarian pass (run before writing the log)
 
 Scan for:
 
@@ -40,7 +55,7 @@ Scan for:
 
 Report what was fixed vs. what was flagged.
 
-### 2. Write the session log
+### 3. Write the session log
 
 **File path:** `Team Knowledge/session-logs/<YYYY>/<MM>/<YYYY-MM-DD-HH-MM>_hawkeye_<topic-slug>.md`
 
@@ -74,11 +89,11 @@ linked_journal_entries: []
 - **Next steps** — concrete, short. Not a wishlist.
 - **Cross-links** — `[[wikilink]]` to the closest related prior session log, if any.
 
-### 3. Task accounting
+### 4. Task accounting
 
 If any tasks were created, claimed, closed, or updated this session, add their basenames to `linked_tasks:` in the session log frontmatter. This is how the task system and the session log stay cross-referenced per [[GL-004-task-resource-linking]].
 
-### 4. Insight graduation (optional)
+### 5. Insight graduation (optional)
 
 If any insight in the log has reached "this is now a permanent rule" status, propose graduating it:
 
@@ -88,7 +103,7 @@ If any insight in the log has reached "this is now a permanent rule" status, pro
 
 Do not self-write framework files. Propose the graduation to the user and wait for approval before a named specialist implements it (per WS-004).
 
-### 5. Report back
+### 6. Report back
 
 Confirm to the user:
 

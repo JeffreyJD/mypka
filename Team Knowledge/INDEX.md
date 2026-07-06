@@ -27,6 +27,11 @@ When the team learns something durable across sessions, Hawkeye appends it to a 
 
 ### Cross-session learnings
 
+**2026-07-01 — SOPs are LLM-agnostic; slash commands are Claude Code-only (Hawkeye authoring rule)**
+All SOPs must be written so any capable LLM can follow them. Where Claude Code tools (`Agent`, parallel subagents, file tools) are used, add a two-path execution note: Claude Code path + sequential/manual fallback for other LLMs. The `.claude/commands/` file is the Claude Code entry point only — other LLMs use natural language triggers documented in the SOP itself. When converting a skill to a SOP, the SOP holds the canonical procedure; the command file becomes a thin wrapper. See "LLM-agnostic standard" and "Skill-to-SOP conversion pattern" in [[Team Knowledge/SOPs/INDEX]].
+
+
+
 **2026-06-30 — Domain-first routing (Hawkeye routing rule)**
 Before any agent executes domain work, Hawkeye must route to the relevant domain specialist first. The specialist reads their source files before Hawkeye briefs the task. Skipping this step makes the specialist's knowledge base invisible — the system holds the answer but cannot surface it. Evidence: Rizzo (Automobiles) was bypassed during an OBD/Subaru diagnostic session; the correct engine type and weeks of vehicle history were unreachable until surfaced late in the session. This is a hard routing check, not a reminder.
 

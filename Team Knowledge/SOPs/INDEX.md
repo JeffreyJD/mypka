@@ -26,8 +26,10 @@ Filename pattern: `SOP-NNN-<title>.md`. See [[GL-001-file-naming-conventions]] f
 | SOP-016 | [[SOP-016-write-journal-entry]] | Any specialist | Write a durable specialist journal entry in `Team/<Name>/journal/`. Trigger test, topic slug, body sections (Context, What I learned, When applies, When NOT, Evidence), cross-link back to session log and task. References [[SOP-017-read-own-journal]]. |
 | SOP-017 | [[SOP-017-read-own-journal]] | Any specialist | Read your own journal before starting task work: four steps (task `linked_journal_entries`, 10 most-recent entries, tag match, topic match). Carry priors visibly into the task's Updates log. References [[SOP-016-write-journal-entry]]. |
 | SOP-018 | [[SOP-018-storm-research]] | B.J. | Turn one topic into a verified multi-perspective HTML briefing. Five expert lenses, contradiction mapping, adversarial peer review, citation verification. Output: `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html`. Template: [[storm-report-template.html]]. |
+| SOP-019 | [[SOP-019-roast-an-idea]] | Hawkeye | Pressure-test an idea before building it. Convenes a 5-persona adversarial council (Contrarian, Expansionist, Logician, Researcher, Buyer) in parallel, then Hawkeye-as-Judge delivers one GO / RESHAPE / KILL verdict plus the cheapest 48-hour de-risk test. Triggered by `/roast`. |
+| SOP-020 | [[SOP-020-obd-scan-analysis]] | Rizzo | Analyze an OBD scan session CSV from the obd_scanner Python logger. Five phases: locate and identify the scan file (Phase 0, includes km/h speed unit guardrail), read baseline conditions (Phase 1), identify events — MIL transitions, LTFT load pattern, STFT spikes, coolant trend (Phase 2), compare against prior sessions (Phase 3), write back to vehicle file + task + journal (Phase 4). Guardrails: speed is km/h; DTCs require separate mode $03 read; chassis codes require multi-module scanner; LTFT is load-cell specific. |
 
-*Reserved (genuinely open for future agents):* SOP-019 onward. Do not back-fill below SOP-019 without coordinating across the team.
+*Reserved (genuinely open for future agents):* SOP-021 onward. Do not back-fill below SOP-021 without coordinating across the team.
 
 ## How to add a new SOP
 
@@ -36,3 +38,20 @@ Filename pattern: `SOP-NNN-<title>.md`. See [[GL-001-file-naming-conventions]] f
 3. Header includes the default owner, status, triggers, references, and an explicit "Reusable by any agent" note — the SOP is a skill, not 1:1 ownership.
 4. Reference [[GL-001-file-naming-conventions]] and any other Guideline instead of duplicating its content.
 5. Add a row to this index.
+
+## LLM-agnostic standard (applies to all SOPs)
+
+**Every SOP must be LLM-agnostic by default.** The procedure — steps, prompts, output format — must be written in plain language any capable LLM can follow. Where Claude Code-specific tools are used (`Agent`, `Write`, `Read`, `Bash`, etc.), add a **two-path execution note** at the point of use:
+
+- **In Claude Code:** [tool-specific path — parallel agents, file writes, etc.]
+- **In any other LLM (Cursor, Gemini CLI, plain chat):** [equivalent sequential or manual path]
+
+The slash command (`.claude/commands/`) is the Claude Code entry point. The SOP is the canonical procedure. Other LLMs invoke the SOP via natural language; they never see the command file.
+
+## Skill-to-SOP conversion pattern
+
+When converting an existing skill or command file to a proper SOP:
+1. Write the SOP first — canonical procedure, LLM-agnostic, two-path note where needed.
+2. Slim the command file down to a thin entry point that references the SOP by wikilink.
+3. The command file holds only: frontmatter, portable trigger phrases, a one-paragraph "what this does," and a single "Execute [[SOP-NNN]] now" instruction.
+4. The SOP is the source of truth. The command file is the doorbell.
