@@ -73,6 +73,8 @@ Why slug not title: the slug is stable across renames inside frontmatter, the ti
 
 The mypka-interface Properties tab renders the resolved title with the slug as a tooltip. The SQLite migration ([[SOP-002-convert-mypka-to-sqlite]]) resolves the slug to the FK integer at conversion time.
 
+**Documented exception — `photo_sidecar` `people` field:** The `people` list in `photo_sidecar` notes uses wikilink form (`[[slug]]`) rather than plain slugs. This is intentional: Obsidian uses wikilinks to generate backlinks, which allows a CRM People file to surface all photos of a person via the backlinks panel without any separate query or manual maintenance. This deviation is canonical for `photo_sidecar` only. See the photo_sidecar schema in the Entity schemas section.
+
 ### 5. Required fields are minimal, optional fields are abundant
 
 The team's bias: **require only what makes the note identifiable**. Every other field is optional and can be filled when the user has it.
@@ -93,6 +95,8 @@ Per entity, the required field is the one that names the thing:
 | Service | `name` |
 | Account | `name` |
 | Software | `name` |
+| photo_sidecar | `image` |
+| photo_album | `album_slug` |
 
 Everything else is optional. A note with three frontmatter fields is fine. A note with twenty is also fine. The shape stays consistent.
 
@@ -415,6 +419,82 @@ tags:
 Notes:
 - Not every package on every machine — only software whose loss, renewal, or license you need to track. OS-level inventory belongs in the Host note's body.
 - Body section conventions: `## What I use it for`, `## Setup notes`, `## Open questions`.
+
+### Photo Sidecars - `PKM/Images/YYYY/MM/<slug>.md`
+
+A photo sidecar is a companion `.md` file for every image file in the vault. The sidecar slug **always matches** its image file slug exactly, same folder. Moving an image requires moving its sidecar. The sidecar is the SSOT for all per-image metadata — who is in the photo, when it was taken, what event it records.
+
+```yaml
+---
+note_type: photo_sidecar
+image: "[[Images/2026/07/2026-07-05-sea-ray-fusion-ms-av650.jpg]]"
+date_taken: 2026-07-05
+year: 2026
+month: 7
+people:
+  - "[[alyssa]]"
+  - "[[alex]]"
+event: ""
+topic_tags:
+  - boat
+  - sea-ray
+photo_type: equipment
+location: ""
+description: ""
+ai_pending: false
+ai_confidence: null
+confirmed: false
+---
+```
+
+Notes:
+- `note_type: photo_sidecar` — discriminator field. Obsidian Bases (and Dataview) filters photo sidecars from all other `.md` files with `WHERE note_type = "photo_sidecar"`. Required because sidecar files co-exist with other markdown files in `PKM/Images/` rather than living in their own isolated folder.
+- `image` — wikilink to the image file, quoted so Obsidian resolves it as a link and creates a backlink from the image to the sidecar. This is the required field.
+- `date_taken` — ISO date of actual capture. May differ from the filename date if the image was imported or renamed after the fact.
+- `year` / `month` — integer copies of the date components for fast Bases filtering without date parsing. Both are optional but strongly recommended.
+- `people` — **DOCUMENTED EXCEPTION TO RULE 4.** Uses wikilink form (`[[slug]]`) rather than plain slugs. Reason: Obsidian uses wikilinks to generate backlinks, which allows a CRM People file to surface all photos of a person via the backlinks panel without any separate query or manual maintenance. This deviation is intentional and canonical for `photo_sidecar` only.
+- `event` — free text event name (e.g. `"Fourth of July 2026"`, `"Christmas morning"`). Optional.
+- `topic_tags` — list of plain strings, not wikilinks. Parallel to body `#tags` but kept in frontmatter for Bases queries. Optional.
+- `photo_type` — controlled vocabulary: `family | property | equipment | document | landscape | event`. Primary browse dimension. Optional but strongly recommended.
+- `location` — free text location (e.g. `"Lake house dock"`, `"Ashburn, VA"`). Optional.
+- `description` — one-sentence AI or user description of the image. Optional.
+- `ai_pending` and `confirmed` — state machine for the AI-suggest + human-confirm pipeline. See state machine below.
+- `ai_confidence` — controlled vocabulary: `high | medium | low`. Set only when `ai_pending: true`. Must be `null` when `ai_pending: false`.
+
+**State machine — `ai_pending` / `confirmed`:**
+
+| State | `ai_pending` | `confirmed` | Meaning |
+|---|---|---|---|
+| Uncatalogued | `false` | `false` | No AI pass run yet. Default. |
+| AI-flagged | `true` | `false` | Claude identified probable people; Jeff has not reviewed. `people` may contain candidates. `ai_confidence` is set. |
+| Confirmed | `false` | `true` | Jeff reviewed all `people` tags. Ground truth. |
+| Rejected | `false` | `true` | Jeff reviewed and removed AI candidates. Still `confirmed: true` to prevent re-flagging. |
+
+Never set both `ai_pending: true` and `confirmed: true` simultaneously. They are mutually exclusive.
+
+**Standard sidecar body** — the image embed is the only expected body content:
+```markdown
+![[Images/YYYY/MM/slug.jpg]]
+```
+
+All metadata lives in frontmatter. The body is the preview surface, not a metadata store.
+
+### Photo Albums - `PKM/Images/_albums/<slug>.md`
+
+A photo album is a browse-surface collection file. Albums are derived from sidecar queries — they wikilink or embed sidecar files for a given event, person, or topic. **Albums never own metadata.** They reference it. The SSOT for any per-image fact is always the sidecar.
+
+```yaml
+---
+note_type: photo_album
+album_slug: alyssa
+---
+```
+
+Notes:
+- `note_type: photo_album` — discriminator. Distinguishes album collection files from sidecar files in Bases queries.
+- `album_slug` — the slug identifying this collection. Required. Matches the filename stem.
+- Albums can be regenerated by Claude during any cataloging session by scanning all sidecar files for matching `people`, `event`, or `topic_tags` values. Treat them as materialized views, not data stores.
+- Body section: curated or generated wikilinks to sidecar files, organized by year or event. Example: `- [[2026-07-05-fourth-of-july-dock]] — Dock at the lake house`.
 
 ## Specialist contract fields
 
