@@ -102,6 +102,8 @@ Each markdown file starts with a `---`-delimited YAML block. Parse with PyYAML o
 | `slug` | filename stem |
 | `full_name` | frontmatter `full_name`, fallback to first H1 in body |
 | `first_name`, `last_name` | derive by splitting `full_name` on first space if not present in frontmatter |
+| `goes_by` | frontmatter `goes_by` (everyday name; NULL when person goes by legal first name) |
+| `maiden_name` | frontmatter `maiden_name` |
 | `relation` | frontmatter `relation` |
 | `email`, `phone`, `city`, `birth_date`, `linkedin_url` | same key in frontmatter |
 | `company`, `role`, `last_contact` | same key |

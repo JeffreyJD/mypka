@@ -2,6 +2,8 @@
 full_name: Jane Doe
 first_name: Jane
 last_name: Doe
+goes_by:
+maiden_name:
 relation: colleague
 role: Product Designer
 company: acme-corp

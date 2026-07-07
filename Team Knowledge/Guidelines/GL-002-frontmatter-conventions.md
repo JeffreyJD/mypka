@@ -130,9 +130,11 @@ These are the canonical fields per entity. Field names are case-sensitive and ma
 
 ```yaml
 ---
-full_name: Jane Doe                        # required
+full_name: Jane Doe                        # required — the LEGAL name
 first_name: Jane                           # optional, derived if absent
 last_name: Doe                             # optional, derived if absent
+goes_by: Janie                             # optional — everyday/referred-to name when it differs from the legal name
+maiden_name: Smith                         # optional — pre-marriage surname
 relation: friend                           # colleague | friend | family | client | other
 role: Product Designer
 company: acme-corp                         # slug of an Organization
@@ -151,6 +153,8 @@ tags:
 Notes:
 - `company` stores the slug of an Organization note. Per rule 4, the UI resolves it to the Organization's `name`.
 - `relation` follows the SOP-002 convention: prefer one of `colleague`, `friend`, `family`, `client`, `other`. Free text accepted but limits queryability.
+- `full_name` is the **legal** name. `goes_by` holds the everyday name when it differs (e.g. `full_name: Ariana Davis`, `goes_by: Anna`). Omit `goes_by` when the person is called by their legal first name. Added 2026-07-06 per rule 6.
+- `maiden_name` documents a pre-marriage surname (already in live use, e.g. Bridget Davis née Borkowski). Added to schema 2026-07-06.
 - Body section conventions: `## How we met`, `## Topics of common interest`, `## Notes`.
 
 ### Organizations - `PKM/CRM/Organizations/<slug>.md`
