@@ -2,22 +2,37 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: (never — first generation will fill this)_
+_Last rebuilt: 2026-07-08T15:55:00Z_
 
 ## Summary
-- Open: 0
+- Open: 3
 - In progress: 0 (0 blocked)
-- Done (this month): 0
+- Done (this month): 3
 - Cancelled (this month): 0
 
-## Open (0)
-_(none yet — see [[SOP-010-create-task]] to add one)_
+## Open (3)
+
+### Priority 1 — urgent
+- [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
+
+### Priority 2 — high
+- [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
+
+### Priority 3 — normal
+- [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
+
+### Priority 4 — low
+_(none)_
 
 ## In progress (0)
 _(none)_
 
 ## By assignee
-_(populated on first rebuild)_
+- rizzo: 1 open, 0 in-progress
+- henry: 1 open, 0 in-progress
+- pierce: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
-_(none)_
+- 2026-07-08 [[tsk-2026-07-08-002-merge-mbs-regime-config-fix]] — done — jeff/hawkeye (approved, merged, deployed, verified)
+- 2026-07-08 [[tsk-2026-07-08-001-rotate-telegram-bot-token]] — done — jeff (verified already resolved same-day)
+- 2026-07-06 [[tsk-2026-07-06-001-images-gl001-rename-pass]] — done — margaret
