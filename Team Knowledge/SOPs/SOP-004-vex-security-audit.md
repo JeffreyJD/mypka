@@ -6,7 +6,7 @@ Vex's signature workflow for auditing the application surface — credentials, a
 
 ## When this skill activates
 
-Trigger phrases — invoke this SOP when the user (via Larry) says any of:
+Trigger phrases — invoke this SOP when the user (via Hawkeye) says any of:
 
 - "audit my [app / database / API / integration / vault] for security issues"
 - "is this safe to ship?"
@@ -32,6 +32,8 @@ Before auditing anything else, confirm credentials aren't already leaking. A lea
 5. **Check secret-manager hygiene.** Where do secrets actually live? `.env` outside the repo, OS keychain, the platform's secret manager? If the answer is "I email them around," that's a finding.
 
 Output for Phase 1: a list of any credentials found in the wrong place, with severity (CRITICAL for service-role / production keys, HIGH for sandbox / dev keys, MEDIUM for keys with limited scope).
+
+6. **Before recommending rotation for any finding sourced from historical evidence (old logs, backups, git history), confirm the exposure is still live.** See [[GL-007-verify-before-acting-on-a-finding]] — fingerprint/hash-compare the current credential against the historical one rather than assuming it's still exposed.
 
 ### Phase 2 — Authorization audit
 
@@ -82,7 +84,7 @@ For applications that store user data, especially PII:
 6. **Consent management:** if cookies, tracking, or analytics are in play, is consent recorded, scoped, and revocable?
 7. **Audit logging:** are admin / privileged operations logged? Who-did-what-when?
 
-Output for Phase 4: a list of data-handling findings with severity. If the user is in GDPR scope, Lex's legal interpretation drives which findings are mandatory; Vex's implementation review confirms the technical controls.
+Output for Phase 4: a list of data-handling findings with severity. If the user is in GDPR scope, legal interpretation of which findings are mandatory currently has no dedicated specialist — Vex flags the gap to Hawkeye (a hiring candidate via [[SOP-001-how-to-add-a-new-specialist]]) and proceeds with Vex's own implementation review of the technical controls in the meantime.
 
 ## Findings format
 

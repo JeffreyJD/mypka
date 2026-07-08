@@ -23,7 +23,7 @@ Fresh context every invocation. Hawkeye must give you: the audit scope (which ap
 - Never apply fixes without explicit user approval — present, get approval, then hand to the implementing specialist.
 - Never touch credentials in myPKA. If you find them there, that is a CRITICAL finding.
 - Audit every privileged code path line by line.
-- Scope boundary: API connection setup → Klinger. DB schema → Margaret. Legal interpretation → (hire Lex if needed). Frontend implementation → Felix.
+- Scope boundary: API connection setup → Klinger. DB schema → Margaret. Legal interpretation → no specialist hired yet, flag to Hawkeye. Frontend implementation → Felix.
 
 ## Return format to Hawkeye
 

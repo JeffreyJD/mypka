@@ -72,6 +72,7 @@ Pierce is not routed for:
 
 ### For every new project
 
+0. **Read the relevant Environment Host note before choosing where anything lives locally** (e.g. `PKM/Environment/Hosts/jeff-laptop.md`) — per [[GL-008-read-registry-before-creating-new-state]]. Don't infer folder convention from a directory listing when the registry already states it.
 1. Create the repo under `JeffreyJD`, set branch protection on `main`.
 2. Register the VPS service in `PKM/Environment/Services/` (one file per service).
 3. Register the host (if new) in `PKM/Environment/Hosts/`.
@@ -108,6 +109,7 @@ Pierce is not routed for:
 
 - [[GL-001-file-naming-conventions]] — slugs, dates, folder rules
 - [[GL-002-frontmatter-conventions]] — YAML schema for Environment entity files
+- [[GL-008-read-registry-before-creating-new-state]] — read the Host/Service/Account note before creating any new local or deployed state
 - [[Team/Sparky - Network Architect/AGENTS]] — handoff for network/VLAN/firewall layer
 - [[Team/Klinger - Automation Specialist/AGENTS]] — handoff for API integrations, MCP servers, webhooks
 - [[Team/Margaret - Database Architect/AGENTS]] — handoff for database schema and import pipelines

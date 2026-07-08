@@ -2,16 +2,16 @@
 
 - **Status:** Active (since v1.6.0)
 - **Default owner:** Pixel
-- **Reusable by any agent.** This is a skill, not a 1:1 ownership. Charta can invoke this SOP when a layout draft needs a stylized finish. Penn can invoke it to turn a captured idea into a hero image. Any specialist who needs to produce a styled visual (thumbnail, social image, hero illustration, quote card, multi-reference composite) follows this procedure.
+- **Reusable by any agent.** This is a skill, not a 1:1 ownership. Charta can invoke this SOP when a layout draft needs a stylized finish. Radar can invoke it to turn a captured idea into a hero image. Any specialist who needs to produce a styled visual (thumbnail, social image, hero illustration, quote card, multi-reference composite) follows this procedure.
 - **Triggered by:** "make me a thumbnail", "stylize this", "create a hero image", "design a quote card", "use these references and generate X", "make this look photographic / illustrated / painted", "the image-gen isn't available in my LLM, can we still do this".
-- **References:** [[GL-003-design-system]], [[GL-001-file-naming-conventions]], [[Team/Pixel - Visual Specialist/AGENTS]], [[Team/Mack - Automation Specialist/AGENTS]] (for the connection-half handoff), [[SOP-008-build-an-infographic]] (when stylizing on top of a Charta layout).
+- **References:** [[GL-003-design-system]], [[GL-001-file-naming-conventions]], [[Team/Pixel - Visual Specialist/AGENTS]], [[Team/Klinger - Automation Specialist/AGENTS]] (for the connection-half handoff), [[SOP-008-build-an-infographic]] (when stylizing on top of a Charta layout).
 
 ## Purpose
 
 Take a brief — a topic, a mood, an intent, optionally a structural draft from Charta — and produce a finished stylized image. The procedure handles three capability scenarios:
 
 1. **Local image-gen available.** The user's LLM can generate images natively. Drive directly.
-2. **Local image-gen unavailable.** Mack wires up an external API/MCP (Gemini, OpenAI Images, Flux via Replicate, etc.); Pixel drives the prompt once online.
+2. **Local image-gen unavailable.** Klinger wires up an external API/MCP (Gemini, OpenAI Images, Flux via Replicate, etc.); Pixel drives the prompt once online.
 3. **No image-gen at all (user opts out).** Fallback to "design brief for human" mode: a detailed brief the user can paste into any external tool (Midjourney, DALL-E, Sora, Stable Diffusion, Canva AI, a designer).
 
 The procedure is stylistic. It does not invent text content; the user provides any caption / headline / copy.
@@ -51,9 +51,9 @@ If a needed section is empty, **stop**. Two paths:
 Before drafting the prompt, confirm the path:
 
 - **Path A — Local image-gen available.** The LLM has native image generation, OR an image-gen MCP is already running, OR an API client (`generate-image.py` or equivalent) is already configured with a working API key. Proceed to Step 3.
-- **Path B — Local image-gen unavailable, but the user wants to wire something up.** Hand the connection half to Mack:
-  > *"To generate this image, we need an image-gen path. I can either drive Gemini's image API, OpenAI Images, Flux via Replicate, or any image-capable MCP server. Mack can wire up whichever you prefer — credentials in `.env`, idempotent retries, the works. Which option do you want, or should Mack pick a sensible default?"*
-  Once Mack confirms the connection is online, return to Step 3.
+- **Path B — Local image-gen unavailable, but the user wants to wire something up.** Hand the connection half to Klinger:
+  > *"To generate this image, we need an image-gen path. I can either drive Gemini's image API, OpenAI Images, Flux via Replicate, or any image-capable MCP server. Klinger can wire up whichever you prefer — credentials in `.env`, idempotent retries, the works. Which option do you want, or should Klinger pick a sensible default?"*
+  Once Klinger confirms the connection is online, return to Step 3.
 - **Path C — No image-gen, fallback mode.** The user explicitly does not want to wire anything up. Skip to Step 7 (write the design brief).
 
 ### Step 3 — Construct the prompt
@@ -155,7 +155,7 @@ Filename per [[GL-001-file-naming-conventions]]: kebab-case, no spaces, with dat
 Write `Team Knowledge/session-logs/YYYY/MM/YYYY-MM-DD-HH-MM_<agent-id>_<topic-slug>.md` with type `end-of-session`. Capture:
 
 - Subject and intent
-- Which path (A/B/C) was used; if B, which generator Mack wired up
+- Which path (A/B/C) was used; if B, which generator Klinger wired up
 - Canonical prompt and references
 - Which GL-003 tokens drove styling
 - What the user picked from the variants
@@ -170,5 +170,5 @@ Write `Team Knowledge/session-logs/YYYY/MM/YYYY-MM-DD-HH-MM_<agent-id>_<topic-sl
 - Generating a synthetic likeness of a real person from a description. Always reference photos or no person.
 - Skipping the variant generation. A single output is hard to score; three give the user real choice.
 - Writing straight to the final Deliverables path without inline review.
-- Silently downgrading from local image-gen → fallback brief without naming the Mack-wires-it-up middle option.
+- Silently downgrading from local image-gen → fallback brief without naming the Klinger-wires-it-up middle option.
 - Forgetting the session-log entry. Future runs of this SOP lose the breadcrumbs.

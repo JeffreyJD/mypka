@@ -6,7 +6,7 @@ Felix's signature workflow for building a UI component end-to-end with design-sy
 
 ## When this skill activates
 
-Trigger phrases — invoke this SOP when the user (via Larry) says any of:
+Trigger phrases — invoke this SOP when the user (via Hawkeye) says any of:
 
 - "build me a [component / button / form / card / modal / widget / panel]"
 - "I need a [thing] in the UI"
@@ -111,7 +111,7 @@ At `Team Knowledge/session-logs/YYYY/MM/YYYY-MM-DD-HH-MM_felix_<component-slug>.
 
 ### 10. Hand off to Vera
 
-The build isn't done until Vera signs off. Larry routes the deliverable to Vera; Vera runs [[SOP-005-vera-quality-gate]] and returns a pass/fail. If Vera flags issues, fix them, then resubmit. Don't argue the gate.
+The build isn't done until Vera signs off. Hawkeye routes the deliverable to Vera; Vera runs [[SOP-005-vera-quality-gate]] and returns a pass/fail. If Vera flags issues, fix them, then resubmit. Don't argue the gate.
 
 ## Output / definition of done
 

@@ -102,6 +102,7 @@ For each `{ name, role, folder }` entry:
 4. Append a row to `Team/agent-index.md` for the new specialist (name, folder, role description). Format: match the existing index's row shape.
 5. Update root `AGENTS.md` "The team" table to bump the count and add the new row.
 6. Update `Team/Hawkeye - Orchestrator/AGENTS.md` routing cheatsheet with any triggers the new agent should own (pulled from the agent's own AGENTS.md or from the Expansion's `ADAPT-EXPANSION.md` hint table).
+7. **Localize generic role names in the copied `AGENTS.md`.** Per [[GL-009-localize-expansion-role-names]]: the Expansion's source content references other specialists by the pack author's generic placeholder names, not this vault's actual roster. Rewrite every such reference in the `Team/<folder>/` copy (not in the `Expansions/<slug>/` source, which stays generic for portability). If a referenced role has no host-team equivalent, name the gap functionally rather than leaving the placeholder name in place.
 
 ### 3.2 SOPs (`adds_sops`) — auto-numbered
 
@@ -111,6 +112,7 @@ For each `{ default_owner, file }` entry:
 2. Copy `Expansions/<slug>/sops/<file>` (or wherever the manifest points) to `Team Knowledge/SOPs/SOP-NNN-<derived-slug>.md`. Slug derived from the source filename minus the descriptive `SOP-` prefix the author used (e.g. `SOP-slack-post-message.md` → slug `slack-post-message` → `SOP-NNN-slack-post-message.md`).
 3. Update `Team Knowledge/SOPs/INDEX.md` with a new row: number, title, default owner, one-line description.
 4. If the SOP body references its own filename (back-pointers, internal links), Potter rewrites those references to the new auto-numbered name. **All internal `[[wikilinks]]` are checked.**
+5. **Localize generic role names**, same as §3.1 step 7 and per [[GL-009-localize-expansion-role-names]] — a pack's SOPs cross-reference the same placeholder roster its agents do.
 
 ### 3.3 Guidelines (`adds_guidelines`)
 
@@ -139,6 +141,7 @@ Margaret validates your myPKA state after Potter's merge:
 3. **Wikilink resolution.** Every `[[wikilink]]` in the new files resolves to an existing target. Broken links → flag to Hawkeye, do not auto-fix.
 4. **INDEX.md consistency.** SOPs, Workstreams, Guidelines, Templates indexes match the actual folder contents.
 5. **No SSOT violations introduced.** New SOPs/Guidelines/Workstreams don't duplicate existing rules. Soft warning if Margaret detects overlap.
+6. **Localization check, per [[GL-009-localize-expansion-role-names]].** Grep every newly-merged file under `Team/<folder>/` and any new SOPs/Guidelines/Workstreams for names not present in `Team/agent-index.md`. Any hit is a FAIL — Potter missed a localization substitution in §3.
 
 Margaret returns one of:
 

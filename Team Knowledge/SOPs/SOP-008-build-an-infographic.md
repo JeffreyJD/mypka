@@ -2,7 +2,7 @@
 
 - **Status:** Active (since v1.6.0)
 - **Default owner:** Charta
-- **Reusable by any agent.** This is a skill, not a 1:1 ownership. Pixel can invoke this SOP when stylizing on top of a structural draft. Penn can invoke it to lay out a captured idea. Any specialist who needs to turn information into a single-image, scannable layout follows this procedure.
+- **Reusable by any agent.** This is a skill, not a 1:1 ownership. Pixel can invoke this SOP when stylizing on top of a structural draft. Radar can invoke it to lay out a captured idea. Any specialist who needs to turn information into a single-image, scannable layout follows this procedure.
 - **Triggered by:** "make me an infographic", "lay this out as one image", "I need a flowchart / decision tree / swimlane / timeline / hub-and-spoke / quadrant matrix", "make a one-pager", "create a cheat sheet", "draft the layout, then we'll polish it".
 - **References:** [[GL-003-design-system]], [[GL-001-file-naming-conventions]], [[Team/Charta - Infographic Designer/AGENTS]], [[SOP-009-generate-a-styled-image]] (for the stylization handoff).
 
@@ -10,7 +10,7 @@
 
 Turn a brief — a topic, a comparison, a process, a set of steps, a hierarchy — into a single scannable image (or a small carousel) that communicates the point in under ten seconds. The output is production-ready PNG (or PDF) built from HTML/CSS/SVG and rendered via a headless browser.
 
-The procedure is structural. It does not invent content. The user (or Penn for capture-shaped inputs) provides the text; this SOP lays it out.
+The procedure is structural. It does not invent content. The user (or Radar for capture-shaped inputs) provides the text; this SOP lays it out.
 
 ## What this SOP does not do
 

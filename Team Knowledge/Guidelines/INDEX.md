@@ -14,8 +14,12 @@ Filename pattern: `GL-NNN-<title>.md`.
 | GL-004 | [[GL-004-task-resource-linking]] | One-way Task → Resource linking rule, seven-array task frontmatter contract, `linked_deliverables` slug format, archive-on-close cascade. Read by [[SOP-010-create-task]], [[SOP-011-claim-task]], [[SOP-012-close-task]]. |
 | GL-005 | [[GL-005-llm-agnostic-portable-core]] | The portable-core boundary: harness-agnostic core (`PKM/`, `Team Knowledge/`, the body of every `Team/*/AGENTS.md`) vs the per-harness adapter layer (`.claude/`, future `.codex/`, `.cursor/`). No harness names, host tool names, slash-command-only triggers, or hardcoded models in the core. Installed with v4.1.1. |
 | GL-006 | [[GL-006-vault-search-ignore-rules]] | Vault-wide searches MUST bypass `.gitignore` (PKM/, Documents/, Deliverables/, Team Inbox/ are all ignored — ripgrep skips them silently). Approved methods: `grep -r`, `rg --no-ignore`, Python walk. Includes the positive-control check. Born from the 2026-07-06 rename-pass near-miss. |
+| GL-007 | [[GL-007-verify-before-acting-on-a-finding]] | Before recommending or documenting action on a historical finding (leaked credential, stale commit, old bug report), verify it's still current — hash/fingerprint-compare, don't assume silence means unresolved. Born from the 2026-07-08 Telegram-token-already-rotated near-miss. |
+| GL-008 | [[GL-008-read-registry-before-creating-new-state]] | Before creating a new project folder, service, or install, read the relevant Environment Host/Service/Account note first — don't infer convention from an unabridged-or-not directory listing. Generalizes Pierce's VPS-only registry-read rule to every agent. Born from the 2026-07-07 `~/dev` vs `~/projects` near-miss. |
+| GL-009 | [[GL-009-localize-expansion-role-names]] | Expansion-merged AGENTS.md/SOPs cross-reference the pack author's generic placeholder roster, not the host vault's real team — localize on merge, not after. Wired into [[WS-003-install-an-expansion]] §3 and §4. Born from six mis-named contracts (Felix/Vex/Vera/Iris/Charta/Pixel) discovered 2026-07-08. |
+| GL-010 | [[GL-010-commit-and-push-before-session-close]] | Every git repo touched this session — myPKA itself included — must be committed and pushed before session close. Not conditional on the user asking. Wired into the close-session procedure. Born 2026-07-08 from Jeff naming his own manual workaround for a gap that was never actually automated. |
 
-*Reserved:* none. Next free Guideline slot is GL-006.
+*Reserved:* none. Next free Guideline slot is GL-011.
 
 ## When to write a new Guideline
 

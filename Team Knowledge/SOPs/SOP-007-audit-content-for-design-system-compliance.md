@@ -118,7 +118,7 @@ These are eligible for re-render against the current GL-003 next time they are t
 
 ### Step 6 — Surface to user; never auto-fix
 
-Present the report to the user (via Larry). Ask which violations they want fixed and in what order.
+Present the report to the user (via Hawkeye). Ask which violations they want fixed and in what order.
 
 For each approved fix:
 

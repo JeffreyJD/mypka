@@ -71,7 +71,7 @@ write a path it is not allowed to write.
 ### 4. Regenerate the mirror and report back
 
 After an apply, route to Margaret to regenerate `mypka.db` (the markdown changed,
-the derived mirror is downstream). Then tell the member, as Larry: what version
+the derived mirror is downstream). Then tell the member, as Hawkeye: what version
 they are now on, how many files changed, that none of their content was touched,
 and where the backups live if they had local edits.
 

@@ -156,6 +156,8 @@ Trigger phrases → action:
 
 Triggers are case-insensitive. Phrasings above are illustrative; the LLM should pattern-match intent, not literal strings. When in doubt, write the entry — over-capture is preferred to under-capture.
 
+**Every `close-session` trigger includes a mandatory git-hygiene step, per [[GL-010-commit-and-push-before-session-close]]:** every git repo touched during the session — this myPKA vault itself included (it is a git repo, remote `origin` = `github.com/JeffreyJD/mypka`) — gets checked for uncommitted changes, committed, and pushed before the session is considered closed. This is not conditional on the user asking for it.
+
 Set-in-stone information graduates from session-logs into SOPs / Guidelines / Workstreams; if a captured insight reaches "this is now a permanent rule" status, propose graduating it instead of letting it stagnate in session-logs.
 
 This section is the authoritative, canonical, LLM-agnostic spec — the natural-language trigger phrases above are the universal path that every host honors. The `/close-session` slash command is **not** required and is **not** shipped in the scaffold: it is a Claude-Code-only convenience that the adapter generates at setup time (see ADAPTER-PROMPT §7-bis) into `.claude/commands/close-session.md`, derived from this protocol. Hosts without slash commands (ChatGPT, Cursor, Cline, Gemini CLI, Codex, and any other LLM that reads `AGENTS.md`) skip the slash command entirely and honor the exact same contract via the trigger phrases above.

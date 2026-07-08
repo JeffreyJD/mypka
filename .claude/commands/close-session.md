@@ -26,6 +26,7 @@ Any LLM driving this scaffold honors those phrases without the slash command. `A
 1. Librarian pass — fix structural drift introduced this session.
 2. Write a session log entry following the `Team Knowledge/session-logs/_template.md` schema.
 3. Optionally graduate set-in-stone insights into SOPs, Guidelines, or Workstreams.
+4. **Commit and push every git repo touched this session — myPKA itself included.** Per [[GL-010-commit-and-push-before-session-close]]. Not conditional on the user asking.
 
 ## Procedure
 
@@ -103,11 +104,21 @@ If any insight in the log has reached "this is now a permanent rule" status, pro
 
 Do not self-write framework files. Propose the graduation to the user and wait for approval before a named specialist implements it (per WS-004).
 
-### 6. Report back
+### 6. Git hygiene — commit and push (mandatory, per [[GL-010-commit-and-push-before-session-close]])
+
+This step is **not optional and not conditional on the user asking**. Run it every time, even if the user doesn't mention git.
+
+1. Run `git status` at the myPKA vault root (`C:\Users\jeff\My Drive\myPKA`, remote `origin` = `github.com/JeffreyJD/mypka`). If there are any staged, unstaged, or untracked changes from this session: stage the specific files touched (never blanket `git add -A`), commit with a clear message summarizing the session, and push to `origin/main`.
+2. For every code project repo edited this session (check `C:\Users\jeff\dev\<project>\`): run `git status` there too. Commit and push following that project's own branch discipline — e.g. Pierce's dev→main rule for `prophet-trader` means committing to `dev` and opening a PR, not force-pushing to `main` without the owner's sign-off.
+3. If any push is blocked (merge conflict, diverged branch, failing CI): do not silently skip it. Report the blocker explicitly in step 7 below as an open item — never a silently dropped one.
+4. Confirm in your own output which repos were checked, which had changes, and the resulting commit hash(es) — this becomes part of the session log's "What I shipped" section.
+
+### 7. Report back
 
 Confirm to the user:
 
 - Session log file path (wikilink).
 - Librarian pass result: N broken links fixed, M orphans flagged, K INDEX entries added, SSOT violations found/resolved.
+- Git hygiene result: which repos were checked, which were committed/pushed, commit hashes, and any blocked pushes.
 - Any insights proposed for graduation.
 - Open threads the next session will inherit.

@@ -113,7 +113,7 @@ Save the file.
 
 ### Step 9 — Announce downstream impact
 
-Tell the user (and Larry):
+Tell the user (and Hawkeye):
 
 - Charta and Pixel now read GL-003 on every task.
 - Any in-flight deliverable that ran in fallback mode is flagged for re-render against the new GL-003.
