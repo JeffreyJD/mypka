@@ -104,9 +104,11 @@ If any insight in the log has reached "this is now a permanent rule" status, pro
 
 Do not self-write framework files. Propose the graduation to the user and wait for approval before a named specialist implements it (per WS-004).
 
-### 6. Git hygiene — commit and push (mandatory, per [[GL-010-commit-and-push-before-session-close]])
+### 6. Git hygiene — commit and push (mandatory backstop, per [[GL-010-commit-and-push-before-session-close]])
 
 This step is **not optional and not conditional on the user asking**. Run it every time, even if the user doesn't mention git.
+
+Per GL-010, this should ideally find nothing new — mid-session checkpoints (after a PR merge, a Guideline/SOP/Workstream edit, a task closure, a security fix, or a topic pivot) are supposed to have already committed most of what happened. If this step finds a large accumulation of uncommitted changes, that's a signal the mid-session checkpoints were missed during the session, not that this final step is the right place to catch it going forward — flag it as such in the report rather than treating a big batch commit as normal.
 
 1. Run `git status` at the myPKA vault root (`C:\Users\jeff\My Drive\myPKA`, remote `origin` = `github.com/JeffreyJD/mypka`). If there are any staged, unstaged, or untracked changes from this session: stage the specific files touched (never blanket `git add -A`), commit with a clear message summarizing the session, and push to `origin/main`.
 2. For every code project repo edited this session (check `C:\Users\jeff\dev\<project>\`): run `git status` there too. Commit and push following that project's own branch discipline — e.g. Pierce's dev→main rule for `prophet-trader` means committing to `dev` and opening a PR, not force-pushing to `main` without the owner's sign-off.

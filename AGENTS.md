@@ -156,7 +156,7 @@ Trigger phrases → action:
 
 Triggers are case-insensitive. Phrasings above are illustrative; the LLM should pattern-match intent, not literal strings. When in doubt, write the entry — over-capture is preferred to under-capture.
 
-**Every `close-session` trigger includes a mandatory git-hygiene step, per [[GL-010-commit-and-push-before-session-close]]:** every git repo touched during the session — this myPKA vault itself included (it is a git repo, remote `origin` = `github.com/JeffreyJD/mypka`) — gets checked for uncommitted changes, committed, and pushed before the session is considered closed. This is not conditional on the user asking for it.
+**Git hygiene, per [[GL-010-commit-and-push-before-session-close]], is continuous, not just a close-session step.** Every git repo touched during a session — this myPKA vault itself included (it is a git repo, remote `origin` = `github.com/JeffreyJD/mypka`) — gets committed and pushed at defined mid-session checkpoints (a PR merge, a Guideline/SOP/Workstream change, a task closure, a security fix, a topic pivot), not batched up and discovered later. Every `close-session` trigger still includes a mandatory final check as a backstop, but that check should find little to nothing if the mid-session checkpoints were followed. None of this is conditional on the user asking for it.
 
 Set-in-stone information graduates from session-logs into SOPs / Guidelines / Workstreams; if a captured insight reaches "this is now a permanent rule" status, propose graduating it instead of letting it stagnate in session-logs.
 
