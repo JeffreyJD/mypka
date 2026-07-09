@@ -8,13 +8,13 @@ assignee: jeff
 priority: 2
 
 # Status (mirrors folder location)
-status: open
-blocked_reason: "needs Jeff's explicit approval before merge — changes the scheduled Sunday autopsy's output shape"
+status: done
+blocked_reason: null
 blocked_by: null
 
 # Time
 created: 2026-07-08T00:00:00Z
-updated: 2026-07-08T00:00:00Z
+updated: 2026-07-09T00:32:00Z
 due: "2026-07-12"
 
 # Provenance
@@ -55,7 +55,14 @@ This also feeds the new [[prophet-trader-weekly-strategy-report]] cloud routine,
 ## Updates
 
 - 2026-07-08 (hawkeye) — created. Due before 2026-07-12 (next Sunday autopsy run) so it fires correctly for both strategies from the start.
+- 2026-07-09 00:31 (hawkeye) — Jeff approved. Merged PR #6 to `main` (`d503ef4`), CI green (2/2), deploy succeeded, VPS confirmed at `d503ef4` with the fix's actual code verified present (not just the commit hash trusted).
 
 ## Outcome
 
-_(filled when status flips to done — see SOP-012-close-task)_
+What shipped: `weekly_autopsy.py` now generates one report per active Phase-2+ strategy instead of defaulting to `cross_sectional_momentum` only. `momentum_breakout_stocks` gets its first automated weekly autopsy this Sunday (2026-07-13).
+
+Where it lives: PR https://github.com/JeffreyJD/prophet-trader/pull/6, merge commit `d503ef4`. Post-deploy confirmation: [[2026-07-09-prophet-trader-deploy-weekly-autopsy-multi-strategy]].
+
+Follow-ups: none required for this task. The VPS→mypka data-push piece this fix's output feeds into remains unbuilt (git-credential-scope decision pending, tracked in [[prophet-trader-weekly-strategy-report]]'s Open questions).
+
+Archived deliverables: none (linked_deliverables was empty).
