@@ -8,13 +8,13 @@ assignee: jeff
 priority: 1
 
 # Status (mirrors folder location)
-status: open
-blocked_reason: "needs Jeff's explicit approval before merge — changes production automation"
+status: done
+blocked_reason: null
 blocked_by: null
 
 # Time
 created: 2026-07-09T00:00:00Z
-updated: 2026-07-09T00:00:00Z
+updated: 2026-07-09T01:09:00Z
 due: "2026-07-12"
 
 # Provenance
@@ -56,7 +56,14 @@ The nightly B2 backup runs 00:00 ET, before the Sunday 10:00 ET autopsy generate
 ## Updates
 
 - 2026-07-09 (hawkeye) — created as part of building the B2-based data pipeline for the Weekly Strategy Report routine, replacing the git-credential approach that was rejected for its trust-boundary expansion.
+- 2026-07-09 01:09 (hawkeye) — Jeff approved. Merged PR #7 to `main` (`dbcfd6f`), CI green (2/2), deploy succeeded, VPS confirmed at `dbcfd6f` with the new B2-push log line verified present in the actual deployed script.
 
 ## Outcome
 
-_(filled when status flips to done — see SOP-012-close-task)_
+What shipped: `run_weekly_autopsy.sh` now pushes each Sunday's autopsy output to B2 immediately after generation instead of waiting for the nightly full-data sync. Live on the VPS as of 2026-07-09T01:09Z.
+
+Where it lives: PR https://github.com/JeffreyJD/prophet-trader/pull/7, merge commit `dbcfd6f`. Post-deploy confirmation: [[2026-07-09-prophet-trader-deploy-b2-autopsy-timing]].
+
+Follow-ups: none. This was the last unbuilt piece of the Weekly Strategy Report pipeline — data path is now fully live ahead of its first scheduled fire (2026-07-12).
+
+Archived deliverables: none (linked_deliverables was empty).
