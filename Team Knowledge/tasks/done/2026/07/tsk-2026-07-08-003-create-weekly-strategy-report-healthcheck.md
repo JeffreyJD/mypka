@@ -8,13 +8,13 @@ assignee: jeff
 priority: 2
 
 # Status (mirrors folder location)
-status: open
-blocked_reason: "no healthchecks.io API key on file — must be created via web dashboard"
+status: done
+blocked_reason: null
 blocked_by: null
 
 # Time
 created: 2026-07-08T00:00:00Z
-updated: 2026-07-08T00:00:00Z
+updated: 2026-07-09T00:30:00Z
 due: "2026-07-12"
 
 # Provenance
@@ -53,7 +53,14 @@ The Daily Routine and Weekly Autopsy each have a dead-man's-switch check on heal
 ## Updates
 
 - 2026-07-08 (hawkeye) — created. Due before the routine's first fire (2026-07-12) so monitoring is live from day one, though the routine will run either way.
+- 2026-07-09 00:30 (hawkeye) — Jeff provided a healthchecks.io Project API key in-chat; created the check programmatically via the API instead of the originally-planned manual dashboard flow. Used `America/New_York` local-time Cron (`0 18 * * 0`) rather than UTC-converted, matching the other two checks' architecture exactly (also DST-safe, same reasoning as the VPS's own permanent timezone fix). Wired the ping into the routine's prompt as its final step on both branches (report written or SKIPPED note written), plus a `/fail` ping on unrecoverable error.
 
 ## Outcome
 
-_(filled when status flips to done — see SOP-012-close-task)_
+What shipped: third healthchecks.io check created (`Prophet Trader - Weekly Strategy Report`, Cron `0 18 * * 0` America/New_York, 180 min grace), routine updated to ping it, registry notes updated ([[healthchecks-io]], [[prophet-trader-weekly-strategy-report]]).
+
+Where it lives: check UUID `1b204e49-283b-4d76-884e-abed551496e4` (ping URL embedded in the routine's own prompt config, not stored in any myPKA file). Routine `trig_01DSKrdhex2fBMkK8bA3q6a3` updated at 2026-07-09T00:27Z.
+
+Follow-ups: none for this task specifically. The broader VPS→mypka data pipeline remains unbuilt (tracked in [[prophet-trader-weekly-strategy-report]]'s Open questions, no task opened yet — it depends on a git-credential-scope decision Jeff hasn't made).
+
+Archived deliverables: none (linked_deliverables was empty).
