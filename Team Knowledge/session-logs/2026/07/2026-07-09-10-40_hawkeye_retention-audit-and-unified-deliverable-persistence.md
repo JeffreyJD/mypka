@@ -56,4 +56,4 @@ Continuation of the marathon session ([[2026-07-08-15-30_hawkeye_token-dashboard
 ## Cross-links
 
 - [[2026-07-09-01-15_hawkeye_scheduled-reporting-build-out-and-b2-credential-pivot]]
-- [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research.html]] (and its new `.md` twin)
+- [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research/report.html]] (and its new `.md` twin)

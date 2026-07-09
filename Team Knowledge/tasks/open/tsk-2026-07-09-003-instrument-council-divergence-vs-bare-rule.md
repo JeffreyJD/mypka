@@ -37,13 +37,13 @@ tags: ["prophet-trader", "agent-council", "analysis"]
 
 ## What this is
 
-Direct follow-up from the STORM research's Frontier Question ([[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research.html]]): no AI agent-council trading system has independent evidence of adding edge, and multi-agent LLM systems have documented correlated-failure modes. Prophet Trader has never measured whether its own council (CEO/Analyst/Strategist/Risk Officer/Executor/Auditor) actually diverges from what a bare regime+momentum rule would decide, or just rubber-stamps it.
+Direct follow-up from the STORM research's Frontier Question ([[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research/report.html]]): no AI agent-council trading system has independent evidence of adding edge, and multi-agent LLM systems have documented correlated-failure modes. Prophet Trader has never measured whether its own council (CEO/Analyst/Strategist/Risk Officer/Executor/Auditor) actually diverges from what a bare regime+momentum rule would decide, or just rubber-stamps it.
 
 With `momentum_breakout_stocks` able to trade again (regime config fix, 2026-07-08) and both strategies active, real decision data is about to start flowing for the first time — this is the moment to start capturing the comparison, not after months of ungathered data.
 
 ## Context one click away
 
-- Research: [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research.html]]
+- Research: [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research/report.html]]
 - Service: [[prophet-trader]]
 - CIO owner: Blake
 

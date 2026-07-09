@@ -98,7 +98,7 @@ Both terminal. Once a task is in `done/` or `cancelled/`, do not move it back. I
 
    Move-the-folder-not-the-file rule: when multiple `linked_deliverables` entries share the same `<folder-slug>` prefix, move the folder once. Do not split a multi-file folder across active and archive.
 
-   **Twin-file rule.** A `linked_deliverables` slug with no extension may match more than one file with the same basename but different extensions — e.g. a STORM report's `.html` (styled) and `.md` (plain twin, per [[SOP-018-storm-research]] Phase 4d). Move every file matching that basename together, in the same `git mv`/archive pass. Do not archive only the file whose extension happens to match what you were expecting.
+   **Twin-file fallback.** Multi-file deliverables (e.g. a STORM report's `report.html` + `report.md`, per [[SOP-018-storm-research]]) live in a dated folder per the rule above — normally there's nothing special to do, the folder-move already carries both files together. If you ever encounter a flat pair of files sharing a basename but different extensions *outside* a folder (a legacy artifact, or a skill that hasn't adopted the folder pattern), archive every file matching that basename together in the same pass — don't split the pair.
 
    **Sharing check (from pre-flight step 3).** If another open or in-progress task also references one of this task's deliverables, the deliverable stays in `Deliverables/`. Record the deferred archive in `## Outcome`:
    ```markdown

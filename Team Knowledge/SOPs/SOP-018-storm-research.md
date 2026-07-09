@@ -3,7 +3,7 @@
 - **Default owner:** B.J.
 - **Reusable by any agent.** This is a skill, not 1:1 ownership. B.J. is the default executor, but any specialist can invoke this SOP when they need a multi-perspective, citation-verified briefing on a topic.
 - **Triggered by:** user says "run a STORM research on X", "storm this topic", "give me a STORM briefing on X", "storm research this", or wants a multi-perspective, citation-verified HTML briefing. Best for topics where multiple viewpoints and fact-checked claims matter; overkill for a simple factual lookup.
-- **Output:** `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html` (styled, for human reading) **and** `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.md` (plain, for agents/grep — same final content, no template chrome)
+- **Output:** `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research/report.html` (styled, for human reading) **and** `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research/report.md` (plain, for agents/grep — same final content, no template chrome). One dated folder per run, per [[GL-004-task-resource-linking]]'s multi-file-deliverable convention — reuses the existing folder-archival pattern rather than inventing a new one.
 - **Template:** `Team Knowledge/Templates/storm-report-template.html`
 - **References:** [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]]
 
@@ -77,7 +77,7 @@ This map is not a separate deliverable. It is the raw material for the report's 
    - **Claim safety guide** — assert / caveat / avoid, populated after Phase 4 verification.
    - **Frontier question** — the one question that would change everything.
    - **References** — every citation with a verification-status tag (set in Phase 4).
-3. Write to `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html` (create the `Deliverables/` folder if it does not exist; follow [[GL-001-file-naming-conventions]] for the date prefix).
+3. Write to `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research/report.html` (create the dated folder — and `Deliverables/` itself if needed; follow [[GL-001-file-naming-conventions]] for the date prefix on the folder name).
 
 ---
 
@@ -98,7 +98,7 @@ This is what separates Storm Research from a normal report. Run it before delive
 - Fill the verification banner (`X fabricated, Y corrected, Z demoted`) and the per-citation status tags.
 - Populate the claim safety guide from the verdicts.
 
-**4d. Write the markdown twin.** Once the HTML is at its final, corrected v2 state, render the same content as plain markdown to `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.md` — do this last so corrections are only applied once, not duplicated across two files. Structure (headings only, no CSS/template chrome):
+**4d. Write the markdown twin.** Once the HTML is at its final, corrected v2 state, render the same content as plain markdown to `report.md` in the same dated folder as `report.html` — do this last so corrections are only applied once, not duplicated across two files. Structure (headings only, no CSS/template chrome):
 
 ```markdown
 # {Topic title}
@@ -144,9 +144,10 @@ The two files must never disagree — the markdown is a direct re-rendering of t
 
 ## Output
 
-1. Final deliverables: `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html` (styled, v2 post-verification) **and** `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.md` (plain twin, same content).
+1. Final deliverables, both inside `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research/`: `report.html` (styled, v2 post-verification) **and** `report.md` (plain twin, same content).
 2. Open the HTML for the user: Windows → `Start-Process <path>`. macOS → `open <path>`. Linux → `xdg-open <path>`. The markdown twin doesn't need opening — it's for agents/grep, not visual reading.
 3. In chat, give: both file paths, the verification tally (`N/N checked, X fabricated, Y corrected, Z demoted`), the one universal finding, the frontier question, and the claim safety summary. Keep it tight.
+4. Cross-link the folder from wherever it's referenced, using `[[YYYY-MM-DD-{topic-slug}-storm-research/report.html]]` — never a bare basename, since the folder's two files share one. Per [[GL-001-file-naming-conventions]]'s `[[path/filename]]` collision-risk convention.
 
 ---
 

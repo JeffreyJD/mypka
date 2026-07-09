@@ -28,8 +28,8 @@ Runs [[SOP-018-storm-research]] end to end:
 1. **Phase 0** — Scope the topic (use `$ARGUMENTS` if provided)
 2. **Phase 1** — Five expert lenses in parallel: Practitioner, Academic, Skeptic, Economist, Historian
 3. **Phase 2** — Map contradictions (inline synthesis)
-4. **Phase 3** — Synthesize the HTML report to `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html`
-5. **Phase 4** — Adversarial peer review + citation verification (do not skip), then write the plain-markdown twin (`...storm-research.md`, same final content, no template chrome) so other agents can read it without the CSS overhead
+4. **Phase 3** — Synthesize the HTML report to `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research/report.html`
+5. **Phase 4** — Adversarial peer review + citation verification (do not skip), then write `report.md` (same folder, same final content, no template chrome) so other agents can read it without the CSS overhead
 
 ## Procedure
 
