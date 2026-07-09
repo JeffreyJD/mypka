@@ -3,6 +3,7 @@
 - **Default owner:** Hawkeye
 - **Reusable by any agent.** This is a skill, not 1:1 ownership. Hawkeye is the default executor (this is an orchestration pattern), but any specialist can invoke this SOP to pressure-test an idea before committing time or money to it.
 - **Triggered by:** user says "/roast", "roast this idea", "pressure-test", "stress-test", "convene the council", "kill this idea", "validate this before I build it", "should I build this", or wants an adversarial second opinion.
+- **Output:** `Deliverables/YYYY-MM-DD-{idea-slug}-roast-verdict.md`
 - **References:** [[GL-001-file-naming-conventions]]
 
 ## Purpose
@@ -103,6 +104,21 @@ to validate the riskiest assumption BEFORE building anything]
 
 Then list the five council scores in one line:
 `Contrarian X/10 · Expansionist X/10 · Logician X/10 · Researcher X/10 · Buyer X/10`
+
+---
+
+## Phase 3: Persist the verdict (mandatory, not conditional on session close)
+
+Mirrors [[SOP-018-storm-research]]'s Phase 3 exactly — the deliverable is part of this SOP's own defined output, not something that depends on whether a session log later happens to summarize it well.
+
+1. Derive a kebab-case `idea-slug` from the brief (same convention as STORM's `topic-slug`).
+2. Write `Deliverables/YYYY-MM-DD-{idea-slug}-roast-verdict.md` (create `Deliverables/` if it somehow doesn't exist; follow [[GL-001-file-naming-conventions]] for the date prefix). Contents:
+   - The brief (Phase 0's consolidated paragraph), verbatim.
+   - Each of the five council members' full response (stance, 3-5 points, the one thing to hear, score) — not just the Judge's summary of them. This is the STORM-equivalent of keeping the lens briefs, except for roast they ARE worth keeping in full (five persona takes, not five research-paper summaries) since re-deriving them means re-running the council.
+   - The full Judge verdict block, exactly as delivered in chat (Phase 2's exact-shape output).
+   - The council scores line.
+3. This is plain markdown, not STORM's HTML template — a verdict doesn't need citation-verification chrome, confidence-score styling, or a claim-safety guide. Skimmable markdown is the right weight for this output.
+4. If the roast happened inside a Hawkeye-coordinated session, cross-link the deliverable from that session's log (`## What we did` or `## Cross-links`) — same two-way wiring discipline as any other Deliverable.
 
 ---
 
