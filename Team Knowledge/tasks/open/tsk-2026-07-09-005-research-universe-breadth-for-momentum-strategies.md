@@ -43,7 +43,7 @@ Current live universe is 120 names for both `cross_sectional_momentum` and `mome
 
 ## Context one click away
 
-- STORM research: [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research]]
+- STORM research: [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research.html]]
 - IPS: `PKM/Documents/prophet-trader/investment-policy-statement.md` Section 2.4 Gate 4 (survivorship-clean universe), Section 6.3 (parameter changes)
 - Service: [[prophet-trader]]
 

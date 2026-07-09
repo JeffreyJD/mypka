@@ -37,13 +37,13 @@ tags: ["prophet-trader", "phase1", "analysis"]
 
 ## What this is
 
-Direct follow-up from the STORM research ([[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research]]): Bailey & López de Prado's Deflated Sharpe Ratio / Probability of Backtest Overfitting framework (peer-reviewed, the strongest-evidence finding in the whole report) says reported Sharpe ratios must be statistically discounted for the number of trials/configurations tested before being trusted.
+Direct follow-up from the STORM research ([[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research.html]]): Bailey & López de Prado's Deflated Sharpe Ratio / Probability of Backtest Overfitting framework (peer-reviewed, the strongest-evidence finding in the whole report) says reported Sharpe ratios must be statistically discounted for the number of trials/configurations tested before being trusted.
 
 `momentum_breakout_stocks` went through nine walk-forward iterations (wf_v2 through wf_v9) before landing on the config that passed Phase 1 (Sharpe 1.455, PF 1.519). That number has been cited everywhere since — the IPS, the autopsy, task history — without ever being corrected for the 9-trial search that produced it. This task gets an honest, statistically-adjusted confidence level instead.
 
 ## Context one click away
 
-- Research: [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research]]
+- Research: [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research.html]]
 - Backtest data: `data/phase_reviews/momentum_breakout_stocks_wf_v2.json` through `_v9.json` in the prophet-trader repo
 - IPS: `PKM/Documents/prophet-trader/investment-policy-statement.md` Section 2.2
 

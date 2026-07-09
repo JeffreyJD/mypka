@@ -63,5 +63,5 @@ Continuation of [[2026-07-08-15-30_hawkeye_token-dashboard-setup-and-governance-
 ## Cross-links
 
 - Same-session earlier log: [[2026-07-08-15-30_hawkeye_token-dashboard-setup-and-governance-hardening]]
-- STORM report: [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research]]
+- STORM report: [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research.html]]
 - New service: [[prophet-trader-weekly-strategy-report]]
