@@ -27,6 +27,7 @@ Any LLM driving this scaffold honors those phrases without the slash command. `A
 2. Write a session log entry following the `Team Knowledge/session-logs/_template.md` schema.
 3. Optionally graduate set-in-stone insights into SOPs, Guidelines, or Workstreams.
 4. **Commit and push every git repo touched this session — myPKA itself included.** Per [[GL-010-commit-and-push-before-session-close]]. Not conditional on the user asking.
+5. **Capture any substantive `/watch` output.** Per [[GL-011-capture-watch-summaries-before-session-end]]. The plugin persists nothing on its own — not conditional on the user saying "remember this."
 
 ## Procedure
 
@@ -42,6 +43,14 @@ For each fact found:
 **Rule:** A fact stated by Jeff in this session and not written to memory before session close is a fact the team will forget. Do not defer this step.
 
 If no new personal facts were stated, note "No new personal facts this session" and proceed.
+
+---
+
+### 1b. `/watch` capture check (per [[GL-011-capture-watch-summaries-before-session-end]])
+
+If `/watch` was invoked this session and produced a substantive answer (apply the three-month test from [[SOP-016-write-journal-entry]] — not every trivial one-line answer needs this), make sure it's captured before the session log is finalized in step 3: either folded into this session log's "What we did" section, or as its own journal entry if the insight is durable and cross-session-relevant. The plugin deletes its working directory at close — this is the only chance to keep what was learned.
+
+If `/watch` wasn't used this session, skip silently.
 
 ---
 
