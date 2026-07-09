@@ -1,6 +1,6 @@
 ---
 name: storm
-description: "Run a STORM multi-perspective research briefing on any topic. Five expert lenses (Practitioner, Academic, Skeptic, Economist, Historian), contradiction mapping, adversarial peer review, and citation verification. Outputs a self-contained HTML report to Deliverables/. Natural-language alternatives: 'storm this topic', 'run a STORM research on X', 'give me a STORM briefing on X'."
+description: "Run a STORM multi-perspective research briefing on any topic. Five expert lenses (Practitioner, Academic, Skeptic, Economist, Historian), contradiction mapping, adversarial peer review, and citation verification. Outputs both a styled HTML report and a plain markdown twin to Deliverables/. Natural-language alternatives: 'storm this topic', 'run a STORM research on X', 'give me a STORM briefing on X'."
 user_invocable: true
 argument-hint: "[the topic to research]"
 ---
@@ -29,7 +29,7 @@ Runs [[SOP-018-storm-research]] end to end:
 2. **Phase 1** — Five expert lenses in parallel: Practitioner, Academic, Skeptic, Economist, Historian
 3. **Phase 2** — Map contradictions (inline synthesis)
 4. **Phase 3** — Synthesize the HTML report to `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html`
-5. **Phase 4** — Adversarial peer review + citation verification (do not skip)
+5. **Phase 4** — Adversarial peer review + citation verification (do not skip), then write the plain-markdown twin (`...storm-research.md`, same final content, no template chrome) so other agents can read it without the CSS overhead
 
 ## Procedure
 

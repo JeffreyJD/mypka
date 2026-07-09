@@ -3,7 +3,7 @@
 - **Default owner:** B.J.
 - **Reusable by any agent.** This is a skill, not 1:1 ownership. B.J. is the default executor, but any specialist can invoke this SOP when they need a multi-perspective, citation-verified briefing on a topic.
 - **Triggered by:** user says "run a STORM research on X", "storm this topic", "give me a STORM briefing on X", "storm research this", or wants a multi-perspective, citation-verified HTML briefing. Best for topics where multiple viewpoints and fact-checked claims matter; overkill for a simple factual lookup.
-- **Output:** `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html`
+- **Output:** `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html` (styled, for human reading) **and** `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.md` (plain, for agents/grep — same final content, no template chrome)
 - **Template:** `Team Knowledge/Templates/storm-report-template.html`
 - **References:** [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]]
 
@@ -98,13 +98,55 @@ This is what separates Storm Research from a normal report. Run it before delive
 - Fill the verification banner (`X fabricated, Y corrected, Z demoted`) and the per-citation status tags.
 - Populate the claim safety guide from the verdicts.
 
+**4d. Write the markdown twin.** Once the HTML is at its final, corrected v2 state, render the same content as plain markdown to `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.md` — do this last so corrections are only applied once, not duplicated across two files. Structure (headings only, no CSS/template chrome):
+
+```markdown
+# {Topic title}
+
+**Date** · **Method: 5 lenses + verification** · **Audience: {role}**
+**Verified:** N/N citations checked, X fabricated, Y corrected, Z demoted
+
+## 60-Second Summary
+{same content as the HTML .ceo block}
+
+## Five Key Findings, Ranked by Reliability
+### 1. {finding title} — Reliability: {label} ({score}/10)
+{finding body}
+- Supported by: {lenses/sources}
+- Challenged by: {lenses/sources, or "No one"}
+
+{repeat for all 5; include any Contested/Demoted sidebars as a `> **Contested — do not assert:**` blockquote}
+
+## The Hidden Connection
+{same content as the HTML .connection block}
+
+## The Assumption This Rests On (Missing 6th Lens)
+{same content}
+
+## What To Actually Do Differently
+{numbered action items}
+
+## What's Safe to Assert
+**Safe:** {list}
+**Say with a caveat:** {list}
+**Don't assert:** {list}
+
+## The Frontier Question
+{the question + why it matters}
+
+## Evidence Base — Verification Status
+{one line per citation: status tag, full citation, URL}
+```
+
+The two files must never disagree — the markdown is a direct re-rendering of the final HTML's content, not a separate summary.
+
 ---
 
 ## Output
 
-1. Final deliverable: `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html` (the v2, post-verification version).
-2. Open it for the user: Windows → `Start-Process <path>`. macOS → `open <path>`. Linux → `xdg-open <path>`.
-3. In chat, give: the file path, the verification tally (`N/N checked, X fabricated, Y corrected, Z demoted`), the one universal finding, the frontier question, and the claim safety summary. Keep it tight.
+1. Final deliverables: `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.html` (styled, v2 post-verification) **and** `Deliverables/YYYY-MM-DD-{topic-slug}-storm-research.md` (plain twin, same content).
+2. Open the HTML for the user: Windows → `Start-Process <path>`. macOS → `open <path>`. Linux → `xdg-open <path>`. The markdown twin doesn't need opening — it's for agents/grep, not visual reading.
+3. In chat, give: both file paths, the verification tally (`N/N checked, X fabricated, Y corrected, Z demoted`), the one universal finding, the frontier question, and the claim safety summary. Keep it tight.
 
 ---
 
