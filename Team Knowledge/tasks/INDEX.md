@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-09T01:20:00Z_
+_Last rebuilt: 2026-07-09T02:45:00Z_
 
 ## Summary
-- Open: 4
+- Open: 6
 - In progress: 0 (0 blocked)
 - Done (this month): 6
 - Cancelled (this month): 0
 
-## Open (4)
+## Open (6)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -21,6 +21,8 @@ _Last rebuilt: 2026-07-09T01:20:00Z_
 
 ### Priority 3 — normal
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
+- [[tsk-2026-07-09-003-instrument-council-divergence-vs-bare-rule]] — Instrument agent-council decision divergence vs. a bare rule — assignee: pierce — created 2026-07-09
+- [[tsk-2026-07-09-004-deflated-sharpe-retrospective-mbs]] — Deflated Sharpe Ratio retrospective on momentum_breakout_stocks — assignee: blake — created 2026-07-09
 
 ### Priority 4 — low
 _(none)_
@@ -31,8 +33,9 @@ _(none)_
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 1 open, 0 in-progress
+- pierce: 2 open, 0 in-progress
 - jeff: 1 open, 0 in-progress
+- blake: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
 - 2026-07-09 [[tsk-2026-07-09-001-merge-b2-autopsy-timing-fix]] — done — jeff/hawkeye (approved, merged, deployed, verified)
