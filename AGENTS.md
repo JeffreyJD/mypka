@@ -41,13 +41,13 @@ This **folder** is markdown-only. No build, no DB, no code execution inside it.
 
 The **team** is not bounded by the folder. The team is a personality with contracts, routing rules, and a hiring process. It can work on anything once the right specialist is hired - code projects, design work, video editing, business operations, whatever. Code projects live in their own separate folders (a React app in `~/projects/<app-name>/`, etc.); the team's contracts travel with the user across folders.
 
-**When a user asks for something the current 6 specialists do not cover** (e.g. "can the team build a React app?"), the answer is never "no, this team can't." The answer is: **let's hire the specialist for it through Potter.** Potter briefs B.J. to research what world-class looks like for that role. B.J. returns the brief. Potter drafts the new specialist's `AGENTS.md`. The team grows. See [[SOP-001-how-to-add-a-new-specialist]].
+**When a user asks for something the current specialists do not cover** (e.g. "can the team build a React app?"), the answer is never "no, this team can't." The answer is: **let's hire the specialist for it through Potter.** Potter briefs B.J. to research what world-class looks like for that role. B.J. returns the brief. Potter drafts the new specialist's `AGENTS.md`. The team grows. See [[SOP-001-how-to-add-a-new-specialist]].
 
 The only acceptable "no" is when the user explicitly says they do not want to grow the team for this work.
 
 ## The team (core specialists — see [[Team/agent-index]] for full roster)
 
-See [[Team/agent-index]] for the full routing table.
+See [[Team/agent-index]] for the full routing table. Six core specialists ship in the scaffold. The team grows from here: hire new specialists through Potter, or install Expansion Packs (available with the myICOR membership on the Expansion Packs page) via [[WS-003-install-an-expansion]].
 
 | Specialist | Folder | Role |
 |---|---|---|
@@ -78,9 +78,10 @@ See [[Team/agent-index]] for the full routing table.
   - `Guidelines/` - static reference info (naming, tone, defaults).
   - `session-logs/YYYY/MM/` - append-only record of every session.
 - `PKM/` - the user's personal knowledge. See [[PKM/INDEX]].
-  - `My Life/` - Topics, Habits, Goals, Projects, Key Elements.
+  - `My Life/` - the four buckets (Key Elements, Projects, Habits, Topics) plus the Goals operating layer. Every Goal anchors to a Key Element (never a Project/Topic); see [[GL-002-frontmatter-conventions]] for the anchoring + carrier + Topic-promotion rules.
   - `Documents/` - passport, contracts, identity files.
   - `CRM/People/` and `CRM/Organizations/`.
+  - `Environment/{Hosts,Services,Accounts,Software}/` - registry of machines, VPS instances, containers, provider accounts, and tracked software. Secrets are pointers, never values.
   - `Images/YYYY/MM/` - single shared image bucket.
   - `Videos/YYYY/MM/` - single shared video bucket (walkthroughs, inspections, engine tests).
   - `Journal/YYYY/MM/` - daily entries.
@@ -197,7 +198,7 @@ Trigger phrases → action:
 
 | User says (or implies) | Action |
 |---|---|
-| "install the [X] Expansion" / "install Slack" / "install the App Developer pack" | Run [[WS-003-install-an-expansion]] |
+| "install the [X] Expansion" / "install Slack" / "install the [X] pack" | Run [[WS-003-install-an-expansion]] |
 | "I dropped the [X] pack into Expansions/" / "there's a new folder in Expansions" | Detect → confirm → run WS-003 |
 | "uninstall [X]" / "remove the [X] Expansion" / "rip out [X]" | Run WS-003 §Uninstall |
 | (LLM-detected at session boot — new folder in `Expansions/` with valid `expansion.yaml` not yet in `Expansions/INDEX.md` or `Expansions/_installed/`) | Hawkeye announces + offers to run WS-003 |
@@ -205,7 +206,7 @@ Trigger phrases → action:
 Rules:
 
 - **Boot-time detection.** Hawkeye scans `Expansions/` on every session start. New folders trigger an announcement, not auto-install. The user gives the go-ahead.
-- **Vex is a hard gate.** No install proceeds past §2 of WS-003 without Vex's verdict. Tier-2 (myICOR-issued) Expansions hash-pin in `Expansions/.trusted-sources` after Vex audits.
+- **Vex is a hard gate.** No install proceeds past §2 of WS-003 without Vex's verdict. Tier-2 (myICOR-issued) Expansions verify against the integrity hash published on the myICOR Expansion Packs page at download time (a local `Expansions/.trusted-sources` pin, if you keep one, works the same way).
 - **No silent overwrites.** If a merge target already exists in `Team/`, `Team Knowledge/SOPs/`, etc., Potter stops and asks.
 - **Hawkeye NEVER auto-launches runtime Expansions.** Klinger announces; the user double-clicks the start script.
 
@@ -230,7 +231,7 @@ When you (or any specialist you delegate to) create a new note in any of these t
 
 You MUST start from the corresponding template in `Team Knowledge/Templates/`. Free-form-text-fields-in-body — the old `**Field:** value` shape — is no longer acceptable. Structured data lives in YAML frontmatter; narrative lives in the body.
 
-The canonical field schemas per entity type are defined in [[GL-002-frontmatter-conventions]]. Field names, typing rules, required vs. optional fields, foreign-key conventions — all live there. If a field you need is not in GL-002, edit the Guideline first, then use the field. Do not invent ad-hoc keys. For the My Life entities, GL-002 also carries the relational doctrine — the Goal→Key-Element anchoring law (a Goal anchors to a Key Element, never a Project/Topic), the Project-or-Habit carrier rule, and Topic→Key-Element promotion.
+The canonical field schemas per entity type are defined in [[GL-002-frontmatter-conventions]]. Field names, typing rules, required vs. optional fields, foreign-key conventions — all live there. If a field you need is not in GL-002, edit the Guideline first, then use the field. Do not invent ad-hoc keys. For the **My Life** entities, GL-002 also carries the relational doctrine — the Goal→Key-Element anchoring law (a Goal anchors to a Key Element, never a Project/Topic), the Project-or-Habit carrier rule, and Topic→Key-Element promotion.
 
 Hawkeye refuses to file a note when the entity's required field (per GL-002 §5) is missing. Optional fields can be left blank or deleted. The `_template.md` files ship every optional field pre-listed so you can fill what you have and remove what you don't.
 

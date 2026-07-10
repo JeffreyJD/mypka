@@ -14,198 +14,180 @@ This is the myPKA discipline: nothing the user has to take on faith, everything 
 
 ---
 
+## v5.0.0 (2026-07-07)
+
+### Summary
+
+v5.0.0 unbundles the two agent packs (App Developer: Felix/Vex/Vera; Designer: Iris/Charta/Pixel) from the download. They are Expansion Packs available with the myICOR membership on the Expansion Packs page in the myICOR app. The six core specialists and the bundled myPKA Cockpit stay, free.
+
+### Migration recipe: NONE REQUIRED
+
+There is nothing to run. **Do not delete anything from an existing folder.**
+
+- If your folder came from a 3.x/4.x bundled download, your installed packs live under `Expansions/*/` and your merged agents under `Team/`, all user-state. The scaffold updater never removes them. They keep working and keep updating through their own Expansion update paths.
+- If you self-update the framework files to 5.0.0 (`/update-scaffold` or "update myPKA"), only `framework_paths` files change per `manifest.json`'s `changes` block. Your roster, packs, PKM, journals, tasks, and session logs are untouched.
+- Fresh 5.0.0 downloads simply ship without the two agent packs; install them from the Expansion Packs page via `WS-003-install-an-expansion` when you want them.
+
+### Validation
+
+Run `bash validation-script.sh .`; the script accepts the 5.x line and enforces the same structural checks as 4.x.
+
+---
+
 ## v4.0.0 (2026-06-22)
 
 ### Summary
 
-**The self-updating, model-agnostic release.** Introduces a machine-readable `manifest.json` at the scaffold root (the new version SSOT and the framework/user-state seam), a one-command updater (`scripts/update-scaffold.py`), a boot-time version check (`scripts/check-version.py`), a Claude Code `/update-scaffold` slash command, the `.mypka/` control folder, and the GL-005 LLM-agnostic portable-core guideline. **BREAKING** — the first myPKA release that is not purely additive. The framework/user-state seam is now machine-readable data; the version SSOT moves to `manifest.json` (`VERSION` and `.scaffold-version` become mirrors).
+The first non-purely-additive release. v4.0.0 introduces a real framework/user-state seam, written down as data in a new root `manifest.json`, plus the offline updater and boot-time version check that use it. This recipe is the **one-time bridge** that moves a 3.1.0 folder (which has no manifest) onto 4.0.0.
 
-Members on v3.1.0 take a one-time bridge. The bridge is numbered, idempotent, and auditable. Your own content (PKM, journals, tasks, session logs, Expansions, secrets, databases) is never moved or modified.
+**This recipe never moves, renames, or modifies any of the member's own content.** It only lays down new framework files (the manifest, the two scripts, the slash command, the cockpit-updater SPEC), bumps the version files, and creates the `.mypka/` control folder. PKM, journals, tasks, session logs, Expansions, secrets, and databases are untouched. The breaking part is conceptual (a seam now exists), not destructive.
 
 ### Added
 
-- `manifest.json` — new at root; `scaffold_version` (authoritative SSOT), `framework_paths` (files the updater MAY overwrite), `user_state_paths` (files the updater will NEVER touch), `update_check` block.
-- `scripts/update-scaffold.py` — stdlib-only Python3 updater. Diff-only on `framework_paths`, plain-English plan, dry-run by default, `--apply` to execute, backs up any locally-modified framework file to `.mypka/backups/<timestamp>/` before overwriting, refuses to write outside `framework_paths`, fail-closed.
-- `scripts/check-version.py` — boot-time check; one HTTPS GET of a public version string; sends no data about the user or vault; fails silent offline; prints one line only when a newer version exists; disableable via `manifest.json`.
-- `.claude/commands/update-scaffold.md` — Claude Code `/update-scaffold` slash command; portable-trigger note included so any LLM honors "update myPKA" even without the slash command.
-- `.mypka/` — hidden control folder created on first updater run; holds `backups/` (pre-overwrite copies of locally-modified framework files), `update-log.txt` (migration audit trail), and a copy of the active manifest. User-state: never overwritten by an update.
-- `Team Knowledge/Guidelines/GL-005-llm-agnostic-portable-core.md` — the LLM-agnostic / adapter-layer split rule; no harness names (Claude Code, Codex, Cursor, etc.) in portable-core files; adapter layer (`.claude/`) is the harness-specific binding point.
+- `manifest.json` (root): version SSOT plus the `framework_paths` / `user_state_paths` seam as data.
+- `scripts/update-scaffold.py`: offline, stdlib-only updater (dry-run by default).
+- `scripts/check-version.py`: boot-time version check (announced-on, sends no user data, fail-silent offline).
+- `.claude/commands/update-scaffold.md`: slash-command wrapper plus the portable "update myPKA" trigger.
+- `Expansions/mypka-cockpit/scripts/UPDATE-COCKPIT.md`: SPEC for the separable cockpit-code updater (cockpit-owned; ships with the cockpit Expansion).
+- `.mypka/`: control folder created by the updater on first run (backups, update log, active-manifest copy).
 
 ### Changed
 
-- `VERSION` and `.scaffold-version` → now mirrors of `manifest.json`; bumped to `4.0.0`.
+- `VERSION` → `4.0.0` (now a mirror of the manifest, not the source of truth).
+- `.scaffold-version` → `4.0.0` (now a mirror of the manifest).
+- `CHANGELOG.md`: gains the `[4.0.0]` entry.
 
-### Path mappings (v3.1.0 → v4.0.0)
+### Removed
+
+- (none)
+
+### Path mappings (3.1.0 → 4.0.0)
 
 | Old path | New path | Migration |
 |---|---|---|
-| _(none — no existing files moved)_ | | |
+| _(none: no existing file is moved or renamed)_ | | |
 
-No existing file is renamed or moved. All new files are net-new additions.
+There are no path mappings. Every existing file stays where it is. All wikilinks continue to resolve. No `git mv` operations against existing files.
 
 ### Migration recipe
 
-Each step is named and numbered. An LLM running this recipe should announce each step ("Step N/8: <name>") so the user can audit. Each step is idempotent.
+Each step is named and numbered. An LLM running this recipe should announce each step before executing it ("Step N/8: <name>") so the member can audit. Each step is idempotent: running the recipe twice produces the same result as running it once.
 
-#### Step 1/8 — Detect current scaffold version
+#### Step 1/8: Detect current scaffold version
 
-Read `<root>/.scaffold-version` (or `<root>/manifest.json` if it exists).
-- If version is `4.0.0` or higher, this recipe is already applied. Stop.
-- If version is below `4.0.0` (or the file is absent), continue.
+Read `<root>/.scaffold-version` (or `<root>/manifest.json` `scaffold_version` if a manifest already exists).
+- If a `manifest.json` exists with `scaffold_version` `4.0.0` or higher, this recipe is already applied. Stop.
+- If the version is `3.1.0` (or below 4.0.0 and at/above 3.1.0), continue. (If it is below 3.1.0, apply the earlier recipes in order first, then return here.)
 
-If `manifest.json` already exists at root, inspect its `scaffold_version`. A `manifest.json` at `4.0.0` means this recipe completed. Do not re-run.
+#### Step 2/8: Verify the folder is a myPKA scaffold
 
-#### Step 2/8 — Verify the folder is a myPKA scaffold
+Check that `<root>/Team/` and `<root>/Team Knowledge/` both exist. If either is missing, this is not a myPKA scaffold: abort and surface the situation to the member.
 
-Check that `<root>/Team/` and `<root>/Team Knowledge/` both exist. If either is missing, abort and surface the situation to the user.
+#### Step 3/8: Surface conflicts before laying down new files
 
-#### Step 3/8 — Write `manifest.json`
+For each new framework file this recipe adds (`manifest.json`, `scripts/update-scaffold.py`, `scripts/check-version.py`, `.claude/commands/update-scaffold.md`), check whether it already exists in the target. If any already exists and differs from the 4.0.0 release copy, that is pre-existing or hand-edited work: stop and ask the member how to proceed before overwriting. If absent, proceed.
 
-Create `<root>/manifest.json` with the following minimum skeleton (copy the full file from the v4.0.0 release; these are the required top-level keys):
+#### Step 4/8: Lay down the manifest and the update core
 
-```json
-{
-  "scaffold_version": "4.0.0",
-  "released": "2026-06-22",
-  "version_files": {
-    "authoritative": "manifest.json",
-    "mirrors": ["VERSION", ".scaffold-version"]
-  },
-  "framework_paths": {
-    "globs": [
-      "Team Knowledge/SOPs/**",
-      "Team Knowledge/Workstreams/**",
-      "Team Knowledge/Guidelines/**",
-      "Team Knowledge/Templates/**",
-      "scripts/**",
-      "AGENTS.md",
-      "Team/*/AGENTS.md",
-      ".claude/agents/**",
-      ".claude/commands/**",
-      "ADAPTER-PROMPT.md",
-      "validation-script.sh",
-      "CHANGELOG.md",
-      "CHANGELOG-MIGRATION.md",
-      "manifest.json"
-    ]
-  },
-  "user_state_paths": {
-    "globs": [
-      "PKM/**",
-      "Team Inbox/**",
-      "Team/*/journal/**",
-      "Team Knowledge/tasks/**",
-      "Team Knowledge/session-logs/**",
-      "Expansions/**",
-      ".env",
-      ".env.*",
-      "*.db",
-      "*.sqlite",
-      ".mypka/**"
-    ]
-  },
-  "update_check": {
-    "enabled": true
-  }
-}
-```
-
-If `manifest.json` already exists, do NOT overwrite it. Surface the conflict to the user.
-
-#### Step 4/8 — Create the `scripts/` directory and copy scripts
+Copy from the 4.0.0 release:
 
 ```bash
 ROOT="<scaffold-root>"
+REL="<path-to-4.0.0-release>"
+
+cp "$REL/manifest.json"                       "$ROOT/manifest.json"
 mkdir -p "$ROOT/scripts"
-```
-
-Copy from the v4.0.0 release:
-```bash
-cp <release>/scripts/update-scaffold.py   "$ROOT/scripts/"
-cp <release>/scripts/check-version.py    "$ROOT/scripts/"
-```
-
-If either file already exists in the target, do NOT overwrite. Surface the conflict.
-
-#### Step 5/8 — Write the `/update-scaffold` slash command
-
-```bash
+cp "$REL/scripts/update-scaffold.py"          "$ROOT/scripts/update-scaffold.py"
+cp "$REL/scripts/check-version.py"            "$ROOT/scripts/check-version.py"
 mkdir -p "$ROOT/.claude/commands"
+cp "$REL/.claude/commands/update-scaffold.md" "$ROOT/.claude/commands/update-scaffold.md"
 ```
 
-Copy from the v4.0.0 release:
+If the cockpit Expansion is installed, also lay down the cockpit-updater SPEC (it ships with the cockpit, not the scaffold updater):
+
 ```bash
-cp <release>/.claude/commands/update-scaffold.md "$ROOT/.claude/commands/"
+if [ -d "$ROOT/Expansions/mypka-cockpit/scripts" ]; then
+  cp "$REL/Expansions/mypka-cockpit/scripts/UPDATE-COCKPIT.md" \
+     "$ROOT/Expansions/mypka-cockpit/scripts/UPDATE-COCKPIT.md"
+fi
 ```
 
-If the file already exists, do NOT overwrite. Surface the conflict.
+Do NOT overwrite any file the member has hand-edited (Step 3 caught those). Skip and report.
 
-#### Step 6/8 — Create the `.mypka/` control folder
+#### Step 5/8: Create the `.mypka/` control folder
 
 ```bash
 mkdir -p "$ROOT/.mypka/backups"
-touch "$ROOT/.mypka/update-log.txt"
+cp "$ROOT/manifest.json" "$ROOT/.mypka/active-manifest.json"
+: > "$ROOT/.mypka/update-log.txt"
 ```
 
-Do NOT write into `.mypka/` on behalf of the user beyond this stub. The updater (`scripts/update-scaffold.py`) populates it on first real run.
+The updater also creates this folder on its first run, so this step is belt-and-braces. It is idempotent.
 
-#### Step 7/8 — Update version mirrors
+#### Step 6/8: Reconcile the manifest's Expansions block with what is installed
+
+Open `<root>/manifest.json`, find the `expansions.items` block, and confirm each declared Expansion matches what is actually under `<root>/Expansions/` and the version in that Expansion's `expansion.yaml`. Remove entries for Expansions the member does not have; leave installed ones. This keeps the boot-time and updater Expansion notices accurate. Do NOT touch Expansion code.
+
+#### Step 7/8: Write the version files (mirrors of the manifest)
 
 ```bash
 echo "4.0.0" > "$ROOT/VERSION"
 echo "4.0.0" > "$ROOT/.scaffold-version"
 ```
 
-`manifest.json` is now the SSOT. These files are mirrors kept for back-compat only.
+`manifest.json` is now authoritative; these two files are kept as back-compat mirrors and must read `4.0.0`.
 
-#### Step 8/8 — Validate
+#### Step 8/8: Append a session-log entry and validate
 
-Check that all of the following exist:
+Append a migration session-log entry under `<root>/Team Knowledge/session-logs/<YYYY>/<MM>/` recording: version detected, files added, any conflicts skipped. Then run the validation script:
+
 ```bash
-test -f "$ROOT/manifest.json"
-test -f "$ROOT/scripts/update-scaffold.py"
-test -f "$ROOT/scripts/check-version.py"
-test -d "$ROOT/.mypka/backups"
-test -f "$ROOT/.mypka/update-log.txt"
+bash "$REL/validation-script.sh" "$ROOT"
 ```
 
-Run the validation script:
-```bash
-bash <release>/validation-script.sh "$ROOT"
-```
+Exit code 0 means the migration is structurally valid. Then regenerate the mirror (`mypka.db` is downstream of the markdown):
 
-Exit code 0 = migration structurally valid. Non-zero = read the output and fix before proceeding to any later version recipe.
+```bash
+python3 "$ROOT/Team Knowledge/scripts/regen-mypka-db.py" 2>/dev/null || \
+python3 "$ROOT/Expansions/mypka-cockpit/scripts/regen-mypka-db.py"
+```
 
 ### Validation steps
 
 After the recipe runs, the following must all be true:
 
-- [ ] `<root>/manifest.json` exists and contains `"scaffold_version": "4.0.0"` (or higher if a later recipe has already run).
-- [ ] `<root>/scripts/update-scaffold.py` exists.
-- [ ] `<root>/scripts/check-version.py` exists.
-- [ ] `<root>/.mypka/backups/` exists as a directory.
-- [ ] `<root>/.mypka/update-log.txt` exists.
-- [ ] `<root>/VERSION` and `<root>/.scaffold-version` both read `4.0.0`.
+- [ ] `<root>/manifest.json` exists, is valid JSON, and `scaffold_version` equals `4.0.0`.
+- [ ] `<root>/manifest.json` contains both a `framework_paths` and a `user_state_paths` block.
+- [ ] `<root>/VERSION` and `<root>/.scaffold-version` both equal `4.0.0` (trimmed).
+- [ ] `<root>/scripts/update-scaffold.py` and `<root>/scripts/check-version.py` exist.
+- [ ] `<root>/.claude/commands/update-scaffold.md` exists.
+- [ ] `<root>/.mypka/` exists with `backups/` and `update-log.txt`.
+- [ ] No file under `user_state_paths` (PKM, journals, tasks, session logs, Expansions, `.env`, databases) was modified by the recipe.
+- [ ] A dry run of the updater against the 4.0.0 manifest reports "0 of your files touched" and refuses nothing it should not.
 
 ### Constraints (hard)
 
-- **`manifest.json` is never overwritten by this recipe.** If it exists, inspect its version and surface to the user.
-- **`.mypka/` is user-state.** The recipe creates the stub; it never modifies or reads `.mypka/backups/` content.
-- **`user_state_paths` are never touched.** PKM/, Team Inbox/, Team/*/journal/, Team Knowledge/tasks/, Team Knowledge/session-logs/, Expansions/, .env, and databases are untouched by this bridge.
+- **No destructive moves.** This recipe only adds files and bumps version mirrors. Nothing the member created is moved, renamed, or modified.
+- **Never overwrite a hand-edited framework file silently.** Step 3 surfaces conflicts; skipped files are reported.
+- **Expansion code is off-limits to the scaffold migration.** Expansions update on their own version via their own updater.
+- **`manifest.json` is the source of truth.** `VERSION` and `.scaffold-version` mirror it.
 
 ### Rollback
 
-Git is the rollback. The only new files this recipe creates are net-new (manifest.json, scripts/\*, .claude/commands/update-scaffold.md, .mypka/ stub). Rollback:
+If the folder is under git, git is the rollback:
 
 ```bash
 cd "$ROOT"
 git status
-git restore --staged .
 git restore .
-git clean -fd          # removes the new files and directories
+git clean -fd      # removes the new files/folders the recipe created
 ```
 
-Do NOT run `git restore`/`git clean` without user confirmation. Surface these as the rollback path.
+If the folder is not under git, the new files this recipe added (`manifest.json`, the two scripts, the slash command, `.mypka/`) can simply be deleted and `VERSION` / `.scaffold-version` reset to `3.1.0`, since the recipe is purely additive. Recipe-runners must NOT run `git restore` / `git clean` or delete files without member confirmation. Surface these as the rollback path.
+
+### Why v4.0.0 is bridged rather than additive
+
+Earlier releases avoided changing any shipped file so a re-download could never collide with member edits. v4.0.0 is the release where that approach reaches its limit: shipping a safe self-updater requires a written-down boundary between our files and the member's. The bridge installs that boundary (the manifest plus the control folder) without disturbing any member content, so the breaking change is the new seam, not lost data. After this one-time bridge, every later update flows through the updater and is shown as a plan before it touches anything.
 
 ---
 
@@ -225,14 +207,14 @@ Adds team-internal task management and per-agent topical journals. **Purely addi
 - `Team/<Name> - <Role>/journal/_template.md` — starter file for new journal entries.
 - `.scaffold-version` — plain-text file at root containing `1.10.0`.
 - New SOPs in `Team Knowledge/SOPs/`:
-  - `SOP-010-create-task.md`
-  - `SOP-011-claim-task.md`
-  - `SOP-012-close-task.md`
-  - `SOP-013-rebuild-task-index.md`
-  - `SOP-014-list-open-tasks.md`
-  - `SOP-015-write-session-log.md`
-  - `SOP-016-write-journal-entry.md`
-  - `SOP-017-read-own-journal.md`
+  - `SOP-create-task.md`
+  - `SOP-claim-task.md`
+  - `SOP-close-task.md`
+  - `SOP-list-open-tasks.md`
+  - `SOP-rebuild-task-index.md`
+  - `SOP-write-journal-entry.md`
+  - `SOP-read-own-journal.md`
+  - `SOP-write-session-log.md`
 
 ### Changed
 
@@ -287,7 +269,7 @@ touch "$ROOT/Team Knowledge/tasks/done/.gitkeep"
 touch "$ROOT/Team Knowledge/tasks/cancelled/.gitkeep"
 ```
 
-There is **no `blocked/` folder**. Blocked tasks live in `in-progress/` with `blocked_reason` set in their frontmatter. (See `SOP-011-claim-task` for the full convention.)
+There is **no `blocked/` folder**. Blocked tasks live in `in-progress/` with `blocked_reason` set in their frontmatter. (See `SOP-claim-task` for the full convention.)
 
 Copy these files from the v1.10.0 release `templates/` directory:
 - `templates/tasks/_template.md` → `<root>/Team Knowledge/tasks/_template.md`
@@ -311,14 +293,14 @@ Do NOT create journal folders for `agent-index.md` or any non-agent subdirectory
 #### Step 6/9 — Copy the new SOPs
 
 ```bash
-cp <release>/sops/SOP-010-create-task.md           "$ROOT/Team Knowledge/SOPs/"
-cp <release>/sops/SOP-011-claim-task.md            "$ROOT/Team Knowledge/SOPs/"
-cp <release>/sops/SOP-012-close-task.md            "$ROOT/Team Knowledge/SOPs/"
-cp <release>/sops/SOP-013-rebuild-task-index.md    "$ROOT/Team Knowledge/SOPs/"
-cp <release>/sops/SOP-014-list-open-tasks.md       "$ROOT/Team Knowledge/SOPs/"
-cp <release>/sops/SOP-015-write-session-log.md     "$ROOT/Team Knowledge/SOPs/"
-cp <release>/sops/SOP-016-write-journal-entry.md   "$ROOT/Team Knowledge/SOPs/"
-cp <release>/sops/SOP-017-read-own-journal.md      "$ROOT/Team Knowledge/SOPs/"
+cp <release>/sops/SOP-create-task.md          "$ROOT/Team Knowledge/SOPs/"
+cp <release>/sops/SOP-claim-task.md           "$ROOT/Team Knowledge/SOPs/"
+cp <release>/sops/SOP-close-task.md           "$ROOT/Team Knowledge/SOPs/"
+cp <release>/sops/SOP-list-open-tasks.md      "$ROOT/Team Knowledge/SOPs/"
+cp <release>/sops/SOP-rebuild-task-index.md   "$ROOT/Team Knowledge/SOPs/"
+cp <release>/sops/SOP-write-journal-entry.md  "$ROOT/Team Knowledge/SOPs/"
+cp <release>/sops/SOP-read-own-journal.md     "$ROOT/Team Knowledge/SOPs/"
+cp <release>/sops/SOP-write-session-log.md    "$ROOT/Team Knowledge/SOPs/"
 ```
 
 If any of these SOP filenames already exist in the target, do NOT overwrite. Surface the conflict to the user.
@@ -342,7 +324,7 @@ agent_id: <actor>
 session_id: <YYYY-MM-DD>-migration-v1.10.0
 timestamp: <RFC3339-UTC>
 type: end-of-session
-linked_sops: [SOP-010-create-task, SOP-016-write-journal-entry]
+linked_sops: [SOP-create-task, SOP-write-journal-entry]
 linked_workstreams: []
 linked_guidelines: []
 linked_tasks: []

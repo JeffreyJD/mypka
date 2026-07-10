@@ -2,6 +2,35 @@
 
 All notable changes to the myPKA scaffold are tracked here. Versions follow semver: MAJOR for breaking structural changes, MINOR for additions, PATCH for fixes.
 
+## [5.0.0] - 2026-07-07
+
+**The scaffold returns to its basic shape: the six core specialists plus the bundled myPKA Cockpit, free.** The two agent packs that earlier downloads bundled into this repo (the App Developer Pack and the Designer Pack) are unbundled. They are now Expansion Packs, part of the myICOR membership, available on the **Expansion Packs page** in the myICOR app. The scaffold itself, including the Cockpit, stays free: it is the basic structure you need to build your AI team, with the core agents everyone needs, and you can build whatever you like on top of it.
+
+> **BREAKING.** The default download's team roster and SOP/Guideline set change shape versus 4.1.1. **Existing folders lose nothing:** `Expansions/*/` is user-state, the scaffold updater never removes an installed pack, and packs you already run keep working and update via their own Expansion update paths. Fresh downloads simply no longer include the two agent packs.
+
+### Removed
+
+- **App Developer Pack unbundled** (was preinstalled since 3.0.0): the `Team/` folders and `.claude/agents/` shims for **Felix** (Frontend Developer), **Vex** (Security Engineer), **Vera** (QA Specialist), their SOPs (`SOP-003`, `SOP-004`, `SOP-005`), and the pack source under `Expansions/app-developer/`. Available with the myICOR membership on the Expansion Packs page.
+- **Designer Pack unbundled** (was preinstalled since 3.0.0): the `Team/` folders and `.claude/agents/` shims for **Iris** (Design System Architect), **Charta** (Infographic Designer), **Pixel** (Visual Specialist), their SOPs (`SOP-006` through `SOP-009`), the `GL-003-design-system` Guideline, and the pack source under `Expansions/designer-pack/`. Available with the myICOR membership on the Expansion Packs page.
+- **`Expansions/.trusted-sources`** no longer ships in the repo. The canonical hash registry is maintained in the private Expansion release pipeline, and integrity hashes surface on the Expansion Packs page at download time. The bundled Cockpit ships in-tree and needs no install-time hash check. (This makes the existing statement in `Expansions/README.md` accurate.)
+
+### Changed
+
+- **Team roster: 12 → 6 specialists.** Root `AGENTS.md`, `Team/agent-index.md`, and the Team Knowledge indexes list the six core specialists: **Larry, Nolan, Pax, Penn, Mack, Silas**. The team grows by hiring through Nolan or by installing Expansion Packs via [[WS-003-install-an-expansion]] (the mechanism is unchanged and stays built in).
+- **The myPKA Cockpit stays bundled and free** at `Expansions/mypka-cockpit/` (cockpit version `1.2.1`, unchanged). First-run activation still builds it under the single upfront consent (ADAPTER-PROMPT § 8-ter); the agent-pack install/verification steps are gone.
+- **SOP/Guideline numbering:** SOP-003 through SOP-009 and GL-003 are vacated by the unbundled packs. A pack installed later reclaims free slots at install time per WS-003; do not back-fill them locally without coordinating.
+- **README, AGENTS.md, CLAUDE.md, ADAPTER-PROMPT.md, LICENSE-MAP.md, Expansions/INDEX.md** rewritten for the basic-plus-Cockpit shape. No copy anywhere claims the agent packs are bundled, preinstalled, or free.
+
+### Fixed
+
+- **`update_check.remote_version_url` pointed at a non-existent repository** (`myICOR/mypka-scaffold`), so the boot-time update check never found the remote version (issue #15). It now points at `https://raw.githubusercontent.com/myICOR/myPKA/main/VERSION`.
+
+### Version files
+
+- `manifest.json` → `scaffold_version` `5.0.0` (authoritative SSOT), `breaking: true`; `expansions.items` reduced to the bundled Cockpit.
+- `VERSION` → `5.0.0` (mirror of the manifest).
+- `.scaffold-version` → `5.0.0` (mirror of the manifest).
+
 ## [4.1.1] - 2026-06-23
 
 **Cockpit day-planner drag-and-drop fix (critical).** A patch release that ships a
@@ -156,42 +185,7 @@ No `mypka.db` regeneration, no team change, and no other scaffold edits are requ
 
 ## [3.0.0] - 2026-06-21
 
-**The all-in-one bundle: base scaffold 2.4.0 + myPKA Cockpit + App Developer Pack + Designer Pack, all preinstalled.** This is the max-capability download for new users — a single folder that ships the full base scaffold plus the local Cockpit viewer and a 12-specialist team out of the box, with no install step required. The à-la-carte packs (Cockpit, App Developer, Designer) remain published separately as the upgrade path for existing scaffolds; both distribution shapes coexist. The major bump reflects that the default download's team roster, SOP/Guideline set, and `Expansions/` contents all change shape — adopters of the base 2.4.0 are unaffected (this is a new bundle SKU, not a forced migration).
-
-### Added
-
-- **myPKA Cockpit v1.0.0 preinstalled** at `Expansions/mypka-cockpit/` — a local, navigable, wikilink-aware viewer over the whole scaffold (reads `mypka.db` read-only). Runtime-type Expansion; self-contained under its folder; declares no team merge. BYO-Claude-key, local-only, **no auto-launch** (the user generates an OS launcher per `launcher/GENERATE-LAUNCHER.md` and starts it themselves). Ships its own `LICENSE` (myICOR Cockpit Personal-Use License, PolyForm-Noncommercial-based), `SECURITY.md`, `DISCLAIMER.md`, and `INSTALL.md`.
-- **App Developer Pack v1.0.1 preinstalled** — adds **Felix** (Frontend Developer), **Vex** (Security Engineer), **Vera** (QA Specialist) to `Team/`, plus `SOP-003-felix-build-a-component`, `SOP-004-vex-security-audit`, `SOP-005-vera-quality-gate`.
-- **Designer Expansion Pack v1.1.0 preinstalled** — adds **Iris** (Design System Architect), **Charta** (Infographic Designer), **Pixel** (Visual Specialist) to `Team/`, plus `SOP-006-author-a-design-system`, `SOP-007-audit-content-for-design-system-compliance`, `SOP-008-build-an-infographic`, `SOP-009-generate-a-styled-image`, and **`GL-003-design-system`** (the previously-reserved design-system SSOT slot, now filled).
-- **Team roster: 6 → 12 specialists.** Root `AGENTS.md` team table and `Team/agent-index.md` updated with all six new specialists and their routing triggers.
-- **Claude Code host shims** at `.claude/agents/` for the six new specialists (`felix`, `vex`, `vera`, `iris`, `charta`, `pixel`), matching the base scaffold's host-binding convention so the bundle dispatches out-of-the-box.
-- **`Expansions/INDEX.md`** now records all three bundled Expansions as preinstalled (3 expansions · 0 invalid · 0 incompatible).
-
-### Licensing
-
-- **Relicensed to NonCommercial.** The base scaffold now ships under **CC BY-NC-SA 4.0** (was a prior permissive posture); free for personal and non-commercial use, with attribution and ShareAlike. The Cockpit runtime ships under the **myICOR Cockpit Personal-Use License** (PolyForm-Noncommercial-1.0.0-based); the App Developer and Designer packs under **CC BY-NC 4.0 (adapted)**.
-- **`LICENSE-MAP.md` added** — a single plain-language map reconciling every subtree's license (base scaffold, Cockpit, both packs) into one coherent, bundle-wide statement, with per-subtree MAY / MAY-NOT boundaries. `README.md`, `NOTICE.md`, and the per-Expansion `LICENSE`/`NOTICE` files reconcile to it.
-
-### Launch-day hardening
-
-- README rewritten for the v3.0.0 all-in-one (12-specialist roster, preinstalled Cockpit interface, both packs preinstalled; version badge 2.1.0 → 3.0.0).
-- ADAPTER-PROMPT and root AGENTS.md reconciled to the bundled-12 roster and the preinstalled-Cockpit setup flow.
-- `.github/` release + snapshot-notify workflow adjustments for the v3.0.0 cut.
-
-### Changed
-
-- **SOP numbering.** SOP-003 through SOP-009 are now claimed by the bundled packs (App Developer → 003–005, Designer → 006–009). Reserved range starts at SOP-010. Descriptive `[[SOP-...]]` wikilinks inside the merged SOPs and the six new agent contracts were rewritten to their auto-numbered slugs per WS-003 §3.2; the à-la-carte pack copies under `Expansions/app-developer/` and `Expansions/designer-pack/` keep descriptive links (they renumber at install time on whatever scaffold they land in).
-- **Guidelines.** GL-003 is no longer reserved — it is filled by the Designer Pack. Next free slot is GL-005.
-
-### Distribution / gates
-
-- **Lex — license posture: RECONCILED.** The base scaffold (CC BY-NC-SA 4.0), the Cockpit's PolyForm-Noncommercial personal-use license, and the two packs' CC BY-NC 4.0 are reconciled into one coherent bundle-license statement in `LICENSE-MAP.md`. Re-verify the BYO-Claude-key allowance against the live Anthropic Usage Policy + Commercial Terms at the moment of public push (Lex owns the legal call).
-- **Vex — bundled-pack security gate: confirm before public push.** Token sweep + trust-tier check over the three preinstalled Expansions (WS-003 §2) across the bundle. To be confirmed green at push time.
-- **BYO-Claude-key compliance:** the Cockpit reads the user's own key locally; no pooling, proxying, central storage, or key in any artifact — re-verified at push time. Release-blocking if violated.
-
-### Migration
-
-New users download this bundle and get everything preinstalled — no action. Existing-scaffold users do **not** need this bundle; they adopt individual capabilities via the à-la-carte packs (Cockpit / App Developer / Designer) through the normal [[WS-003-install-an-expansion]] flow. There is no forced migration from 2.4.0.
+**Historical entry (download withdrawn).** v3.0.0 introduced the bundled download era: it added the myPKA Cockpit v1.0.0 at `Expansions/mypka-cockpit/` (which remains bundled and free today) and it bundled two agent packs (App Developer: Felix/Vex/Vera + SOP-003..005; Designer: Iris/Charta/Pixel + SOP-006..009 + GL-003) directly into the download. As of **5.0.0** those two agent packs are unbundled and available with the myICOR membership on the Expansion Packs page; the bundled-era release downloads (3.0.0 through 4.1.1) were withdrawn. This release also relicensed the base scaffold to **CC BY-NC-SA 4.0** and introduced `LICENSE-MAP.md` and the Cockpit's own license (myICOR Cockpit Personal-Use License, PolyForm-Noncommercial-based), which remain in force.
 
 ### Version files
 
@@ -252,13 +246,13 @@ Existing vaults need no action. Local version history is opt-in and can be turne
 - **`GL-004-task-resource-linking.md`** in `Team Knowledge/Guidelines/`. The canonical rule: task → resource, never the reverse. Defines what counts as a resource, the seven-array frontmatter contract, the `linked_deliverables` slug format (`<folder-slug>/<file-slug>` or `<folder-slug>`), the archive-on-close cascade, the sharing escape hatch for deliverables referenced by multiple tasks, and the orphan-deliverable rule.
 - **`linked_deliverables: []`** field in `Team Knowledge/tasks/_template.md`. The seventh `linked_*` array. The template's `## Context one click away` body section gains a `Working artifacts:` sub-bullet group that mirrors the array.
 - **`Deliverables/_archive/.gitkeep`** — seeds the archive folder so it ships in the scaffold on first clone.
-- **Lifecycle section in `Deliverables/README.md`** — documents the archive-on-close cascade, the orphan-deliverable rule, and the shared-deliverable behavior. Wikilinks to GL-004 and SOP-012-close-task.
+- **Lifecycle section in `Deliverables/README.md`** — documents the archive-on-close cascade, the orphan-deliverable rule, and the shared-deliverable behavior. Wikilinks to GL-004 and SOP-close-task.
 
 ### Changed
 
-- **`Team Knowledge/SOPs/SOP-010-create-task.md`** bumped to v1.1. Step 4's cross-reference walk table gains a `linked_deliverables` row. "Six linked_* arrays" copy bumps to "seven" throughout (inputs table, step 4 paragraph, step 5 bullet, common-mistakes section). A second worked example shows a task with `linked_deliverables` populated (the minimal mux-webhook example stays as-is for the empty-arrays case). References list adds `[[GL-004-task-resource-linking]]`.
-- **`Team Knowledge/SOPs/SOP-012-close-task.md`** bumped to v1.1. New §A.3 pre-flight step: check deliverable sharing across other open/in-progress tasks before archiving. New §A.8 / §B.5 archive steps: move each `linked_deliverables` folder to `Deliverables/_archive/<YYYY>/<MM>/`. The "move the folder, not the file" rule is documented. The `## Outcome` shape gains an `Archived deliverables:` line. A second worked example walks the archive-on-close path; the original mux-webhook example stays as the no-deliverables case. References list adds `[[GL-004-task-resource-linking]]` and `[[SOP-002-convert-mypka-to-sqlite]]`.
-- **`Team Knowledge/SOPs/SOP-011-claim-task.md`** — small update. Pre-flight read list adds `linked_deliverables` ("the working artifacts already in flight — skipping them means re-doing what's already done"). References list adds `[[GL-004-task-resource-linking]]`. Common-mistakes section notes that skipping `linked_deliverables` in pre-flight is a resumption hazard.
+- **`Team Knowledge/SOPs/SOP-create-task.md`** bumped to v1.1. Step 4's cross-reference walk table gains a `linked_deliverables` row. "Six linked_* arrays" copy bumps to "seven" throughout (inputs table, step 4 paragraph, step 5 bullet, common-mistakes section). A second worked example shows a task with `linked_deliverables` populated (the minimal mux-webhook example stays as-is for the empty-arrays case). References list adds `[[GL-004-task-resource-linking]]`.
+- **`Team Knowledge/SOPs/SOP-close-task.md`** bumped to v1.1. New §A.3 pre-flight step: check deliverable sharing across other open/in-progress tasks before archiving. New §A.8 / §B.5 archive steps: move each `linked_deliverables` folder to `Deliverables/_archive/<YYYY>/<MM>/`. The "move the folder, not the file" rule is documented. The `## Outcome` shape gains an `Archived deliverables:` line. A second worked example walks the archive-on-close path; the original mux-webhook example stays as the no-deliverables case. References list adds `[[GL-004-task-resource-linking]]` and `[[SOP-002-convert-mypka-to-sqlite]]`.
+- **`Team Knowledge/SOPs/SOP-claim-task.md`** — small update. Pre-flight read list adds `linked_deliverables` ("the working artifacts already in flight — skipping them means re-doing what's already done"). References list adds `[[GL-004-task-resource-linking]]`. Common-mistakes section notes that skipping `linked_deliverables` in pre-flight is a resumption hazard.
 - **`Team Knowledge/tasks/open/EXAMPLE-tsk-2026-05-10-001-welcome-to-tasks.md`** — seeded teaching task updated to the seven-array shape (`linked_deliverables: []` added; `GL-004` added to `linked_guidelines`; "six arrays" copy in the body bumped to "seven"; an additional `Linking rule: [[GL-004-task-resource-linking]]` bullet appears in `## Context one click away`).
 - **`Team Knowledge/Guidelines/INDEX.md`** — gains a row for GL-004 between GL-002 and the reserved-GL-003 note. The reserved note for GL-003 (Designer Expansion Pack) is unchanged.
 
@@ -266,7 +260,7 @@ Existing vaults need no action. Local version history is opt-in and can be turne
 
 **Existing scaffold users with active tasks need a one-line frontmatter addition per task** to bring them up to the seven-array shape. A one-shot grep + sed pattern is suggested in the migration prompt exposed as the "upgrade" button in the myPKA course at https://myicor.com.
 
-Tasks already in `done/` or `cancelled/` are historical record and do not need migration. The walk in [[SOP-010-create-task]] step 4 starts using all seven slots immediately from v2.2.0 onward.
+Tasks already in `done/` or `cancelled/` are historical record and do not need migration. The walk in [[SOP-create-task]] step 4 starts using all seven slots immediately from v2.2.0 onward.
 
 Resources written before v2.2.0 may carry a pre-GL-004 `linked_tasks` field. Per the new one-way rule, that field is retired — remove it on touch. New writes never add it.
 
@@ -309,7 +303,7 @@ Resources written before v2.2.0 may carry a pre-GL-004 `linked_tasks` field. Per
 
 ## [2.0.0] - 2026-05-18
 
-**Breaking structural change.** The base scaffold roster moves from **nine specialists to six**. The three creative specialists — Iris (Design System Architect), Charta (Infographic Designer), Pixel (Visual Specialist) — and everything they own come out of the base scaffold and into the optional **Designer Expansion Pack** from the AI Library. The base now ships Hawkeye, Potter, B.J., Radar, Klinger, and Margaret. A user updating an existing myPKA from 1.10.x to 2.0.0 loses the three creative agents from their base roster — install the Designer Expansion Pack to keep them. (COU-261)
+**Breaking structural change.** The base scaffold roster moves from **nine specialists to six**. The three creative specialists — Iris (Design System Architect), Charta (Infographic Designer), Pixel (Visual Specialist) — and everything they own come out of the base scaffold and into the optional **Designer Expansion Pack** from the AI Library. The base now ships Larry, Nolan, Pax, Penn, Mack, and Silas. A user updating an existing myPKA from 1.10.x to 2.0.0 loses the three creative agents from their base roster — install the Designer Expansion Pack to keep them. (COU-261)
 
 ### Removed
 
@@ -321,8 +315,8 @@ Resources written before v2.2.0 may carry a pre-GL-004 `linked_tasks` field. Per
 
 ### Changed
 
-- `Team/agent-index.md` — routing table down to six rows; "nine specialists" → "six specialists"; Klinger's row drops the Pixel-handoff parenthetical.
-- `Team/Hawkeye - Orchestrator/AGENTS.md` — routing cheatsheet drops the four design rows; "What Hawkeye does not do" drops the two design/GL-003 lines.
+- `Team/agent-index.md` — routing table down to six rows; "nine specialists" → "six specialists"; Mack's row drops the Pixel-handoff parenthetical.
+- `Team/Larry - Orchestrator/AGENTS.md` — routing cheatsheet drops the four design rows; "What Larry does not do" drops the two design/GL-003 lines.
 - `AGENTS.md` (root) — "The team (9 specialists)" → "The team (6 specialists)"; team table down to six rows; "the current 9 specialists" → "6".
 - `README.md` — "nine"/"9" roster references → "six"/"6" (×5 including version badge); three creative team-card blocks removed; added a Designer Pack pointer note.
 - `WAY-FORWARD.md` — roster lines and the "When … specialists isn't enough" section updated to six; capability list drops infographic layout, image stylization, and design-system authoring (now pack capabilities).
@@ -374,12 +368,12 @@ Wires v1.10.0's task system and journal SOPs into the agent contracts. v1.10.0 s
 
 ### Changed
 
-- `Team/Hawkeye - Orchestrator/AGENTS.md` — adds `## Session boot — task-walk first` before `## Three duties`. Hawkeye now walks `Team Knowledge/tasks/open/` + `tasks/in-progress/` per [[SOP-014-list-open-tasks]] at every session boot and surfaces open priority-1 / in-progress / blocked / stale items in the greeting. Tom no longer has to ask "what's open?" — the team picks up where it left off automatically.
-- `Team/Hawkeye - Orchestrator/AGENTS.md` — Duty 1 step 4 (Brief) now requires Hawkeye to create a task via [[SOP-010-create-task]] before delegating any work that won't finish in-turn, populating all six `linked_*` arrays. The specialist resumes from the task file, not from chat scrollback.
-- All 8 specialist AGENTS.md (Potter, B.J., Radar, Klinger, Margaret, Charta, Pixel, Iris) — adds a shared `## Task discipline (v1.10.1)` section right after the agent's "When Hawkeye routes to <Name>" section. The block wires three behaviors at dispatch:
-  1. Read your `linked_journal_entries` and the matching files in `Team/<your-name>/journal/` per [[SOP-017-read-own-journal]] before starting work. Auditable via a `## Updates` line that names the priors you carried.
-  2. When you create a task, populate all six `linked_*` arrays per [[SOP-010-create-task]].
-  3. When you close a task, write the `## Outcome` and, if there's a durable lesson, write a journal entry per [[SOP-016-write-journal-entry]] and link it from the closed task.
+- `Team/Larry - Orchestrator/AGENTS.md` — adds `## Session boot — task-walk first` before `## Three duties`. Larry now walks `Team Knowledge/tasks/open/` + `tasks/in-progress/` per [[SOP-list-open-tasks]] at every session boot and surfaces open priority-1 / in-progress / blocked / stale items in the greeting. Tom no longer has to ask "what's open?" — the team picks up where it left off automatically.
+- `Team/Larry - Orchestrator/AGENTS.md` — Duty 1 step 4 (Brief) now requires Larry to create a task via [[SOP-create-task]] before delegating any work that won't finish in-turn, populating all six `linked_*` arrays. The specialist resumes from the task file, not from chat scrollback.
+- All 8 specialist AGENTS.md (Nolan, Pax, Penn, Mack, Silas, Charta, Pixel, Iris) — adds a shared `## Task discipline (v1.10.1)` section right after the agent's "When Larry routes to <Name>" section. The block wires three behaviors at dispatch:
+  1. Read your `linked_journal_entries` and the matching files in `Team/<your-name>/journal/` per [[SOP-read-own-journal]] before starting work. Auditable via a `## Updates` line that names the priors you carried.
+  2. When you create a task, populate all six `linked_*` arrays per [[SOP-create-task]].
+  3. When you close a task, write the `## Outcome` and, if there's a durable lesson, write a journal entry per [[SOP-write-journal-entry]] and link it from the closed task.
 - `validation-script.sh` — version check loosened from a hard `1.10.0` literal to a `1.10.x` glob so v1.10.x patch releases pass the same structural check. v1.10.0 folders still pass.
 
 ### Migration
@@ -402,20 +396,20 @@ Adds task management, per-agent journals, and an LLM-readable migration changelo
 - `Team Knowledge/tasks/INDEX.md` — auto-generated summary view (open by priority, in-progress by assignee, recently closed). Rebuilt at the end of every task-touching SOP and re-checked at session boot.
 - `Team Knowledge/tasks/{open,in-progress,done,cancelled}/.gitkeep` — placeholders so empty folders survive in git.
 - Task ID scheme: `tsk-YYYY-MM-DD-NNN`. Lexical sort matches chronological sort. Date-prefixed filenames stay self-describing when referenced from session logs months later.
-- `Team/<Name> - <Role>/journal/` — per-agent durable insight notes. One folder per shipped specialist (Hawkeye, Potter, B.J., Radar, Klinger, Margaret, Charta, Pixel, Iris). The agent commits an entry when they learn something cross-session: a lesson, a decision rule, an anti-pattern. Journal entries are topical, not chronological.
+- `Team/<Name> - <Role>/journal/` — per-agent durable insight notes. One folder per shipped specialist (Larry, Nolan, Pax, Penn, Mack, Silas, Charta, Pixel, Iris). The agent commits an entry when they learn something cross-session: a lesson, a decision rule, an anti-pattern. Journal entries are topical, not chronological.
 - `Team/<Name> - <Role>/journal/_template.md` — starter file for journal entries. Locked frontmatter (`agent_id`, `type`, `topic`, `tags`, `linked_session_logs`, `linked_tasks`, `related_journal_entries`, `status`).
 - `.scaffold-version` — plain-text file at the repo root containing `1.10.0`. Single source of truth for which migrations apply.
 - `CHANGELOG-MIGRATION.md` — machine-actionable upgrade spec. Per-version sections with numbered, idempotent recipes any LLM can follow to upgrade an older myPKA folder. Includes a validation script that exits 0 on a structurally valid migration.
 - `validation-script.sh` — bash script at the repo root that verifies a folder is v1.10.0-compliant. Exits 0 on success, 1 on failure.
 - New SOPs in `Team Knowledge/SOPs/`:
-  - `SOP-010-create-task.md` — confronts all six cross-reference arrays at creation.
-  - `SOP-011-claim-task.md` — atomic claim via `git mv`. Loser retries on a re-list.
-  - `SOP-012-close-task.md` — moves to `done/` with outcome filled in. Surfaces open sub-tasks for explicit decision.
-  - `SOP-014-list-open-tasks.md` — folder walk that Hawkeye runs at session boot.
-  - `SOP-013-rebuild-task-index.md` — awk-based, sub-500ms target on 1,000 tasks.
-  - `SOP-016-write-journal-entry.md` — trigger test, body shape, supersession rules.
-  - `SOP-017-read-own-journal.md` — what each agent runs before starting work on a task.
-  - `SOP-015-write-session-log.md` — extended to reference any tasks created or touched.
+  - `SOP-create-task.md` — confronts all six cross-reference arrays at creation.
+  - `SOP-claim-task.md` — atomic claim via `git mv`. Loser retries on a re-list.
+  - `SOP-close-task.md` — moves to `done/` with outcome filled in. Surfaces open sub-tasks for explicit decision.
+  - `SOP-list-open-tasks.md` — folder walk that Larry runs at session boot.
+  - `SOP-rebuild-task-index.md` — awk-based, sub-500ms target on 1,000 tasks.
+  - `SOP-write-journal-entry.md` — trigger test, body shape, supersession rules.
+  - `SOP-read-own-journal.md` — what each agent runs before starting work on a task.
+  - `SOP-write-session-log.md` — extended to reference any tasks created or touched.
 
 ### Changed
 
@@ -433,18 +427,18 @@ Adds task management, per-agent journals, and an LLM-readable migration changelo
 
 ## [1.9.0] - 2026-05-09
 
-**Host subagent binding ships out of the box.** First activation now generates host-specific subagent shims so the eight deputies (Radar, B.J., Potter, Klinger, Margaret, Charta, Pixel, Iris) can dispatch in parallel via the host's agent runtime — not role-played in a single context. Hawkeye is excluded (he's the main-session identity, not a dispatched subagent).
+**Host subagent binding ships out of the box.** First activation now generates host-specific subagent shims so the eight deputies (Penn, Pax, Nolan, Mack, Silas, Charta, Pixel, Iris) can dispatch in parallel via the host's agent runtime — not role-played in a single context. Larry is excluded (he's the main-session identity, not a dispatched subagent).
 
 The contract: **two layers, never three.** The wiki contract at `Team/<Name>/AGENTS.md` is canonical and host-agnostic. The host shim (`.claude/agents/<slug>.md` for Claude Code; `.codex/agents/<slug>.md` for Codex if supported; per-spec for Gemini) is a thin pointer that the host runtime reads to dispatch the specialist. We do NOT add a third layer (e.g. a `CLAUDE.md` inside each `Team/<Name>/`) — that violates SSOT.
 
 ### Added
 
-- `.claude/agents/{charta,iris,klinger,potter,bj,radar,pixel,margaret}.md` — Claude Code subagent shims for the eight deputies. YAML frontmatter (`name`, `description`, `tools`) + body that points back to the wiki contract via path. ~30-60 lines each. Hawkeye is intentionally excluded.
+- `.claude/agents/{charta,iris,mack,nolan,pax,penn,pixel,silas}.md` — Claude Code subagent shims for the eight deputies. YAML frontmatter (`name`, `description`, `tools`) + body that points back to the wiki contract via path. ~30-60 lines each. Larry is intentionally excluded.
 - `ADAPTER-PROMPT.md` Step 7 (new) — host-agnostic procedure to walk `Team/`, derive each slug, and generate host-specific shims on first init. Per-host matrix: Claude Code → `.claude/agents/`, Codex CLI → `.codex/agents/` (when supported), Gemini CLI → per spec, Cursor / chat-only → noted limitation. **Idempotent** — re-running Step 7 skips any pre-existing shims (never overwrites user customizations). Report-back template adds `HOST SUBAGENT BINDING` field listing written + skipped.
 
 ### Changed
 
-- `Team/Potter - HR/AGENTS.md` — every hire now ships two artifacts: the wiki contract AND the host shim(s) for every host the user has activated. Detection by pointer-file presence (`CLAUDE.md`, `AGENTS.md.codex`, `GEMINI.md`, `.cursor/rules/main.md`).
+- `Team/Nolan - HR/AGENTS.md` — every hire now ships two artifacts: the wiki contract AND the host shim(s) for every host the user has activated. Detection by pointer-file presence (`CLAUDE.md`, `AGENTS.md.codex`, `GEMINI.md`, `.cursor/rules/main.md`).
 - `Team Knowledge/SOPs/SOP-001-how-to-add-a-new-specialist.md` §5 — host-agnostic principle plus host-specific shim path matrix. Two artifacts always go together.
 - `VERSION` 1.8.2 → 1.9.0.
 
@@ -460,7 +454,7 @@ The contract: **two layers, never three.** The wiki contract at `Team/<Name>/AGE
 
 ### Changed
 
-- `Team/Hawkeye - Orchestrator/AGENTS.md` — "Tom double-clicks `start.command`" → "{{USER_NAME}} double-clicks `start.command`".
+- `Team/Larry - Orchestrator/AGENTS.md` — "Tom double-clicks `start.command`" → "{{USER_NAME}} double-clicks `start.command`".
 - `Team Knowledge/session-logs/_template.md` — example follow-up items "Tom reviews v1" → "{{USER_NAME}} reviews v1".
 - `Team Knowledge/Workstreams/WS-003-install-an-expansion.md` — "Tom-approved canonical exception" → "Pre-canonicalized exception".
 - `README.md`, `WAY-FORWARD.md` — "Tom builds the system" → "Dr. Thomas Rödl builds the system" (formal authorship credit).
@@ -476,7 +470,7 @@ The contract: **two layers, never three.** The wiki contract at `Team/<Name>/AGE
 
 ## [1.8.1] - 2026-05-09
 
-**Initial public release.** myPKA ships with a 9-person pre-hired AI team (Hawkeye, Potter, B.J., Radar, Klinger, Margaret, Charta, Pixel, Iris), full Personal Knowledge Architecture folder structure (PKM/My Life, PKM/CRM, PKM/Documents, PKM/Journal, PKM/Images), Team Knowledge layer (SOPs, Workstreams, Guidelines, Templates, session-logs), and the Expansions architecture for downloadable agent + connector packs.
+**Initial public release.** myPKA ships with a 9-person pre-hired AI team (Larry, Nolan, Pax, Penn, Mack, Silas, Charta, Pixel, Iris), full Personal Knowledge Architecture folder structure (PKM/My Life, PKM/CRM, PKM/Documents, PKM/Journal, PKM/Images), Team Knowledge layer (SOPs, Workstreams, Guidelines, Templates, session-logs), and the Expansions architecture for downloadable agent + connector packs.
 
 ### Highlights
 
