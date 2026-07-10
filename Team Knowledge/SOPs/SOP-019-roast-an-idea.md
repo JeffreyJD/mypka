@@ -33,7 +33,7 @@ The procedure (brief structure, persona prompts, verdict format) is fully LLM-ag
 
 ## Phase 1: Convene the council (5 parallel agents)
 
-**In Claude Code:** Spin up all five agents in a single message so they run concurrently. Each gets `subagent_type: general-purpose`. Paste the same brief into each, then give each its persona mandate below.
+**In Claude Code:** Spin up all five agents in a single message so they run concurrently. Each gets `subagent_type: general-purpose`. Paste the same brief into each, then give each its persona mandate below. <!-- agnosticism-audit:allow: paired with the sequential fallback on the next line, per this SOP's own Portability section above -->
 
 **In any other LLM (Cursor, Gemini CLI, plain chat):** Run each persona sequentially in the same conversation. Ask the LLM to adopt each persona in turn — paste the persona mandate and brief, get the response, then move to the next. Collect all five responses before proceeding to Phase 2.
 

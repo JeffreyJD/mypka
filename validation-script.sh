@@ -148,22 +148,28 @@ fi
 # 5. Required SOPs exist
 # ----------------------------------------------------------------------------
 
-REQUIRED_SOPS=(
-  "SOP-create-task.md"
-  "SOP-claim-task.md"
-  "SOP-close-task.md"
-  "SOP-list-open-tasks.md"
-  "SOP-rebuild-task-index.md"
-  "SOP-write-journal-entry.md"
-  "SOP-read-own-journal.md"
-  "SOP-write-session-log.md"
+# Slugs, not filenames: per GL-001-file-naming-conventions, SOPs are numbered
+# (SOP-NNN-<slug>.md), so match by suffix rather than requiring the old bare
+# SOP-<slug>.md form. Either shape satisfies the requirement.
+REQUIRED_SOP_SLUGS=(
+  "create-task"
+  "claim-task"
+  "close-task"
+  "list-open-tasks"
+  "rebuild-task-index"
+  "write-journal-entry"
+  "read-own-journal"
+  "write-session-log"
 )
 
-for sop in "${REQUIRED_SOPS[@]}"; do
-  if [ -f "$ROOT/Team Knowledge/SOPs/$sop" ]; then
-    pass "SOP exists: $sop"
+for slug in "${REQUIRED_SOP_SLUGS[@]}"; do
+  MATCH=$(find "$ROOT/Team Knowledge/SOPs" -maxdepth 1 -type f \
+    \( -name "SOP-${slug}.md" -o -name "SOP-[0-9][0-9][0-9]-${slug}.md" \) \
+    2>/dev/null | head -1)
+  if [ -n "$MATCH" ]; then
+    pass "SOP exists: $(basename "$MATCH") (covers $slug)"
   else
-    fail "SOP missing: Team Knowledge/SOPs/$sop"
+    fail "SOP missing: no file matching SOP-${slug}.md or SOP-NNN-${slug}.md in Team Knowledge/SOPs/"
   fi
 done
 

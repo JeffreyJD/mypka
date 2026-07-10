@@ -53,7 +53,7 @@ Adds:
   - M SOPs: <count, with default owners>
   - K guidelines, L workstreams, P templates (if any)
   - Q env vars (X required, Y sensitive)
-  - R MCP servers (if any)
+  - R MCP servers (optional, host-dependent — if any)
   - Runtime: yes/no
 Post-install steps: <count>
 
@@ -162,7 +162,7 @@ For each `env_vars` entry:
 2. Write to `Expansions/<slug>/.env`. `chmod 600` the file.
 3. Confirm `Expansions/<slug>/.env` is gitignored (the Expansion's own `.gitignore` should cover this; if not, Klinger adds the entry to your myPKA root `.gitignore`).
 
-### 5.2 MCP servers
+### 5.2 MCP servers (optional, host-dependent)
 
 For each `mcp_servers` entry:
 
@@ -221,7 +221,7 @@ Will remove:
   - K guidelines, L workstreams, P templates
   - Runtime: yes/no (will stop the listener)
   - launchd plist: yes/no (will unload + remove)
-  - MCP server registrations: <list>
+  - MCP server registrations (optional, host-dependent): <list>
   - Env vars in Expansions/<slug>/.env: <count, keys only>
 
 Will keep (per residual_paths):
@@ -233,7 +233,7 @@ Proceed? [y/n]
 
 ### U2 — Klinger: stop runtime + tear down connector
 
-For runtime Expansions: `launchctl unload` the plist (macOS); kill the foreground process (Linux/Windows). Remove the plist from `~/Library/LaunchAgents/`. Deregister MCP servers from the user's LLM config. Clear `Expansions/<slug>/.env`.
+For runtime Expansions: `launchctl unload` the plist (macOS); kill the foreground process (Linux/Windows). Remove the plist from `~/Library/LaunchAgents/`. Deregister any MCP servers (optional, host-dependent) from the user's LLM config. Clear `Expansions/<slug>/.env`.
 
 ### U3 — Potter: reverse the merge
 
