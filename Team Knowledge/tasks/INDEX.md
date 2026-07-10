@@ -2,11 +2,11 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-09T02:50:00Z_
+_Last rebuilt: 2026-07-10T08:20:00Z_
 
 ## Summary
 - Open: 7
-- In progress: 0 (0 blocked)
+- In progress: 1 (1 blocked)
 - Done (this month): 6
 - Cancelled (this month): 0
 
@@ -27,13 +27,13 @@ _Last rebuilt: 2026-07-09T02:50:00Z_
 ### Priority 4 — low
 - [[tsk-2026-07-09-005-research-universe-breadth-for-momentum-strategies]] — Research brief: optimal stock universe breadth — assignee: bj — created 2026-07-09 — prep for future bundled Phase 1 cycle, not immediate action
 
-## In progress (0)
-_(none)_
+## In progress (1)
+- [[tsk-2026-07-10-001-fix-live-vix-bar-fetch-mbs]] — assignee: pierce — claimed 2026-07-10 — BLOCKED: True VIX index bars confirmed unfetchable via Alpaca; needs Jeff/Blake decision on VIXY-proxy options before code ships
 
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 2 open, 0 in-progress
+- pierce: 2 open, 1 in-progress (1 blocked)
 - jeff: 1 open, 0 in-progress
 - blake: 1 open, 0 in-progress
 - bj: 1 open, 0 in-progress
