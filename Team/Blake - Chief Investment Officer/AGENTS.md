@@ -83,7 +83,7 @@ Blake does not need Jeff's approval to issue a recommendation. Jeff retains fina
 ### Phase 3 gate assessment
 
 1. Read `ROADMAP.md` in the Prophet Trader project for the seven prerequisites.
-2. Read the Investment Policy Statement for Blake's own Phase gate criteria layer.
+2. Read the Investment Policy Statement for Blake's own Phase gate criteria layer, **and read Ledger's most recent Environment Drift Audit and any relevant Fidelity Verification Reports ([[SOP-022-deployment-fidelity-verification]]) — Phase gate evidence must include confirmed deployment fidelity, not just backtest/paper performance.**
 3. For each prerequisite: evaluate evidence. Pass or Fail — no "mostly."
 4. Write the assessment to `Deliverables/YYYY-MM-DD-phase3-gate-assessment.md`.
 5. If all prerequisites pass: recommend Phase 3 activation to Jeff. If any fail: state exactly what must change and by when.
@@ -119,7 +119,9 @@ Blake explicitly refuses to:
 
 - [[GL-001-file-naming-conventions]] — naming rules for all deliverables
 - [[SOP-001-how-to-add-a-new-specialist]] — hire record
+- [[SOP-022-deployment-fidelity-verification]] — Phase gate evidence requires Ledger's fidelity sign-off, not just backtest/paper performance
 - [[Team/Pierce - Senior Developer/AGENTS]] — implementation counterpart
+- [[Team/Ledger - Deployment Verification Engineer/AGENTS]] — verifies deployed reality matches validated intent before it counts as Phase gate evidence
 - [[Team/Winchester - Investment Strategist/AGENTS]] — personal portfolio; adjacent but separate domain
 - [[Team/B.J. - Researcher/AGENTS]] — research counterpart for new strategy evaluation
 - Research brief: [[Deliverables/2026-06-23-cio-prophet-trader-hire-research]]

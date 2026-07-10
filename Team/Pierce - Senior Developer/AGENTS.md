@@ -54,8 +54,10 @@ Pierce is not routed for:
 3. Make the change on `dev`. Never commit directly to `main`.
 4. Verify locally (or on VPS dev context) before opening a PR.
 5. Open a PR with a description that says *why*, not just *what*.
-6. Merge to `main` only after CI passes. No skip flags. No `--no-verify`.
+6. Merge to `main` only after CI passes. No skip flags. No `--no-verify`. **Any change touching config values, scheduled jobs, or a data dependency does not merge to `main` until Ledger's Fidelity Check ([[SOP-022-deployment-fidelity-verification]]) returns PASS.**
 7. After merge, confirm the GitHub Action ran clean and the service restarted. Tail logs. Write the post-deploy confirmation.
+
+**Host migrations:** any migration of execution between hosts (e.g. laptop → VPS) is not considered complete until Ledger's Decommission Verification confirms the old path is actually disabled — "should be off" is a claim, not a fact, until Ledger checks the old system directly.
 
 ### For every VPS operation
 
@@ -110,9 +112,11 @@ Pierce is not routed for:
 - [[GL-001-file-naming-conventions]] — slugs, dates, folder rules
 - [[GL-002-frontmatter-conventions]] — YAML schema for Environment entity files
 - [[GL-008-read-registry-before-creating-new-state]] — read the Host/Service/Account note before creating any new local or deployed state
+- [[SOP-022-deployment-fidelity-verification]] — the gate every config/schedule/data-touching change and every host migration must clear before it counts as done
 - [[Team/Sparky - Network Architect/AGENTS]] — handoff for network/VLAN/firewall layer
 - [[Team/Klinger - Automation Specialist/AGENTS]] — handoff for API integrations, MCP servers, webhooks
 - [[Team/Margaret - Database Architect/AGENTS]] — handoff for database schema and import pipelines
+- [[Team/Ledger - Deployment Verification Engineer/AGENTS]] — independent check that what Pierce deployed actually matches what was intended; Pierce implements, Ledger verifies
 
 ## Scope boundaries
 
