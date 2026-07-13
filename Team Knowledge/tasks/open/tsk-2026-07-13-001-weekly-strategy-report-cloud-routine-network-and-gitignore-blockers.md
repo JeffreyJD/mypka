@@ -1,7 +1,7 @@
 ---
 # Identity
 id: tsk-2026-07-13-001
-title: "Weekly Strategy Report cloud routine cannot run at all — no egress to B2/healthchecks, no git write access, and PKM/ isn't in the bare clone"
+title: "Move Weekly Strategy Report from broken cloud routine to a VPS script — 2 blocking data-integrity bugs found along the way"
 
 # Ownership & priority
 assignee: pierce
@@ -14,7 +14,7 @@ blocked_by: null
 
 # Time
 created: 2026-07-13T11:10:33Z
-updated: 2026-07-13T11:10:33Z
+updated: 2026-07-13T12:05:00Z
 due: 2026-07-19
 
 # Provenance
@@ -29,7 +29,7 @@ linked_guidelines: []
 linked_my_life: []
 linked_session_logs: []
 linked_journal_entries: []
-linked_deliverables: []
+linked_deliverables: ["2026-07-13-weekly-strategy-report-vps-script-spec"]
 
 # Tagging
 tags: ["prophet-trader", "weekly-strategy-report", "remotetrigger", "cloud-routine", "network-egress", "architecture"]
@@ -49,7 +49,21 @@ The Weekly Strategy Report's first live fire (2026-07-12) never pinged healthche
 
 ## Why this matters more than the original hypothesis
 
-This isn't a bug in Blake's prompt or a small chaining mistake — it's a mismatch between how this routine was designed (assumes free internet egress + git write + access to gitignored vault content) and what a `RemoteTrigger` cloud-routine session's environment actually permits. If the "Anthropic cloud default" environment (`env_01G17NfzLXQ4TjkNnbFnrauA`) has no configurable egress allowlist and no write access by design — which is plausible given no environment-level network/permission settings were ever surfaced during this routine's original setup — then **this specific approach (fetch from B2, ping healthchecks, commit to a gitignored path, all from inside the cloud sandbox) may not be achievable at all without redesigning how this routine gets its data in and its output out.**
+This isn't a bug in Blake's prompt or a small chaining mistake — it's a mismatch between how this routine was designed (assumes free internet egress + git write + access to gitignored vault content) and what a `RemoteTrigger` cloud-routine session's environment actually permits.
+
+## Decision (2026-07-13): retire the cloud routine, move to the VPS
+
+Jeff and Hawkeye decided not to chase whether the cloud sandbox's egress/write restrictions are even configurable. Instead: **retire the `RemoteTrigger` routine entirely** (disabled via API, `enabled: false`, confirmed) and **move this report onto the VPS**, reusing what's already proven reliable there (Daily Routine, Weekly Autopsy both have full network egress and git write access). The judgment/reasoning layer becomes a direct Anthropic API call from a VPS Python script, not an interactive cloud agent session.
+
+Blake reviewed and approved this architecture with conditions — see [[2026-07-13-weekly-strategy-report-vps-script-spec]] for the full spec. Key points:
+
+- **The verdict itself must be computed by deterministic Python** (extending `weekly_autopsy.py`'s existing `_compute_verdict()`), not decided by the API call — the model is scoped narrowly to the one genuinely interpretive judgment IPS assigns to a human (regime-vs-model-failure attribution) plus narrative writing. This directly prevents the "judgment call without running the structured criteria" anti-pattern IPS 7.3 forbids.
+- **Two blocking data-integrity bugs found while tracing the actual code, independent of this redesign:**
+  1. Trade fill records (`data/trades.jsonl`) carry no strategy attribution — the `"strategy"` field on every proposal is never copied onto the resulting fill. Per-strategy P&L has been effectively portfolio-wide all along, masked only because `momentum_breakout_stocks` has had zero lifetime fills so far.
+  2. The daily classified market regime is never persisted to `data/decisions/*.json` — without it, nothing can later distinguish a regime-gated quiet week from a model-failure quiet week.
+- Report lands at `prophet-trader/reports/YYYY-MM-DD-weekly-strategy-report.md`, git-committed on the VPS — not myPKA's `Deliverables/`. myPKA gets a pointer note in `PKM/Environment/Services/prophet-trader.md`, same pattern as other Environment/Accounts entries.
+- New `config/ips_criteria.yaml` in prophet-trader, owned by Blake, kept in sync as a mandatory sub-step of any future IPS amendment.
+- Benchmark data: Alpaca's own SPY bars (already-integrated adapter), explicitly labeled a proxy, gated behind 50%-of-quarter-elapsed before any beat/miss commentary.
 
 ## Context one click away
 
@@ -59,14 +73,22 @@ This isn't a bug in Blake's prompt or a small chaining mistake — it's a mismat
 
 ## Success criteria
 
-- [ ] Determine whether the `RemoteTrigger`/CCR "Default" cloud environment supports any user-configurable network egress allowlist at all. If yes, add `api.backblazeb2.com` and `hc-ping.com`.
-- [ ] Determine why this session had read-only, not read-write, access to `JeffreyJD/mypka` despite the routine's design assuming write access — check the routine's `session_context`/`sources.git_repository` config and whatever token/permission model backs it.
-- [ ] Resolve the structural gitignore problem independent of the above: decide how the cloud routine gets IPS/registry content in and gets its report out, given `PKM/`/`Deliverables/` will never be in a bare clone. Candidate approaches (not yet evaluated): commit the specific files this routine needs into a git-tracked path instead of a gitignored one; have the routine read from B2 exclusively (no git-tracked vault content) if B2 egress gets fixed; abandon the cloud-routine approach for this specific job and have Pierce's existing VPS infrastructure produce the report on a schedule instead, with the cloud routine (or nothing at all) handling only distribution.
-- [ ] If none of the above is fixable within the current environment/tool model, escalate as a real architectural decision for Jeff rather than continuing to patch around it — this may mean the Weekly Strategy Report needs to move off `RemoteTrigger` entirely.
+- [x] Determine root cause — done, see above. Cloud sandbox egress/write restrictions confirmed real and reproducible (original fire + manual re-run both failed identically).
+- [x] Architectural decision made — retire `RemoteTrigger` for this job, move to VPS. Routine disabled (`enabled: false`, confirmed via API).
+- [x] Blake's spec for the VPS-scripted version — complete, [[2026-07-13-weekly-strategy-report-vps-script-spec]].
+- [ ] **Blocking, do first, as their own separate PRs:** fix trade-fill strategy attribution in `data/trades.jsonl`; persist daily classified regime to `data/decisions/*.json`.
+- [ ] Resolve quarter-open-equity source (prefer Alpaca portfolio-history query) and per-strategy drawdown tracking (or explicitly disclose in the report that IPS 6.2's 15% trigger isn't yet mechanically checked, rather than silently omitting it).
+- [ ] Build `config/ips_criteria.yaml` per Blake's spec §1.2 — this file's content is Blake's sign-off, not Pierce's to draft freely.
+- [ ] Build the VPS report-generation script per Blake's spec §7 order-of-operations, chained after `weekly_autopsy.py` same pattern as `daily_fidelity_check.py` is chained after `daily_routine.py`.
+- [ ] Jeff provisions a new `HEALTHCHECKS_WEEKLY_REPORT_URL` dead-man's switch (same pattern as the existing autopsy/fidelity checks) before first live fire.
+- [ ] Report written to `prophet-trader/reports/YYYY-MM-DD-weekly-strategy-report.md`; myPKA pointer note added to `PKM/Environment/Services/prophet-trader.md`.
+- [ ] Ledger's Pre-deploy Fidelity Check (SOP-022 §1) — new cron entry, new credential, new config file. Do not merge without PASS.
+- [ ] First live fire confirmed clean before closing this task — do not close on "should work now."
 
 ## Updates
 
 - 2026-07-13 11:10 (hawkeye) — recreated. The original version of this task was created by the routine's own final diagnostic session as `tsk-2026-07-13-001` but only existed inside that session's local (uncommitted) state — the same git-write-access problem this task describes prevented it from ever being pushed, so it was lost when the session ended. Jeff relayed the routine's own summary verbatim; this task reconstructs it faithfully rather than only noting "something failed."
+- 2026-07-13 12:05 (hawkeye) — Jeff confirmed the architecture decision: retire the cloud routine, move to the VPS. Disabled `trig_01DSKrdhex2fBMkK8bA3q6a3` via API (`enabled: false`, confirmed). Dispatched Blake to spec the VPS-scripted judgment logic before Pierce builds anything — he approved the architecture with conditions and, while tracing the actual codebase to write the spec, found two real, previously-undiscovered data-integrity bugs (trade-fill strategy attribution, regime persistence) that need fixing as their own prerequisite work, independent of this redesign. Full spec at [[2026-07-13-weekly-strategy-report-vps-script-spec]]. Routing to Pierce next.
 
 ## Outcome
 
