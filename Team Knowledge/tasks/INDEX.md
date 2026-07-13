@@ -2,19 +2,20 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-12T10:05:31Z_
+_Last rebuilt: 2026-07-13T11:10:33Z_
 
 ## Summary
-- Open: 11
+- Open: 12
 - In progress: 0
 - Done (this month): 6
 - Cancelled (this month): 0
 
-## Open (11)
+## Open (12)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
 - [[tsk-2026-07-09-002-check-weekly-strategy-report-first-fire]] — Check Weekly Strategy Report's first live fire — assignee: jeff — created 2026-07-09 — due 2026-07-12
+- [[tsk-2026-07-13-001-weekly-strategy-report-cloud-routine-network-and-gitignore-blockers]] — Weekly Strategy Report cloud routine cannot run at all — no egress to B2/healthchecks, no git write access, PKM/ not in bare clone — assignee: pierce — created 2026-07-13 — due 2026-07-19
 
 ### Priority 2 — high
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
@@ -36,7 +37,7 @@ _Last rebuilt: 2026-07-12T10:05:31Z_
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 6 open, 0 in-progress
+- pierce: 7 open, 0 in-progress
 - jeff: 1 open, 0 in-progress
 - blake: 1 open, 0 in-progress
 - bj: 1 open, 0 in-progress
