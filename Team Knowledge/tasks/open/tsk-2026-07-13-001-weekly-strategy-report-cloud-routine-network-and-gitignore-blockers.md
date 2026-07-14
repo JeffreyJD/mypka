@@ -14,7 +14,7 @@ blocked_by: null
 
 # Time
 created: 2026-07-13T11:10:33Z
-updated: 2026-07-13T12:05:00Z
+updated: 2026-07-14T10:00:00Z
 due: 2026-07-19
 
 # Provenance
@@ -29,7 +29,7 @@ linked_guidelines: []
 linked_my_life: []
 linked_session_logs: []
 linked_journal_entries: []
-linked_deliverables: ["2026-07-13-weekly-strategy-report-vps-script-spec"]
+linked_deliverables: ["2026-07-13-weekly-strategy-report-vps-script-spec", "2026-07-13-prophet-trader-deploy-cross-strategy-sweep", "2026-07-13-weekly-strategy-report-data-prerequisites-decision", "2026-07-13-prophet-trader-debug-healthchecks-slug-lookup"]
 
 # Tagging
 tags: ["prophet-trader", "weekly-strategy-report", "remotetrigger", "cloud-routine", "network-egress", "architecture"]
@@ -73,22 +73,29 @@ Blake reviewed and approved this architecture with conditions — see [[2026-07-
 
 ## Success criteria
 
-- [x] Determine root cause — done, see above. Cloud sandbox egress/write restrictions confirmed real and reproducible (original fire + manual re-run both failed identically).
+- [x] Determine root cause — done. Cloud sandbox egress/write restrictions confirmed real and reproducible (original fire + manual re-run both failed identically).
 - [x] Architectural decision made — retire `RemoteTrigger` for this job, move to VPS. Routine disabled (`enabled: false`, confirmed via API).
 - [x] Blake's spec for the VPS-scripted version — complete, [[2026-07-13-weekly-strategy-report-vps-script-spec]].
-- [ ] **Blocking, do first, as their own separate PRs:** fix trade-fill strategy attribution in `data/trades.jsonl`; persist daily classified regime to `data/decisions/*.json`.
-- [ ] Resolve quarter-open-equity source (prefer Alpaca portfolio-history query) and per-strategy drawdown tracking (or explicitly disclose in the report that IPS 6.2's 15% trigger isn't yet mechanically checked, rather than silently omitting it).
+- [x] **Blocking prerequisite bugs fixed and deployed:** trade-fill strategy attribution (PR #15) and regime persistence (PR #16) both merged, deployed to `main`, confirmed live on the VPS (`d85e10c`).
+- [x] **Unplanned but completed:** full cross-strategy-mixing sweep (Jeff's "identify and fix all bugs" directive) found 3 more real instances beyond the two Blake originally scoped — most severe: `check_demotion_triggers.py` Triggers 1-3 had zero strategy filtering and were **live and unmasked in production today**, meaning `momentum_breakout_stocks` demotion evidence could have been computed from `cross_sectional_momentum`'s real numbers. Also fixed: `_summarize_open_positions()` cross-strategy leakage, 3 dashboard endpoint key-mismatch bugs. All fixed, tested, merged, deployed (PR #17 → PR #18 `dev`→`main`, VPS confirmed at `d85e10c`). Full detail: [[2026-07-13-prophet-trader-deploy-cross-strategy-sweep]]. Blake's gut-check confirmed **no strategy was ever actually demoted incorrectly** (verified directly against `phase_state.json`) — only the evidence text was mislabeled.
+- [x] Quarter-open-equity source and per-strategy drawdown tracking — **decided**, not yet implemented. Blake's decisions: persisted first-party snapshot (one-time Alpaca bootstrap + automatic quarterly snapshots going forward) for equity; drawdown computed from the existing demotion-trigger logic, unbounded to since-Phase-2-inception. One open condition: Pierce must confirm a 2026-07-09–07-13 data gap before trusting the `cross_sectional_momentum` drawdown backfill. Full detail: [[2026-07-13-weekly-strategy-report-data-prerequisites-decision]]. **Not yet coded.**
+- [ ] Implement the quarter-open-equity snapshot mechanism and drawdown computation per Blake's decisions above.
 - [ ] Build `config/ips_criteria.yaml` per Blake's spec §1.2 — this file's content is Blake's sign-off, not Pierce's to draft freely.
-- [ ] Build the VPS report-generation script per Blake's spec §7 order-of-operations, chained after `weekly_autopsy.py` same pattern as `daily_fidelity_check.py` is chained after `daily_routine.py`.
-- [ ] Jeff provisions a new `HEALTHCHECKS_WEEKLY_REPORT_URL` dead-man's switch (same pattern as the existing autopsy/fidelity checks) before first live fire.
+- [ ] Build the VPS report-generation script per Blake's spec §7 order-of-operations, chained after `weekly_autopsy.py` same pattern as `daily_fidelity_check.py` is chained after `daily_routine.py`. **Not yet started** — Pierce has been diverted twice (the sweep, then the healthchecks bug below) since the spec landed.
+- [ ] Jeff provisions a new `HEALTHCHECKS_WEEKLY_REPORT_URL` dead-man's switch (same pattern as the existing autopsy/fidelity checks) before first live fire. **Still outstanding.**
 - [ ] Report written to `prophet-trader/reports/YYYY-MM-DD-weekly-strategy-report.md`; myPKA pointer note added to `PKM/Environment/Services/prophet-trader.md`.
-- [ ] Ledger's Pre-deploy Fidelity Check (SOP-022 §1) — new cron entry, new credential, new config file. Do not merge without PASS.
+- [ ] Ledger's Pre-deploy Fidelity Check (SOP-022 §1) on the report script itself — new cron entry, new credential, new config file. Do not merge without PASS.
 - [ ] First live fire confirmed clean before closing this task — do not close on "should work now."
+
+### Side quest, found and mostly resolved along the way: the fidelity check itself had a false-positive bug
+
+While chasing the "fix all bugs" directive, a genuinely unrelated bug surfaced: `daily_fidelity_check.py` (the tool from `tsk-2026-07-11`/`-12`, unrelated to this task's actual scope) has been reporting a false "Routine: FAIL" every weekday since it deployed, including today — a hardcoded hyphen in a name lookup didn't match the real check's em-dash name. Root cause and fix confirmed independently by Ledger (PASS), but Ledger found the PR's own reasoning for rejecting a more stable identifier (`unique_key`) was factually wrong per vendor docs, and pointed to live proof in this same account (two checks with an empty `slug` field) that the chosen fix doesn't fully close the bug class either. **Fix works and is safe to build on (merged to `dev`), but the PR's documentation/comments need correcting before promotion to `main`** — routed back to Pierce, not yet confirmed landed. Full detail: [[2026-07-13-prophet-trader-debug-healthchecks-slug-lookup]]. Tracked here only for visibility; not a literal blocker on this task's own success criteria.
 
 ## Updates
 
 - 2026-07-13 11:10 (hawkeye) — recreated. The original version of this task was created by the routine's own final diagnostic session as `tsk-2026-07-13-001` but only existed inside that session's local (uncommitted) state — the same git-write-access problem this task describes prevented it from ever being pushed, so it was lost when the session ended. Jeff relayed the routine's own summary verbatim; this task reconstructs it faithfully rather than only noting "something failed."
 - 2026-07-13 12:05 (hawkeye) — Jeff confirmed the architecture decision: retire the cloud routine, move to the VPS. Disabled `trig_01DSKrdhex2fBMkK8bA3q6a3` via API (`enabled: false`, confirmed). Dispatched Blake to spec the VPS-scripted judgment logic before Pierce builds anything — he approved the architecture with conditions and, while tracing the actual codebase to write the spec, found two real, previously-undiscovered data-integrity bugs (trade-fill strategy attribution, regime persistence) that need fixing as their own prerequisite work, independent of this redesign. Full spec at [[2026-07-13-weekly-strategy-report-vps-script-spec]]. Routing to Pierce next.
+- 2026-07-14 10:00 (hawkeye) — bringing this current after a full day of activity that wasn't being logged against this task as it happened. Since the last update: (1) PR #15/#16 merged and deployed, confirming the two prerequisite bugs are actually fixed in production, not just committed. (2) Jeff's "we must have all bugs identified and fixed asap" directive triggered a full cross-strategy-mixing sweep — found and fixed 3 more real instances, most seriously a live, unmasked bug in the demotion-trigger logic itself (fixed, deployed, Blake confirmed no strategy was ever actually demoted incorrectly as a result). (3) Blake resolved both remaining data prerequisites (quarter-open equity, drawdown tracking) with concrete mechanisms — decided, not yet coded. (4) An unrelated but real bug surfaced in the Daily Fidelity Check tool itself (false "Routine: FAIL" every weekday) — fixed and Ledger-verified, but Ledger found the fix's own documented reasoning was factually wrong per vendor docs and flagged a live gap in the same account (empty `slug` fields) proving the fix doesn't fully close the bug class; correction routed to Pierce, not yet confirmed landed. **Net effect: the actual report-generation script Pierce needs to build per Blake's spec has not been started yet** — he's been correctly diverted twice to fix real bugs found along the way rather than building on an unverified foundation.
 
 ## Outcome
 
