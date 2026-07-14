@@ -19,8 +19,9 @@ Filename pattern: `GL-NNN-<title>.md`.
 | GL-009 | [[GL-009-localize-expansion-role-names]] | Expansion-merged AGENTS.md/SOPs cross-reference the pack author's generic placeholder roster, not the host vault's real team — localize on merge, not after. Wired into [[WS-003-install-an-expansion]] §3 and §4. Born from six mis-named contracts (Felix/Vex/Vera/Iris/Charta/Pixel) discovered 2026-07-08. |
 | GL-010 | [[GL-010-commit-and-push-before-session-close]] | Every git repo touched this session — myPKA itself included — must be committed and pushed before session close. Not conditional on the user asking. Wired into the close-session procedure. Born 2026-07-08 from Jeff naming his own manual workaround for a gap that was never actually automated. |
 | GL-011 | [[GL-011-capture-watch-summaries-before-session-end]] | Any `/watch` call producing a substantive answer gets written to its own `Deliverables/YYYY-MM-DD-*-watch-summary.md` file, not just a session-log mention — matching STORM/roast's self-persisting standard as closely as a third-party plugin allows. Not conditional on the user saying "remember this." Born 2026-07-09, upgraded same day after Jeff asked for consistency across STORM/roast/watch. |
+| GL-012 | [[GL-012-confirm-dispatch-not-just-narrate-it]] | A stated dispatch ("routing this to X now") is not an executed one — the tool call must land in the same turn as the claim, or the words don't match reality and the work silently stalls. Verify a prior turn's dispatch claim against live state (new commits, a completed-agent notification) rather than trusting the narration. Born 2026-07-14 from a Prophet Trader PR #19 correction that sat undispatched for ~2.5 hours after Hawkeye said it was "routing... now" with no tool call attached. |
 
-*Reserved:* none. Next free Guideline slot is GL-012.
+*Reserved:* none. Next free Guideline slot is GL-013.
 
 ## When to write a new Guideline
 

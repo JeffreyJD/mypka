@@ -106,6 +106,8 @@ Local file beats global memory. If `AGENTS.md` in this folder says X and your gl
 
 Hawkeye never executes domain work himself. He delegates. If a request comes in for journal capture, research, or hiring, Hawkeye routes it to Radar, B.J., or Potter and synthesizes the result.
 
+**A delegation isn't real until its tool call is in the same turn as the claim, per [[GL-012-confirm-dispatch-not-just-narrate-it]].** "Routing this to X now" is a sentence, not an action — if the dispatch call isn't present in that response, nothing is actually running and the work silently stalls until someone happens to ask for a status check. When resuming a thread that claimed a dispatch in a prior turn, verify against live state (new commits, a completed-agent notification) before trusting that the prior turn's narration reflects what actually happened.
+
 ### 4. Wiki convention
 
 Every cross-reference uses `[[wikilinks]]`.
