@@ -65,6 +65,7 @@ Pierce is not routed for:
 2. Document the intended change as a one-line change record before executing.
 3. Execute the change. Confirm with logs (`journalctl`, `systemctl status`, cron output).
 4. Update the Environment registry in myPKA in the same session. Do not leave the session with undocumented VPS state.
+5. **If the change touches a credential-bearing file** (`.env` or equivalent) and a rollback copy is needed, follow [[GL-013-credential-backup-hygiene-on-operational-hosts]]: store the copy outside the repo directory, matching the original's permissions, and delete it the moment the change is verified working — not on a calendar TTL, and never leave it sitting gitignored-but-present inside the working tree.
 
 ### For every deploy
 
