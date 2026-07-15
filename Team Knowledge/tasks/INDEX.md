@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-14T01:25:54Z_
+_Last rebuilt: 2026-07-15T02:45:00Z_
 
 ## Summary
-- Open: 13
+- Open: 12
 - In progress: 0
-- Done (this month): 6
+- Done (this month): 7
 - Cancelled (this month): 0
 
-## Open (13)
+## Open (12)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -19,7 +19,6 @@ _Last rebuilt: 2026-07-14T01:25:54Z_
 
 ### Priority 2 — high
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
-- [[tsk-2026-07-12-001-post-deploy-baseline-recheck-fidelity-check]] — Update fidelity baseline after first live Monday run, then dispatch Ledger's required SOP-022 follow-up recheck — assignee: pierce — created 2026-07-12 — due 2026-07-14
 
 ### Priority 3 — normal
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
@@ -38,12 +37,13 @@ _Last rebuilt: 2026-07-14T01:25:54Z_
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 8 open, 0 in-progress
+- pierce: 7 open, 0 in-progress
 - jeff: 1 open, 0 in-progress
 - blake: 1 open, 0 in-progress
 - bj: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
+- 2026-07-15 [[tsk-2026-07-12-001-post-deploy-baseline-recheck-fidelity-check]] — done — pierce (PR #22 merged/deployed, Ledger PASS, healthchecks.io red alert cleared, two LOW findings also shipped)
 - 2026-07-09 [[tsk-2026-07-09-001-merge-b2-autopsy-timing-fix]] — done — jeff/hawkeye (approved, merged, deployed, verified)
 - 2026-07-09 [[tsk-2026-07-08-004-merge-weekly-autopsy-multi-strategy-fix]] — done — jeff/hawkeye (approved, merged, deployed, verified)
 - 2026-07-09 [[tsk-2026-07-08-003-create-weekly-strategy-report-healthcheck]] — done — hawkeye (created via API, wired into routine)
