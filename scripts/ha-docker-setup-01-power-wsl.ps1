@@ -87,18 +87,32 @@ try {
 
     # --- WSL2 ---
     Add-Report '--- WSL2 ---'
+    # VirtualMachinePlatform is the DISM feature genuinely required for the WSL2
+    # backend Docker Desktop uses. Microsoft-Windows-Subsystem-Linux (the legacy
+    # DISM feature) is only required for WSL1 -- `wsl --status` says so
+    # explicitly on builds where WSL2 already has its own separately-installed
+    # kernel package. Requiring the legacy feature here was observed to loop
+    # forever demanding needless reboots (2026-07-16, bridget-laptop): VMP was
+    # Enabled and `wsl --status` was healthy, but the legacy feature never
+    # finalized to Enabled even after `wsl --install --no-distribution` +
+    # a real reboot, so this step kept re-triggering install/reboot on every
+    # run. It is reported below for debugging visibility ONLY -- it is not
+    # part of the "already installed" check.
     $wslFeature = Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -ErrorAction SilentlyContinue
     $vmpFeature = Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -ErrorAction SilentlyContinue
-    $wslEnabled = $wslFeature -and $wslFeature.State -eq 'Enabled'
     $vmpEnabled = $vmpFeature -and $vmpFeature.State -eq 'Enabled'
-    Add-Report "  Microsoft-Windows-Subsystem-Linux: $(if ($wslFeature) { $wslFeature.State } else { 'not found' })"
-    Add-Report "  VirtualMachinePlatform:            $(if ($vmpFeature) { $vmpFeature.State } else { 'not found' })"
+    Add-Report "  Microsoft-Windows-Subsystem-Linux: $(if ($wslFeature) { $wslFeature.State } else { 'not found' }) (informational only -- required for WSL1, NOT for WSL2/Docker Desktop; not part of the check below)"
+    Add-Report "  VirtualMachinePlatform:            $(if ($vmpFeature) { $vmpFeature.State } else { 'not found' }) (required -- part of the check below)"
 
-    if ($wslEnabled -and $vmpEnabled) {
-        Add-Report '  Both features already enabled -- skipping install, no reboot needed for this step.'
-        $wslStatus = wsl --status 2>&1 | Out-String
-        Add-Report '  wsl --status output:'
-        Add-Report $wslStatus.Trim()
+    # Functional check: does `wsl --status` actually succeed? More accurate
+    # signal of "is WSL2 actually usable right now" than any DISM feature flag.
+    $wslStatusOutput = wsl --status 2>&1 | Out-String
+    $wslStatusOk = ($LASTEXITCODE -eq 0)
+    Add-Report "  wsl --status exit code: $LASTEXITCODE (0 = healthy)"
+    Add-Report (($wslStatusOutput.Trim() -split "`r?`n" | ForEach-Object { "    $_" }) -join "`n")
+
+    if ($vmpEnabled -and $wslStatusOk) {
+        Add-Report '  WSL2 already functional (VirtualMachinePlatform Enabled AND wsl --status healthy) -- skipping install, no reboot needed for this step.'
     } else {
         Add-Report '  Installing WSL2 (no default distro -- Docker Desktop only needs the WSL2 engine)...'
         $installOutput = wsl --install --no-distribution 2>&1 | Out-String

@@ -60,10 +60,30 @@ try {
 
     # --- Pre-check: WSL2 ready? ---
     Add-Report '--- Pre-check: WSL2 ---'
+    # VirtualMachinePlatform is the DISM feature genuinely required for the WSL2
+    # backend Docker Desktop uses. Microsoft-Windows-Subsystem-Linux (the legacy
+    # DISM feature) is only required for WSL1 -- `wsl --status` says so explicitly
+    # on builds where WSL2 already has its own separately-installed kernel
+    # package. Gating on the legacy feature blocked a fully-functional WSL2
+    # machine for an entire evening (2026-07-16, bridget-laptop): VMP was
+    # Enabled and `wsl --status` reported a healthy WSL2 kernel, but the legacy
+    # feature never finalized to Enabled. It is reported below for debugging
+    # visibility ONLY -- it is not part of the readiness gate.
     $wslFeature = Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -ErrorAction SilentlyContinue
     $vmpFeature = Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -ErrorAction SilentlyContinue
-    $wslReady = $wslFeature -and $wslFeature.State -eq 'Enabled' -and $vmpFeature -and $vmpFeature.State -eq 'Enabled'
-    Add-Report "  WSL2 features enabled: $wslReady"
+    $vmpEnabled = $vmpFeature -and $vmpFeature.State -eq 'Enabled'
+    Add-Report "  Microsoft-Windows-Subsystem-Linux: $(if ($wslFeature) { $wslFeature.State } else { 'not found' }) (informational only -- required for WSL1, NOT for WSL2/Docker Desktop; not part of the gate below)"
+    Add-Report "  VirtualMachinePlatform:            $(if ($vmpFeature) { $vmpFeature.State } else { 'not found' }) (required -- part of the gate below)"
+
+    # Functional check: does `wsl --status` actually succeed? This is a more
+    # accurate signal of "is WSL2 actually usable" than any DISM feature flag.
+    $wslStatusOutput = wsl --status 2>&1 | Out-String
+    $wslStatusOk = ($LASTEXITCODE -eq 0)
+    Add-Report "  wsl --status exit code: $LASTEXITCODE (0 = healthy)"
+    Add-Report (($wslStatusOutput.Trim() -split "`r?`n" | ForEach-Object { "    $_" }) -join "`n")
+
+    $wslReady = $vmpEnabled -and $wslStatusOk
+    Add-Report "  WSL2 ready (VirtualMachinePlatform Enabled AND 'wsl --status' succeeded): $wslReady"
     if (-not $wslReady) {
         Add-Report '  WSL2 is not ready yet. Run Step 1 first and reboot. Stopping here.'
         Write-ReportFile -Report $report -Path $OutFile
