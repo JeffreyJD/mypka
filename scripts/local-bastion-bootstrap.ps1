@@ -38,11 +38,22 @@
 #      nothing matches, that is NOT an error -- the machine just isn't
 #      registered in the Environment registry yet, and the bundle says so
 #      plainly instead of failing.
-#   4. A freshly (re)generated local-bastion-operating-guide.md -- the ONE
+#   4. Any project-reference files the Host doc's OWN BODY TEXT links to --
+#      resolved DYNAMICALLY, ONE level only (never recursed further), by
+#      scanning the Host doc's body for [[wikilinks]] (resolved by filename
+#      search across the vault) and literal `PKM/...` path references
+#      (resolved by direct path check), then copying anything that resolves
+#      to a real file living under PKM/My Life/Projects/ or PKM/Documents/.
+#      Scope-guarded on purpose: PKM/CRM/, PKM/Journal/, and every other
+#      personal folder are never auto-copied even on a coincidental filename
+#      match -- Host docs are technical/infra notes, not a path to personal
+#      data. Nothing hardcoded to any specific project or device name.
+#   5. A freshly (re)generated local-bastion-operating-guide.md -- the ONE
 #      rule for whoever/whatever operates as Local Bastion in the
 #      standalone session: everything produced gets written to Team Inbox
 #      as a timestamped report, never directly into any live-synced myPKA
-#      path.
+#      path. Also lists whatever project-reference files were pulled in by
+#      item 4 above (or says plainly that none were found).
 #
 # Destination: %USERPROFILE%\dev\<device-slug>-local-bastion\
 # <device-slug> is the resolved Host-doc filename (no extension) if a match
@@ -222,6 +233,95 @@ try {
         Add-Report "  Copied: PKM\Environment\Hosts\$([System.IO.Path]::GetFileName($matchedHostFile))"
     }
 
+    # --- 4. Resolve + copy project references the Host doc's own body links to ---
+    # ONE level only -- we scan the Host doc's own text for references and copy what
+    # resolves, but we do NOT then scan whatever we just pulled in for further
+    # references. Keeps the bundle bounded instead of potentially spiraling into
+    # copying large unrelated chunks of the vault.
+    #
+    # Scope-guarded: a resolved match is only auto-copied if it lives under
+    # PKM/My Life/Projects/ or PKM/Documents/ -- the only folders a Host doc would
+    # plausibly link to for legitimate project reference material. PKM/CRM/,
+    # PKM/Journal/, and every other personal folder are never auto-copied, even if a
+    # wikilink name happens to coincidentally match a filename living there.
+    Add-Report ''
+    Add-Report '--- Resolving project references from Host doc body (one level, no recursion) ---'
+    $projectRefs = New-Object System.Collections.Generic.List[string]
+    $allowedProjectRoots = @(
+        (Join-Path $myPkaRoot 'PKM\My Life\Projects'),
+        (Join-Path $myPkaRoot 'PKM\Documents')
+    )
+    function Test-InAllowedProjectRoot {
+        param([string]$FullPath)
+        foreach ($root in $allowedProjectRoots) {
+            if ($FullPath.StartsWith("$root\", [System.StringComparison]::OrdinalIgnoreCase)) { return $true }
+        }
+        return $false
+    }
+
+    if (-not $matchedHostFile) {
+        Add-Report '  Skipped -- no Host doc matched for this machine, nothing to scan.'
+    } else {
+        $hostBody = Get-Content -Path $matchedHostFile -Raw
+        $resolvedSrcPaths = New-Object System.Collections.Generic.List[string]
+
+        # Pattern 1: [[wikilinks]] -- resolve by filename search across the vault,
+        # per myPKA's own convention ("[[filename]] when unique in the vault").
+        $wikiNames = New-Object System.Collections.Generic.List[string]
+        foreach ($m in [regex]::Matches($hostBody, '\[\[([^\]\|#]+)')) {
+            $n = $m.Groups[1].Value.Trim()
+            if ($n -and -not $wikiNames.Contains($n)) { $wikiNames.Add($n) }
+        }
+        foreach ($n in $wikiNames) {
+            $leaf = Split-Path -Leaf $n
+            if ($leaf -notmatch '\.md$') { $leaf = "$leaf.md" }
+            $found = @(Get-ChildItem -Path $myPkaRoot -Recurse -Filter $leaf -File -ErrorAction SilentlyContinue)
+            if ($found.Count -eq 0) { continue }  # doesn't resolve to any file -- skip silently
+            $inScope = @($found | Where-Object { Test-InAllowedProjectRoot $_.FullName })
+            if ($inScope.Count -eq 0) {
+                Add-Report "  [[$n]] -> resolved to $($found[0].FullName.Substring($myPkaRoot.Length + 1)), but that's outside PKM/My Life/Projects or PKM/Documents -- not copied."
+                continue
+            }
+            if (-not $resolvedSrcPaths.Contains($inScope[0].FullName)) {
+                $resolvedSrcPaths.Add($inScope[0].FullName)
+                Add-Report "  [[$n]] -> $($inScope[0].FullName.Substring($myPkaRoot.Length + 1)) (in scope)"
+            }
+        }
+
+        # Pattern 2: literal path references in prose, e.g. PKM/Documents/pool/foo.yml
+        $pathNames = New-Object System.Collections.Generic.List[string]
+        foreach ($m in [regex]::Matches($hostBody, 'PKM/[^\s\)\]\`"''<>]+\.[A-Za-z0-9]{1,10}')) {
+            $p = $m.Value
+            if (-not $pathNames.Contains($p)) { $pathNames.Add($p) }
+        }
+        foreach ($p in $pathNames) {
+            $candidate = Join-Path $myPkaRoot ($p -replace '/', '\')
+            if (-not (Test-Path -Path $candidate -PathType Leaf)) { continue }  # doesn't resolve -- skip silently
+            $resolvedCandidate = (Resolve-Path -Path $candidate).ProviderPath
+            if (-not (Test-InAllowedProjectRoot $resolvedCandidate)) {
+                Add-Report "  $p -> resolves, but that's outside PKM/My Life/Projects or PKM/Documents -- not copied."
+                continue
+            }
+            if (-not $resolvedSrcPaths.Contains($resolvedCandidate)) {
+                $resolvedSrcPaths.Add($resolvedCandidate)
+                Add-Report "  $p -> in scope"
+            }
+        }
+
+        if ($resolvedSrcPaths.Count -eq 0) {
+            Add-Report '  No in-scope project references found in the Host doc body.'
+        } else {
+            foreach ($srcPath in $resolvedSrcPaths) {
+                $rel = $srcPath.Substring($myPkaRoot.Length + 1)
+                $destPath = Join-Path $bundleRoot $rel
+                New-Item -ItemType Directory -Path (Split-Path -Parent $destPath) -Force | Out-Null
+                Copy-Item -Path $srcPath -Destination $destPath -Force
+                $projectRefs.Add($rel)
+                Add-Report "  Copied: $rel"
+            }
+        }
+    }
+
     # --- 5. (Re)generate the operating guide ---
     Add-Report ''
     Add-Report '--- Generating local-bastion-operating-guide.md ---'
@@ -236,6 +336,14 @@ try {
         "- PKM\Environment\Hosts\$deviceSlug.md -- this machine's own registry entry, as of when this bundle was built. It may be stale by the time you read it if it changed on the live vault since -- treat it as a snapshot, not a live source."
     } else {
         '- (No Host doc bundled -- this machine is not yet registered. See above.)'
+    }
+    $projectRefsBlock = if (-not $matchedHostFile) {
+        '- (No Host doc was bundled, so there was nothing to scan for project references.)'
+    } elseif ($projectRefs.Count -eq 0) {
+        '- Host doc body was scanned for project references (`[[wikilinks]]` and literal `PKM/...` paths) -- none resolved to an in-scope file. Nothing pulled in beyond the Host doc itself.'
+    } else {
+        $refLines = $projectRefs | ForEach-Object { "  - $_" }
+        "- Project references the Host doc's own body linked to, pulled in one level deep (not recursed further):`n" + ($refLines -join "`n")
     }
     $teamInboxDisplayPath = Join-Path $myPkaRoot 'Team Inbox'
     $glListDisplay = if ($glNames.Count -gt 0) { ($glNames -join ', ') } else { '(none found)' }
@@ -308,6 +416,7 @@ Pierce, Trapper, Sparky, or Relay per the scope boundaries in the bundled contra
 - `Team Knowledge\Guidelines\` -- every Guideline Bastion's contract itself cross-
   references ({{GLLIST}}). Read these before creating any new local state.
 {{BUNDLEDHOSTLINE}}
+{{PROJECTREFSBLOCK}}
 
 ## What Local Bastion must NOT do
 
@@ -335,7 +444,8 @@ Pierce, Trapper, Sparky, or Relay per the scope boundaries in the bundled contra
         Replace('{{TEAMINBOXPATH}}', $teamInboxDisplayPath).
         Replace('{{REGISTEREDLINE}}', $registeredLine).
         Replace('{{GLLIST}}', $glListDisplay).
-        Replace('{{BUNDLEDHOSTLINE}}', $bundledHostLine)
+        Replace('{{BUNDLEDHOSTLINE}}', $bundledHostLine).
+        Replace('{{PROJECTREFSBLOCK}}', $projectRefsBlock)
 
     # Explicit UTF-8, no BOM (see Write-ReportFile note above for why).
     [System.IO.File]::WriteAllText($guidePath, $guideText, (New-Object System.Text.UTF8Encoding($false)))
