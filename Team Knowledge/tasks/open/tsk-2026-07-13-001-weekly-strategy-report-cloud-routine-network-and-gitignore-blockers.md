@@ -14,7 +14,7 @@ blocked_by: null
 
 # Time
 created: 2026-07-13T11:10:33Z
-updated: 2026-07-14T18:00:00Z
+updated: 2026-07-16T16:45:00Z
 due: 2026-07-19
 
 # Provenance
@@ -29,7 +29,7 @@ linked_guidelines: []
 linked_my_life: []
 linked_session_logs: []
 linked_journal_entries: []
-linked_deliverables: ["2026-07-13-weekly-strategy-report-vps-script-spec", "2026-07-13-prophet-trader-deploy-cross-strategy-sweep", "2026-07-13-weekly-strategy-report-data-prerequisites-decision", "2026-07-13-prophet-trader-debug-healthchecks-slug-lookup", "2026-07-14-prophet-trader-adr-weekly-strategy-report-build"]
+linked_deliverables: ["2026-07-13-weekly-strategy-report-vps-script-spec", "2026-07-13-prophet-trader-deploy-cross-strategy-sweep", "2026-07-13-weekly-strategy-report-data-prerequisites-decision", "2026-07-13-prophet-trader-debug-healthchecks-slug-lookup", "2026-07-14-prophet-trader-adr-weekly-strategy-report-build", "2026-07-16-vps-change-weekly-report-fidelity-fixes"]
 
 # Tagging
 tags: ["prophet-trader", "weekly-strategy-report", "remotetrigger", "cloud-routine", "network-egress", "architecture"]
@@ -85,8 +85,25 @@ Blake reviewed and approved this architecture with conditions — see [[2026-07-
 - [x] A new, separate `ANTHROPIC_WEEKLY_REPORT_API_KEY` needs provisioning on the VPS (never the existing unused `ANTHROPIC_API_KEY` placeholder). **Resolved 2026-07-16** — Jeff generated a dedicated Anthropic API key (named in console.anthropic.com for cost/blast-radius isolation). Pierce added it to `/home/trader/prophet-trader/.env` on [[davisglobe-vps-ash-1]] (single clean line, verified via targeted `grep -c` = 1, permissions unchanged at `600`). `ANTHROPIC_WEEKLY_REPORT_MODEL` left unset (default `claude-sonnet-4-5-20250929` is correct).
 - [x] myPKA pointer note added to `PKM/Environment/Services/prophet-trader.md` and `PKM/Environment/Services/prophet-trader-weekly-strategy-report.md` (rewritten to reflect the new architecture, old cloud-routine content kept as a labeled "retired" section for history) — done 2026-07-14.
 - [ ] Report actually written to `prophet-trader/reports/YYYY-MM-DD-weekly-strategy-report.md` on a live cron fire — cannot happen until deployed.
-- [ ] Ledger's Pre-deploy Fidelity Check (SOP-022 §1) on the report script itself — new cron entry, new credential, new config file. Do not merge without PASS. **Not yet requested.**
+- [x] Ledger's Pre-deploy Fidelity Check (SOP-022 §1) on the report script itself — **requested and returned FAIL 2026-07-16** (2 CRITICAL, 1 HIGH, 1 unchanged confirmation set). Both CRITICALs fixed same day, see below. **Re-verification not yet requested** — do not merge to `main` until Ledger confirms PASS.
+- [ ] **Deploy checklist — explicit sequencing (added 2026-07-16, do not skip):**
+  1. Ledger re-verifies PASS on PR #35 (`b121812` on `dev`).
+  2. Merge `dev` → `main`.
+  3. Confirm GitHub Actions `Deploy to VPS` ran clean (now includes the new `pip install -r requirements.txt` step — watch for it actually running, not just the SSH step succeeding).
+  4. **Immediately**, before the next daily-routine cron fire (weekdays 09:30 ET — margin was ~21h as of 2026-07-16 12:45 ET, re-check at actual merge time), SSH in and run `python scripts/bootstrap_quarter_open_equity.py --quarter 2026-Q3 --date 2026-07-01` on the VPS. Do not let a daily-routine fire happen first — the self-heal only sets an entry once and never overwrites it, so a bad self-heal value would be permanent.
+  5. Wire the cron line: `0 10 * * 0 run_weekly_autopsy.sh && run_weekly_strategy_report.sh`.
+  6. Tail logs on the first live Sunday fire; confirm healthchecks.io ping and report file both land.
 - [ ] First live fire confirmed clean before closing this task — do not close on "should work now."
+
+### Ledger's SOP-022 FAIL (2026-07-16) — findings and resolution
+
+Ledger's pre-deploy fidelity check on this deployment returned **FAIL**. Full detail and verification commands: [[Deliverables/2026-07-16-vps-change-weekly-report-fidelity-fixes]].
+
+- **CRITICAL #1 (deploy pipeline never installs dependencies) — FIXED.** `.github/workflows/deploy.yml` now runs `pip install -r requirements.txt` after `git pull`. `anthropic` also manually installed into the VPS venv immediately (verified `import anthropic` succeeds) so the current gap doesn't block the next deploy cycle.
+- **CRITICAL #2 (VPS's deploy key is read-only, weekly report push would fail silently) — FIXED.** Provisioned a new write-scoped SSH deploy key (`~/.ssh/github_deploy_write`, registered `read_only: false` on GitHub) and a dedicated `origin-write` git remote on the VPS; `_git_commit_and_push()` now pushes there instead of the read-only `origin`. Chose the "new scoped key" option over switching to the rclone/B2 pattern, since Blake's spec wants the report git-committed for history and this matches the project's existing least-privilege credential pattern. End-to-end push verified with a throwaway test branch. Docstring corrected (previously falsely claimed push failures are healthcheck-visible; they're only logged locally). Shipped in PR [#35](https://github.com/JeffreyJD/prophet-trader/pull/35), merged to `dev` (`b121812`), CI green (564 passed, 9 deselected).
+- **HIGH (quarter-open-equity backfill sequencing) — documented, not yet executable.** Added as an explicit, ordered deploy-checklist step above; cannot run until deployed.
+- **MODERATE #1/#2 (healthchecks.io grace period + empty slug) — NOT resolved, needs Jeff.** Live query confirms grace is still 180 min (registry previously, incorrectly, claimed it was fixed to ~90 min — corrected in [[PKM/Environment/Accounts/healthchecks-io]]) and the slug is still empty. Both require write access to the healthchecks.io Management API or a manual UI edit; the only credential provisioned (`HEALTHCHECKS_API_KEY`) is read-only (confirmed: list response omits `uuid`/`ping_url`, a test update call 404'd). **Open question for Jeff:** fix both directly in the UI, or generate a write-scoped API key for Pierce to use.
+- **Also confirmed clean by Ledger, no action needed:** credential var names/permissions, no scheduling collision, regime persistence already live, clean merge-tree, correct `.gitignore` state, and `dev` test count (564 passed / 9 deselected, up from an earlier stale count of 553 due to legitimate follow-on commits).
 
 ### §4 gut-check (demotion-check archive spot-check) — closed, with a finding Blake's memo didn't anticipate
 
@@ -105,6 +122,8 @@ While chasing the "fix all bugs" directive, a genuinely unrelated bug surfaced: 
 - 2026-07-14 18:00 (pierce) — Weekly Strategy Report VPS script built per Blake's spec §7 order-of-operations: `AlpacaStocksAdapter.get_portfolio_history()`, `src/journal/drawdown.py` (shared equity-curve helper), `config/ips_criteria.yaml`, `scripts/bootstrap_quarter_open_equity.py`, `src/integrations/anthropic_narrator.py` (first direct Anthropic API call in this codebase — deliberately narrow, not the deferred Phase-3-Gate-2 gateway), `scripts/weekly_strategy_report.py`, `install/run_weekly_strategy_report.sh`. 553 tests passing, 76 new. §6.2 verification and the §4 gut-check both closed (see checklist above and the ADR — the gut-check surfaced a related-but-distinct pre-existing data gap Blake's memo didn't anticipate). Code pushed to `dev` (commit `3d0c6b9`). **Not deployed** — three items still block: `HEALTHCHECKS_WEEKLY_REPORT_URL` (Jeff), a new `ANTHROPIC_WEEKLY_REPORT_API_KEY` (Jeff/Pierce), and Ledger's SOP-022 Pre-deploy Fidelity Check (not yet requested). Also worth flagging: this session discovered `C:\Users\jeff\dev\prophet-trader` was being actively worked concurrently by a separate session (uncommitted `config/fidelity_baseline.json`/`config/phase_state.json` changes tied to the open item below, plus a Firecrawl retry fix that committed cleanly mid-session on its own branch `fix/firecrawl-scrape-retry`) — a shared-git-working-directory hazard, not something either session caused deliberately. No data was lost; Pierce's commit briefly landed on the wrong local branch due to a HEAD race and was moved to the correct one without touching the other session's uncommitted work. Recommend Hawkeye/Jeff consider whether concurrent Pierce dispatches should use separate git worktrees going forward.
 
 - 2026-07-16 (pierce) — `ANTHROPIC_WEEKLY_REPORT_API_KEY` provisioned. Jeff generated a dedicated Anthropic API key (named "prophet-trader-weekly-report" in console.anthropic.com — first direct-Anthropic-call key in the codebase, scoped for cost/blast-radius isolation). Added to `/home/trader/prophet-trader/.env` on [[davisglobe-vps-ash-1]] as a single clean line, verified via targeted `grep -c` = 1 (no duplicate, no full-file cat), permissions confirmed unchanged at `600` before and after. `ANTHROPIC_WEEKLY_REPORT_MODEL` left unset (default `claude-sonnet-4-5-20250929` correct per earlier investigation). `PKM/Environment/Accounts/anthropic.md` and `PKM/Environment/Services/prophet-trader-weekly-strategy-report.md` updated with pointer-only references (key name, purpose, no value) — both gitignored, local-only. Remaining blockers before this task closes: Ledger's SOP-022 Pre-deploy Fidelity Check (not yet requested) and the cron-wiring item itself.
+
+- 2026-07-16 (pierce) — Ledger's SOP-022 pre-deploy fidelity check returned FAIL (2 CRITICAL, 1 HIGH, 2 MODERATE). Both CRITICALs fixed same session: deploy pipeline now installs dependencies (`pip install -r requirements.txt` added to `.github/workflows/deploy.yml`; `anthropic` also manually installed into the live VPS venv, verified importable); weekly report push now uses a new write-scoped deploy key + dedicated `origin-write` git remote instead of the VPS's read-only key, verified end-to-end with a throwaway test branch, docstring corrected. Shipped in PR #35, merged to `dev` (`b121812`), CI green (564/9). The HIGH sequencing item is now an explicit ordered checklist on this task (see above) — not yet executable until deployed. The 2 MODERATE healthchecks.io findings (grace still 180 min not ~90 as previously misdocumented; empty slug) could NOT be fixed — the only provisioned API key is read-only; flagged to Jeff as an open decision (UI edit or new write-scoped key). Full detail: [[Deliverables/2026-07-16-vps-change-weekly-report-fidelity-fixes]]. **Still NOT merged to `main` — awaiting Ledger's re-verification per Jeff's explicit instruction not to merge until PASS.**
 
 ## Outcome
 
