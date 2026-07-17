@@ -8,13 +8,13 @@ assignee: pierce
 priority: 1
 
 # Status (mirrors folder location)
-status: open
+status: done
 blocked_reason: null
 blocked_by: null
 
 # Time
 created: 2026-07-13T11:10:33Z
-updated: 2026-07-16T16:45:00Z
+updated: 2026-07-16T22:00:00Z
 due: 2026-07-19
 
 # Provenance
@@ -28,7 +28,7 @@ linked_workstreams: []
 linked_guidelines: []
 linked_my_life: []
 linked_session_logs: []
-linked_journal_entries: []
+linked_journal_entries: ["2026-07-16-verify-live-third-party-state-not-just-the-registry-note"]
 linked_deliverables: ["2026-07-13-weekly-strategy-report-vps-script-spec", "2026-07-13-prophet-trader-deploy-cross-strategy-sweep", "2026-07-13-weekly-strategy-report-data-prerequisites-decision", "2026-07-13-prophet-trader-debug-healthchecks-slug-lookup", "2026-07-14-prophet-trader-adr-weekly-strategy-report-build", "2026-07-16-vps-change-weekly-report-fidelity-fixes"]
 
 # Tagging
@@ -125,6 +125,24 @@ While chasing the "fix all bugs" directive, a genuinely unrelated bug surfaced: 
 
 - 2026-07-16 (pierce) — Ledger's SOP-022 pre-deploy fidelity check returned FAIL (2 CRITICAL, 1 HIGH, 2 MODERATE). Both CRITICALs fixed same session: deploy pipeline now installs dependencies (`pip install -r requirements.txt` added to `.github/workflows/deploy.yml`; `anthropic` also manually installed into the live VPS venv, verified importable); weekly report push now uses a new write-scoped deploy key + dedicated `origin-write` git remote instead of the VPS's read-only key, verified end-to-end with a throwaway test branch, docstring corrected. Shipped in PR #35, merged to `dev` (`b121812`), CI green (564/9). The HIGH sequencing item is now an explicit ordered checklist on this task (see above) — not yet executable until deployed. The 2 MODERATE healthchecks.io findings (grace still 180 min not ~90 as previously misdocumented; empty slug) could NOT be fixed — the only provisioned API key is read-only; flagged to Jeff as an open decision (UI edit or new write-scoped key). Full detail: [[Deliverables/2026-07-16-vps-change-weekly-report-fidelity-fixes]]. **Still NOT merged to `main` — awaiting Ledger's re-verification per Jeff's explicit instruction not to merge until PASS.**
 
+- 2026-07-16 22:00 (pierce) — **Deployed end to end, task closed on Jeff's explicit go-ahead.** Confirmed dev still exactly at `b121812` (no drift since Ledger's PASS). Merged `dev`→`main` via PR [#36](https://github.com/JeffreyJD/prophet-trader/pull/36) (merge commit `a4c4c49`); GitHub Actions `Deploy to VPS` ran clean, `pip install -r requirements.txt` step confirmed executing, `anthropic` confirmed importable on the VPS (`0.116.0`), all five new files confirmed present. Discovered and fixed one new issue while wiring the cron line: `install/run_weekly_strategy_report.sh` was committed without its executable bit (100644 instead of 100755) — fixed via PR [#37](https://github.com/JeffreyJD/prophet-trader/pull/37) (merge commit `f81428e`), same class of miss as the earlier `run_fidelity_check.sh` chmod fix. VPS confirmed at `f81428e` (current deployed commit; dev separately sits at `2b5f65f`, whose content is exactly main's second merge parent — dev/main hashes differ by normal merge-commit structure, not drift; content is identical). Cron line wired: `0 10 * * 0 run_weekly_autopsy.sh && run_weekly_strategy_report.sh`, verified via `crontab -l`, no duplicates. Backfill executed immediately (VPS clock 21:34 ET Thursday, ~12h inside the window before Friday 09:30 ET's daily-routine fire): `python scripts/bootstrap_quarter_open_equity.py --quarter 2026-Q3 --date 2026-07-01` — sanity check passed, `data/benchmark/quarter_open_equity.json` confirmed written. Live-queried healthchecks.io directly (not trusting the registry's stale note): grace is actually `5400` (90 min) and slug is `prophet-trader-weekly-strategy-report` — both already correct, apparently fixed by Jeff via the UI since the registry was last updated; Environment docs corrected to match live state (see [[healthchecks-io]], [[prophet-trader-weekly-strategy-report]]). Durable lesson: [[2026-07-16-verify-live-third-party-state-not-just-the-registry-note]] (journal).
+
+  **Closing despite this task's own stated gate ("first live fire confirmed clean before closing — do not close on 'should work now'") not yet being met** — next Sunday cron fire is 2026-07-19, hasn't happened yet as of close. Jeff gave explicit go-ahead to close now rather than hold the task open through the weekend; the unmet verification step is carried forward as its own follow-up task rather than silently dropped: [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]].
+
 ## Outcome
 
-_(filled when status flips to done — see SOP-012-close-task)_
+What shipped: the Weekly Strategy Report is fully deployed and live on [[davisglobe-vps-ash-1]]. Merged `dev`→`main` (PR #36, `a4c4c49`; PR #37 chmod fix, `f81428e` — current VPS commit), GitHub Actions deploy confirmed clean including the new `pip install` step, cron line wired and verified (`0 10 * * 0 run_weekly_autopsy.sh && run_weekly_strategy_report.sh`, no duplicates), quarter-open-equity backfill executed and verified (`data/benchmark/quarter_open_equity.json`), healthchecks.io check confirmed correctly configured (grace 90 min, slug populated) via direct live query.
+
+Where it lives: [[prophet-trader-weekly-strategy-report]] (full deploy detail), [[prophet-trader]] (infra footprint), commits `a4c4c49`/`f81428e` on `JeffreyJD/prophet-trader`.
+
+Follow-ups: [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] — verify the actual Sunday 2026-07-19 cron fire runs clean end-to-end (report written, healthcheck pinged, `origin-write` push succeeds). This is the one piece of this task's own success criteria not yet verifiable at close time.
+
+Lessons: [[2026-07-16-verify-live-third-party-state-not-just-the-registry-note]] (journal) — re-query live third-party state before trusting a registry note that describes an out-of-band-changeable fact.
+
+Archived deliverables:
+  - `2026-07-13-weekly-strategy-report-vps-script-spec.md` → archived to `Deliverables/_archive/2026/07/`
+  - `2026-07-13-weekly-strategy-report-data-prerequisites-decision.md` → archived to `Deliverables/_archive/2026/07/`
+  - `2026-07-13-prophet-trader-debug-healthchecks-slug-lookup.md` → archived to `Deliverables/_archive/2026/07/`
+  - `2026-07-14-prophet-trader-adr-weekly-strategy-report-build.md` → archived to `Deliverables/_archive/2026/07/`
+  - `2026-07-16-vps-change-weekly-report-fidelity-fixes.md` → archived to `Deliverables/_archive/2026/07/`
+  - `2026-07-13-prophet-trader-deploy-cross-strategy-sweep.md` → archive deferred, still referenced by [[tsk-2026-07-14-001-risk-journal-pnl-schema-mismatch]]
