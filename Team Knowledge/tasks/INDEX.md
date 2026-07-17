@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-17T16:25:00Z_
+_Last rebuilt: 2026-07-17T19:15:00Z_
 
 ## Summary
-- Open: 19
+- Open: 20
 - In progress: 0
 - Done (this month): 12
 - Cancelled (this month): 1
 
-## Open (19)
+## Open (20)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -31,6 +31,7 @@ _Last rebuilt: 2026-07-17T16:25:00Z_
 - [[tsk-2026-07-17-005-event-driven-regime-csm-formal-evaluation]] — Formal Blake evaluation: should cross_sectional_momentum trade through event-driven regime windows — assignee: blake — created 2026-07-17
 - [[tsk-2026-07-17-006-demotion-trigger-4-portfolio-wide-design-question]] — Demotion Trigger 4 (reconciliation drift) is portfolio-wide, not per-strategy — assignee: blake — created 2026-07-17 — GH #47
 - [[tsk-2026-07-17-010-risk-journal-open-positions-schema-mismatch]] — risk_journal.py open-positions summary + deployed_pct use the same fictional trade schema as the P&L bug — assignee: pierce — created 2026-07-17
+- [[tsk-2026-07-17-013-confirm-bac-reconciliation-clean-on-monday-run]] — Confirm BAC reconciles clean on the next automated Daily Fidelity Check run (2026-07-17 FAIL 5/6, settlement-timing theory) — assignee: pierce — created 2026-07-17 — due 2026-07-20 — no GH issue (watch item, not yet a bug)
 
 ### Priority 4 — low
 - [[tsk-2026-07-09-005-research-universe-breadth-for-momentum-strategies]] — Research brief: optimal stock universe breadth — assignee: bj — created 2026-07-09 — prep for future bundled Phase 1 cycle, not immediate action
@@ -45,7 +46,7 @@ _None._
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 11 open, 0 in-progress
+- pierce: 12 open, 0 in-progress
 - blake: 3 open, 0 in-progress
 - bj: 2 open, 0 in-progress
 
