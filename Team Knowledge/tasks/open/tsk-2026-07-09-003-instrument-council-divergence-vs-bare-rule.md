@@ -35,6 +35,8 @@ tags: ["prophet-trader", "agent-council", "analysis"]
 
 # Instrument agent-council decision divergence vs. a bare regime+momentum rule
 
+**GitHub issue:** [#41](https://github.com/JeffreyJD/prophet-trader/issues/41)
+
 ## What this is
 
 Direct follow-up from the STORM research's Frontier Question ([[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research/report.html]]): no AI agent-council trading system has independent evidence of adding edge, and multi-agent LLM systems have documented correlated-failure modes. Prophet Trader has never measured whether its own council (CEO/Analyst/Strategist/Risk Officer/Executor/Auditor) actually diverges from what a bare regime+momentum rule would decide, or just rubber-stamps it.
@@ -46,6 +48,7 @@ With `momentum_breakout_stocks` able to trade again (regime config fix, 2026-07-
 - Research: [[2026-07-08-systematic-trading-bot-edge-vs-prophet-trader-storm-research/report.html]]
 - Service: [[prophet-trader]]
 - CIO owner: Blake
+- GitHub issue: [#41](https://github.com/JeffreyJD/prophet-trader/issues/41)
 
 ## Success criteria
 
@@ -57,6 +60,7 @@ With `momentum_breakout_stocks` able to trade again (regime config fix, 2026-07-
 ## Updates
 
 - 2026-07-09 (hawkeye) — created per Jeff's approval to act on the STORM research findings.
+- 2026-07-17 (pierce) — filed as GitHub issue [#41](https://github.com/JeffreyJD/prophet-trader/issues/41) per Jeff's consolidated-backlog directive; this is build work (new instrumentation), qualifies as backlog-worthy enhancement under the bugs/enhancements-only backlog scope.
 
 ## Outcome
 

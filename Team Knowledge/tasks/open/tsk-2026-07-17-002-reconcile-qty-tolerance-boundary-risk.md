@@ -37,6 +37,8 @@ tags: ["prophet-trader", "reconciliation", "fractional-shares", "edge-case", "lo
 
 # Widen scripts/reconcile.py QTY_TOLERANCE boundary (strict > at exactly 1e-6 can silently mask a genuine drift)
 
+**GitHub issue:** [#43](https://github.com/JeffreyJD/prophet-trader/issues/43)
+
 ## What this is
 
 Surfaced as a non-blocking [MODERATE] finding in Ledger's SOP-022 re-check of PR #38 (`fix: reconciliation crash + false-positive drift on fractional-share fills`), which otherwise returned an overall PASS.
@@ -56,6 +58,7 @@ Surfaced as a non-blocking [MODERATE] finding in Ledger's SOP-022 re-check of PR
 - Related closed task (the fix this finding was raised against): [[tsk-2026-07-17-001-reconciliation-fractional-share-format-bug]]
 - Prior learning applied: [[2026-07-16-verify-live-third-party-state-not-just-the-registry-note]]
 - Working artifacts: none yet.
+- GitHub issue: [#43](https://github.com/JeffreyJD/prophet-trader/issues/43)
 
 ## Success criteria
 
@@ -67,6 +70,7 @@ Surfaced as a non-blocking [MODERATE] finding in Ledger's SOP-022 re-check of PR
 ## Updates
 
 - 2026-07-17 09:20 (pierce) — created from Ledger's SOP-022 re-check finding #2 on PR #38. Deliberately deferred rather than rushed into the PR #38/#39/#40 deploy pass — this deserves its own careful pass with a boundary test per Hawkeye's direction.
+- 2026-07-17 (pierce) — filed as GitHub issue [#43](https://github.com/JeffreyJD/prophet-trader/issues/43) per Jeff's consolidated-backlog directive; concrete bug fix, qualifies as backlog-worthy under the bugs/enhancements-only backlog scope.
 
 ## Outcome
 _(filled when status flips to done — see SOP-012-close-task)_

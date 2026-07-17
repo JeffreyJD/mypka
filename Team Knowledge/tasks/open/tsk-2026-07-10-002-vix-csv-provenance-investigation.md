@@ -62,6 +62,7 @@ There's also a `.gitignore` comment currently claiming VIX data is "regenerable 
 ## Updates
 
 - 2026-07-10 08:35 (hawkeye) — created per Blake's explicit handoff in [[2026-07-10-mbs-vix-proxy-decision]]; tracked separately from `tsk-2026-07-10-001` since it's a provenance question, not blocking the live-fetch fix. No urgency — due date set well ahead of the strategy's 2026-09-20 Phase 3 eligibility, giving room for this to feed the eventual audit.
+- 2026-07-17 (pierce) — Jeff clarified the GitHub Issues backlog is for bugs/enhancements only, not investigation activities. This is a provenance trace, so it stays myPKA-task-only — no GitHub issue filed. If the trace surfaces an actual fix (e.g. a `.gitignore` correction or a data-architecture change), that becomes its own new issue at that time.
 
 ## Outcome
 

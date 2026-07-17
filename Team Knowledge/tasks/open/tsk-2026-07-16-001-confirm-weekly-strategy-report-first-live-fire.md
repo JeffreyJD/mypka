@@ -54,6 +54,7 @@ The parent task ([[tsk-2026-07-13-001-weekly-strategy-report-cloud-routine-netwo
 
 ## Updates
 - 2026-07-16 21:45 (pierce) — created as a follow-up when closing the parent task per Jeff's explicit go-ahead to close now rather than wait for Sunday's fire.
+- 2026-07-17 (pierce) — Jeff clarified the GitHub Issues backlog is for bugs/enhancements only, not verification activities. This task is a confirmation check (did the cron fire run clean), so it stays myPKA-task-only — no GitHub issue filed. If the verification surfaces an actual defect, that becomes its own new issue at that time.
 
 ## Outcome
 _(filled when status flips to done — see SOP-012-close-task)_

@@ -61,6 +61,7 @@ Delivered as a standard B.J. research brief to `Deliverables/`, handed to Blake 
 ## Updates
 
 - 2026-07-09 (hawkeye) — created per Jeff's approval, explicitly sequenced as prep work for a future bundled Phase 1 cycle with the Phase 3 data-source upgrade, not immediate action.
+- 2026-07-17 (pierce) — Jeff clarified the GitHub Issues backlog is for bugs/enhancements only, not research activities. This is a B.J. research brief, so it stays myPKA-task-only — no GitHub issue filed. If Blake's evaluation of the brief triggers an actual parameter change, that becomes its own new issue at that time.
 
 ## Outcome
 

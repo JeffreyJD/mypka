@@ -56,6 +56,7 @@ Direct follow-up from the STORM research ([[2026-07-08-systematic-trading-bot-ed
 ## Updates
 
 - 2026-07-09 (hawkeye) — created per Jeff's approval to act on the STORM research findings.
+- 2026-07-17 (pierce) — Jeff clarified the GitHub Issues backlog is for bugs/enhancements only, not research/analysis activities. This is a statistical retrospective, so it stays myPKA-task-only — no GitHub issue filed. If the retrospective surfaces an actual finding requiring a code/config change, that becomes its own new issue at that time.
 
 ## Outcome
 

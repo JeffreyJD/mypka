@@ -37,6 +37,8 @@ tags: ["prophet-trader", "momentum-breakout-stocks", "vix", "data-pipeline", "op
 
 # Source true VIX index data (non-Alpaca) for momentum_breakout_stocks — VIXY proxy rejected
 
+**GitHub issue:** [#44](https://github.com/JeffreyJD/prophet-trader/issues/44)
+
 ## What this is
 
 Blake's original assessment ([[2026-07-10-mbs-vix-filter-operational-gap]]) confirmed a structural gap between the Phase 1 gate-passing backtest and live paper trading: `momentum_breakout_stocks`'s internal VIX filter has been a permanent no-op since deployment (VIX isn't in the strategy's universe, so `market.bars.get("VIX", [])` always returns empty and the strategy fail-opens).
@@ -59,6 +61,7 @@ Pierce investigated and confirmed true VIX index bars are not fetchable via Alpa
 - Related open task: [[tsk-2026-07-09-004-deflated-sharpe-retrospective-mbs]]
 - Pierce's journal precedent: [[2026-07-08-verify-deployed-config-field-by-field-against-the-backtest-that-passed]]
 - IPS: [[PKM/Documents/prophet-trader/investment-policy-statement]] Sections 3.2, 3.5, 6.2, 7.7
+- GitHub issue: [#44](https://github.com/JeffreyJD/prophet-trader/issues/44)
 
 ## Success criteria (re-scoped per Blake's decision)
 
@@ -74,6 +77,7 @@ Pierce investigated and confirmed true VIX index bars are not fetchable via Alpa
 
 - 2026-07-10 07:29 (hawkeye) — created from Blake's assessment; routing to Pierce now given the tight window before today's 09:30 ET run.
 - 2026-07-10 08:10 (pierce) — investigated. Confirmed empirically that true VIX index bars/quotes are not fetchable via Alpaca's stock data API on this account (IEX and SIP both empty for symbol `VIX`; `VIXY` works fine). This trips the task's hard guardrail — proxy required, so I stopped before writing the fallback code or touching `vix_threshold`, and did not open a PR. Full findings and three options (A/B/C) for Jeff/Blake in [[2026-07-10-prophet-trader-debug-vix-bars-alpaca-unavailable]]. Task moved to `in-progress`, `blocked_reason` set. Will not make the 09:30 ET 2026-07-10 window — status quo (fail-open) continues today, which Blake's memo already assesses as benign/non-urgent. No VPS changes made; no deploy attempted.
+- 2026-07-17 (pierce) — filed as GitHub issue [#44](https://github.com/JeffreyJD/prophet-trader/issues/44) per Jeff's consolidated-backlog directive; concrete replace-the-data-source enhancement, qualifies as backlog-worthy under the bugs/enhancements-only backlog scope.
 - 2026-07-10 08:35 (hawkeye) — Jeff routed the A/B/C decision to Blake explicitly ("that is why we hired him"). **Blake rejected both proxy options** (Option A: VIXY now + revalidate later; Option B: VIXY + a threshold conversion he signs off on) — full reasoning in [[2026-07-10-mbs-vix-proxy-decision]]: per IPS 7.7 "a parameter is a parameter, change it and restart the clock," and a conversion formula isn't out-of-sample evidence regardless of who blesses it, including Blake himself. Also ruled the VIX.csv provenance gap (the original backtest's VIX data can't be reproduced from live Alpaca) material but not IPS-2.2-fail-triggering — it independently reinforces that VIXY is the wrong scale to substitute, since the original filter was validated against a different, currently-unidentified source. That gets tracked as a separate low-priority task, not blocking this one. Re-scoped this task per Blake's explicit handoff: dropped same-day due date and priority-1 (no capital risk, filter stays fail-open, already assessed benign), retitled from "fix live VIX bar fetch" to "source true VIX index data (non-Alpaca)," new due date 2026-08-07 (~4 weeks, comfortably ahead of the strategy's 2026-09-20 Phase 3 eligibility), priority dropped to 3, moved back to `open/` (nothing actively in-progress right now — new primary task is evaluating FRED VIXCLS / Polygon indices, not yet started).
 
 ## Outcome

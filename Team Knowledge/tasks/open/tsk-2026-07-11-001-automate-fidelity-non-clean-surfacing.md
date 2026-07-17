@@ -35,6 +35,8 @@ tags: ["prophet-trader", "sop-022", "observability", "automation-followup"]
 
 # Formalize surfacing of non-CLEAN Daily Fidelity Check days into myPKA (currently manual, unenforced)
 
+**GitHub issue:** [#42](https://github.com/JeffreyJD/prophet-trader/issues/42)
+
 ## What this is
 
 Ledger's PR #13 review flagged (LOW severity) that PR #13's own documentation says non-CLEAN Daily Fidelity Check days will be "surfaced into myPKA's `Deliverables/` by hand" (Pierce, manually) — but there is no enforcement mechanism. If Pierce misses a day, a real FAIL or NEEDS REVIEW verdict could sit in `data/fidelity_checks/YYYY-MM-DD.{json,md}` on the VPS indefinitely without ever reaching myPKA, silently defeating the point of the check. This is the same class of gap SOP-022 exists to catch (an observability gap with no verifiable success signal), just one level up — applied to the fidelity checker's own output.
@@ -46,6 +48,7 @@ The [[prophet-trader-weekly-strategy-report]] cloud routine already has a workin
 - Procedure: [[SOP-022-deployment-fidelity-verification]]
 - Working artifacts:
   - [[2026-07-11-prophet-trader-deploy-daily-fidelity-check]]
+- GitHub issue: [#42](https://github.com/JeffreyJD/prophet-trader/issues/42)
 
 ## Success criteria
 
@@ -57,6 +60,7 @@ The [[prophet-trader-weekly-strategy-report]] cloud routine already has a workin
 ## Updates
 
 - 2026-07-11 23:40 (pierce) — created per Ledger's LOW finding on PR #13; not automated tonight to avoid rushing a design decision alongside tonight's merge/deploy/credential work. VPS has no path to the Google Drive myPKA folder (confirmed via `rclone listremotes` — only `b2:` configured), so option (a) will need a real transport decision (webhook, email, B2 + Klinger-side pull, or similar), not just "write a file."
+- 2026-07-17 (pierce) — filed as GitHub issue [#42](https://github.com/JeffreyJD/prophet-trader/issues/42) per Jeff's consolidated-backlog directive; this is build work (automation gap needing a fix), qualifies as backlog-worthy under the bugs/enhancements-only backlog scope.
 
 ## Outcome
 
