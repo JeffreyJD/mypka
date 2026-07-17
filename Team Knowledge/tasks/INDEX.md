@@ -2,11 +2,11 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-16T22:30:00Z_
+_Last rebuilt: 2026-07-17T09:10:00Z_
 
 ## Summary
 - Open: 11
-- In progress: 0
+- In progress: 1 (1 blocked)
 - Done (this month): 8
 - Cancelled (this month): 1
 
@@ -31,12 +31,13 @@ _Last rebuilt: 2026-07-16T22:30:00Z_
 ### Priority 4 — low
 - [[tsk-2026-07-09-005-research-universe-breadth-for-momentum-strategies]] — Research brief: optimal stock universe breadth — assignee: bj — created 2026-07-09 — prep for future bundled Phase 1 cycle, not immediate action
 
-## In progress (0)
+## In progress (1)
+- [[tsk-2026-07-17-001-reconciliation-fractional-share-format-bug]] — assignee: pierce — claimed 2026-07-17 — BLOCKED: awaiting Ledger's independent SOP-022 Pre-deploy Fidelity Check on PR #38 (merged to dev at caeaca4) before merge to main
 
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 7 open, 0 in-progress
+- pierce: 7 open, 1 in-progress
 - blake: 1 open, 0 in-progress
 - bj: 1 open, 0 in-progress
 
