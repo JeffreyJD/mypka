@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-17T11:15:00Z_
+_Last rebuilt: 2026-07-17T15:00:00Z_
 
 ## Summary
-- Open: 19
+- Open: 18
 - In progress: 1 (1 blocked)
-- Done (this month): 9
+- Done (this month): 10
 - Cancelled (this month): 1
 
-## Open (19)
+## Open (18)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -18,7 +18,6 @@ _Last rebuilt: 2026-07-17T11:15:00Z_
 ### Priority 2 — high
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
 - [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] — Confirm Weekly Strategy Report's first live Sunday cron fire runs clean — assignee: pierce — created 2026-07-16 — due 2026-07-20
-- [[tsk-2026-07-17-003-weekly-autopsy-cadence-broken]] — Weekly Autopsy cadence broken — IPS-committed weekly cadence not being honored — assignee: blake — created 2026-07-17 — GH #45
 
 ### Priority 3 — normal
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
@@ -45,11 +44,12 @@ _Last rebuilt: 2026-07-17T11:15:00Z_
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 11 open, 1 in-progress (1 blocked)
-- blake: 4 open, 0 in-progress
+- pierce: 10 open, 1 in-progress (1 blocked)
+- blake: 3 open, 0 in-progress
 - bj: 2 open, 0 in-progress
 
 ## Recently closed (last 7 days)
+- 2026-07-17 [[tsk-2026-07-17-003-weekly-autopsy-cadence-broken]] — done — blake/pierce (root-caused as the same cloud-routine egress/git-write failure fixed under [[tsk-2026-07-13-001-weekly-strategy-report-cloud-routine-network-and-gitignore-blockers]]; 2026-07-12 narrative autopsy backfilled at [[2026-07-12-strategy-autopsy]]; GH #45 closed with full diagnosis)
 - 2026-07-17 [[tsk-2026-07-17-001-reconciliation-fractional-share-format-bug]] — done — pierce (PR #38 fix merged/deployed, Ledger SOP-022 PASS on re-check, cosmetic type-hint fix PR #39 also shipped, follow-up [[tsk-2026-07-17-002-reconcile-qty-tolerance-boundary-risk]] opened for the tolerance-boundary finding)
 - 2026-07-16 [[tsk-2026-07-09-002-check-weekly-strategy-report-first-fire]] — cancelled — pierce (superseded by the VPS-native rebuild; first-live-fire verification now tracked by [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]])
 - 2026-07-16 [[tsk-2026-07-13-001-weekly-strategy-report-cloud-routine-network-and-gitignore-blockers]] — done — pierce (merged dev→main, deployed to VPS, cron wired, quarter-open-equity backfill executed, Environment docs updated; follow-up [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] carries first-live-fire verification)
