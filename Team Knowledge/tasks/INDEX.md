@@ -2,19 +2,18 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-16T22:10:00Z_
+_Last rebuilt: 2026-07-16T22:30:00Z_
 
 ## Summary
-- Open: 12
+- Open: 11
 - In progress: 0
 - Done (this month): 8
-- Cancelled (this month): 0
+- Cancelled (this month): 1
 
-## Open (12)
+## Open (11)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
-- [[tsk-2026-07-09-002-check-weekly-strategy-report-first-fire]] — Check Weekly Strategy Report's first live fire — assignee: jeff — created 2026-07-09 — due 2026-07-12 — NOTE: predates the 2026-07-16 architecture move to a VPS cron script; likely superseded by [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]], flagged for Hawkeye/Jeff to confirm and close/cancel if redundant
 
 ### Priority 2 — high
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
@@ -38,11 +37,11 @@ _Last rebuilt: 2026-07-16T22:10:00Z_
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
 - pierce: 7 open, 0 in-progress
-- jeff: 1 open, 0 in-progress
 - blake: 1 open, 0 in-progress
 - bj: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
+- 2026-07-16 [[tsk-2026-07-09-002-check-weekly-strategy-report-first-fire]] — cancelled — pierce (superseded by the VPS-native rebuild; first-live-fire verification now tracked by [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]])
 - 2026-07-16 [[tsk-2026-07-13-001-weekly-strategy-report-cloud-routine-network-and-gitignore-blockers]] — done — pierce (merged dev→main, deployed to VPS, cron wired, quarter-open-equity backfill executed, Environment docs updated; follow-up [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] carries first-live-fire verification)
 - 2026-07-15 [[tsk-2026-07-12-001-post-deploy-baseline-recheck-fidelity-check]] — done — pierce (PR #22 merged/deployed, Ledger PASS, healthchecks.io red alert cleared, two LOW findings also shipped)
 - 2026-07-09 [[tsk-2026-07-09-001-merge-b2-autopsy-timing-fix]] — done — jeff/hawkeye (approved, merged, deployed, verified)

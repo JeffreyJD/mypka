@@ -8,13 +8,13 @@ assignee: jeff
 priority: 1
 
 # Status (mirrors folder location)
-status: open
+status: cancelled
 blocked_reason: null
 blocked_by: null
 
 # Time
 created: 2026-07-09T00:00:00Z
-updated: 2026-07-09T00:00:00Z
+updated: 2026-07-16T22:30:00Z
 due: "2026-07-12"
 
 # Provenance
@@ -58,7 +58,12 @@ Routine: https://claude.ai/code/routines/trig_01DSKrdhex2fBMkK8bA3q6a3
 ## Updates
 
 - 2026-07-09 (hawkeye) — created after Google Calendar's connector failed re-authorization; Jeff chose a myPKA task over Slack or fixing the calendar connection.
+- 2026-07-16 (pierce) — cancelled per Jeff's confirmation; superseded by the VPS-native rebuild.
 
-## Outcome
+## Outcome (cancelled)
 
-_(filled when status flips to done — see SOP-012-close-task)_
+Reason: this task tracked the first live fire of the Weekly Strategy Report's original **cloud-routine** architecture (Claude routine `trig_01DSKrdhex2fBMkK8bA3q6a3`), which fired once on 2026-07-12 but was subsequently retired. [[tsk-2026-07-13-001-weekly-strategy-report-cloud-routine-network-and-gitignore-blockers]] replaced the cloud routine with a VPS-native cron script (deployed and wired 2026-07-16). That parent task's own unresolved thread — confirming the *new* architecture's first live fire — was spun off as its own follow-up rather than reusing this task, since the pipeline, verification steps, and even the log/report paths changed. Continuing to track "first fire" against a routine that no longer exists would be tracking a dead artifact.
+
+Superseded by: [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] (tracks first-live-fire verification for the VPS-native cron script, Sunday 2026-07-19 10:00 ET).
+
+Archived deliverables: none (`linked_deliverables: []`).
