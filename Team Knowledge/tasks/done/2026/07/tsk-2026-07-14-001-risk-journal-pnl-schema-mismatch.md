@@ -8,13 +8,13 @@ assignee: pierce
 priority: 3
 
 # Status (mirrors folder location)
-status: in-progress
-blocked_reason: "awaiting Ledger's SOP-022 fidelity check on PR #52, then merge to main + deploy + post-deploy log confirmation"
+status: done
+blocked_reason: null
 blocked_by: null
 
 # Time
 created: 2026-07-14T01:25:54Z
-updated: 2026-07-17T11:10:00Z
+updated: 2026-07-17T16:20:00Z
 due: 2026-07-21
 
 # Provenance
@@ -29,7 +29,7 @@ linked_guidelines: []
 linked_my_life: []
 linked_session_logs: []
 linked_journal_entries: []
-linked_deliverables: ["2026-07-13-prophet-trader-deploy-cross-strategy-sweep"]
+linked_deliverables: ["2026-07-13-prophet-trader-deploy-cross-strategy-sweep", "2026-07-17-prophet-trader-deploy-risk-journal-pnl-schema-fix"]
 
 # Tagging
 tags: ["prophet-trader", "data-integrity", "risk-journal", "daily-alpha-brief"]
@@ -46,6 +46,7 @@ Found (not fixed) during Pierce's broader cross-strategy-mixing sweep on 2026-07
 ## Context one click away
 
 - [[2026-07-13-prophet-trader-deploy-cross-strategy-sweep]] — where this was found, full detail on the broader sweep it was found during
+- [[2026-07-17-prophet-trader-deploy-risk-journal-pnl-schema-fix]] — post-deploy confirmation (merge chain, CI, VPS HEAD match, log status)
 - `C:\Users\jeff\dev\prophet-trader\src\briefs\fetchers\risk_journal.py` (`_compute_pnl()`)
 - `C:\Users\jeff\dev\prophet-trader\data\trades.jsonl` (real schema to compare against)
 
@@ -55,8 +56,8 @@ Found (not fixed) during Pierce's broader cross-strategy-mixing sweep on 2026-07
 - [x] Confirm the actual production impact — has the Daily Alpha Brief been silently reporting $0.00 P&L, or is there a fallback/different path that masks this in practice?
 - [x] Fix the schema mismatch, with a regression test that would have caught it.
 - [x] Confirm no other consumer of this same fetcher/schema has the identical problem.
-- [ ] Ledger's SOP-022 fidelity check on PR #52.
-- [ ] Merge to `main`, deploy, tail logs, confirm next Daily Alpha Brief run.
+- [x] Ledger's SOP-022 fidelity check on PR #52.
+- [x] Merge to `main`, deploy, tail logs, confirm next Daily Alpha Brief run.
 
 ## Findings (confirmed, not a false alarm)
 
@@ -81,7 +82,22 @@ Financial-calculation code per Pierce's contract → requires Ledger's [[SOP-022
 
 - 2026-07-14 01:25 (hawkeye) — created per Jeff's explicit "we must have all bugs identified and fixed asap" directive, tracking this so it doesn't get lost now that the higher-priority report-script build and the healthchecks naming fix are in progress. Not urgent relative to those — the Daily Alpha Brief is a separate, lower-stakes surface than the demotion/reconciliation logic fixed same-day — but real and worth closing properly.
 - 2026-07-17 11:10 (pierce) — confirmed the bug against live VPS `data/trades.jsonl` (not a false alarm); fixed `_compute_pnl()` in `src/briefs/fetchers/risk_journal.py`; added regression test built on the real schema; verified against a live copy of production trade data (correctly returns $0.00 because zero closed fills exist yet — no crash, no false positive); confirmed no other consumer of the journal reimplements the wrong schema; opened PR #52 on `dev`, CI green; filed follow-up [[tsk-2026-07-17-010-risk-journal-open-positions-schema-mismatch]] for the related-but-separate open-positions/deployed_pct bug in the same file; moved this task to in-progress pending Ledger's SOP-022 check and deploy.
+- 2026-07-17 16:20 (pierce) — Ledger's SOP-022 check on PR #52 **PASSED** — safe to merge and deploy, with two non-blocking findings (see Outcome). Merged PR #52 into `dev` (commit `c8a148a`, merge `c80e423`). Per Jeff's direction, findings from Ledger's check were handled as immediate remediation rather than deferred backlog: removed the dead-code duplicate (`realized_edge()`) same-session in PR #54, opened+closed GH issue #55 with evidence, and filed+closed matching myPKA task [[tsk-2026-07-17-012-remove-dead-realized-edge]]. Opened release PR #53 (`dev` → `main`), CI green, merged at `ea5c677`. GitHub Actions deploy confirmed (`Deploy complete — ea5c677`); VPS `git rev-parse HEAD` independently confirmed matching. Closed GH issue #29 (auto-closed by PR #53's `Fixes #29`; added full fix-confirmation comment). Filed [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]] as a myPKA-task-only watch item for Ledger's informational finding #2 (no GH issue — not a bug/enhancement yet). Task done.
 
 ## Outcome
 
-_(filled when status flips to done — see SOP-012-close-task, after Ledger's PASS, merge, deploy, and post-deploy log confirmation)_
+What shipped: `_compute_pnl()` in `src/briefs/fetchers/risk_journal.py` now reads the real trade schema (`event_type == "fill"`, `is_close`, `timestamp`, `realized_pnl"`) instead of the fictional one it had used since the initial Phase 2 commit (`status == "closed"`, `close_timestamp`, `pnl`), which matched zero records unconditionally — every Daily Alpha Brief to date read $0.00 day/week P&L regardless of actual activity. Historical-correction check confirmed no past brief masked a real nonzero value (production `trades.jsonl` has zero closed fills to date) — the bug was live but had zero realized impact by coincidence; this fix matters starting with the first rebalance close. Added regression test `test_day_pnl_from_real_closed_fill_schema` built on the real schema.
+
+Where it lives: PR [#52](https://github.com/JeffreyJD/prophet-trader/pull/52) → `dev` (`c8a148a`/`c80e423`). Release PR [#53](https://github.com/JeffreyJD/prophet-trader/pull/53) → `main` at `ea5c677`. GitHub Actions "Deploy complete — ea5c677" confirmed; VPS `git rev-parse HEAD` = `ea5c677a2b31e4d0cf6bc969d773f6ef9a25f2ba`, matching. GitHub issue [#29](https://github.com/JeffreyJD/prophet-trader/issues/29) closed with fix confirmation. Full end-to-end verification with a real nonzero realized P&L awaits the first closed fill in production (zero exist as of this close) — the code path is deployed and correct, just not yet exercised with nonzero data.
+
+**Ledger's SOP-022 verdict:** PASS — safe to merge and deploy. Two findings:
+1. **[LOW, remediated same-session]** Dead-code duplicate of this exact schema bug in `src/strategies/base.py::realized_edge()` (never called in production, only referenced in two stale comments). Per Jeff's corrected direction (any code-touch remediation gets a tracked GitHub issue + myPKA task, even when fixed immediately), this was deleted in PR [#54](https://github.com/JeffreyJD/prophet-trader/pull/54) (`dev` commit `13be8de`/`2955690`), tracked via GH issue #55 (opened and closed same-session with evidence) and myPKA task [[tsk-2026-07-17-012-remove-dead-realized-edge]] (created and closed done same-session). No open thread remains for this finding.
+2. **[LOW/informational]** The now-correct `week_pnl_pct` feeds `council_intent.py`'s stand-down warning text (-3%/-5% week P&L thresholds) for the first time ever in production — previously always pinned at 0.0, so that branch never fired. Display-only; does not touch the separately-correct G5 halt gate. Per Jeff's clarified backlog rule (future work effort that is neither a bug nor an enhancement still needs a myPKA task, just not a GitHub issue), tracked as [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]] — a watch item for the first time a real closed loss crosses those thresholds.
+
+Follow-ups: [[tsk-2026-07-17-010-risk-journal-open-positions-schema-mismatch]] (pre-existing, separate bug class — `_summarize_open_positions()`/`deployed_pct` schema mismatch, still open, not part of this fix). [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]] (new, open watch item). [[tsk-2026-07-17-012-remove-dead-realized-edge]] (new, closed done same-session).
+
+Lessons: none new beyond what's already captured in the Findings section above — the existing lesson (grep for schema-mismatch duplicates elsewhere in the codebase once one is found) is what surfaced both the dead-code duplicate and the open-positions follow-up.
+
+Archived deliverables:
+  - `2026-07-13-prophet-trader-deploy-cross-strategy-sweep` → checked for sharing against other open/in-progress tasks; none found referencing it, archived to `Deliverables/_archive/2026/07/2026-07-13-prophet-trader-deploy-cross-strategy-sweep.md`.
+  - `2026-07-17-prophet-trader-deploy-risk-journal-pnl-schema-fix` (post-deploy confirmation, written at close) → archived directly to `Deliverables/_archive/2026/07/2026-07-17-prophet-trader-deploy-risk-journal-pnl-schema-fix.md`.

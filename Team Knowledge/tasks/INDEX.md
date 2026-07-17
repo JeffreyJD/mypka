@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-17T15:00:00Z_
+_Last rebuilt: 2026-07-17T16:25:00Z_
 
 ## Summary
-- Open: 18
-- In progress: 1 (1 blocked)
-- Done (this month): 10
+- Open: 19
+- In progress: 0
+- Done (this month): 12
 - Cancelled (this month): 1
 
-## Open (18)
+## Open (19)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -37,18 +37,21 @@ _Last rebuilt: 2026-07-17T15:00:00Z_
 - [[tsk-2026-07-17-007-preferred-regimes-fidelity-check-coverage-gap]] — Fidelity check hash doesn't cover phase_state.json preferred_regimes — can silently drift again undetected — assignee: pierce — created 2026-07-17 — GH #48
 - [[tsk-2026-07-17-008-walk-forward-cost-estimate-placeholder]] — walk_forward.py _stress_test() cost-estimate placeholder needs a proper version — assignee: pierce — created 2026-07-17 — GH #49
 - [[tsk-2026-07-17-009-bj-base-rate-research-trending-bull-event-blackout]] — B.J. base-rate research: trending-bull and event-blackout frequency from Phase 1 backtest period — assignee: bj — created 2026-07-17
+- [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]] — Verify council_intent.py's week_pnl_pct stand-down warning displays correctly the first time a real closed loss triggers it (-3%/-5%) — assignee: pierce — created 2026-07-17 — no GH issue (watch item, not yet a bug/enhancement)
 
-## In progress (1)
-- [[tsk-2026-07-14-001-risk-journal-pnl-schema-mismatch]] — assignee: pierce — claimed 2026-07-17 — BLOCKED: awaiting Ledger's SOP-022 fidelity check on PR #52, then merge to main + deploy + post-deploy log confirmation
+## In progress (0)
+_None._
 
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 10 open, 1 in-progress (1 blocked)
+- pierce: 11 open, 0 in-progress
 - blake: 3 open, 0 in-progress
 - bj: 2 open, 0 in-progress
 
 ## Recently closed (last 7 days)
+- 2026-07-17 [[tsk-2026-07-14-001-risk-journal-pnl-schema-mismatch]] — done — pierce (Ledger SOP-022 PASS on PR #52; merged dev→main via release PR #53 at `ea5c677`; deploy confirmed via GitHub Actions + VPS HEAD match; GH #29 closed with fix confirmation; dead-code duplicate finding remediated same-session as [[tsk-2026-07-17-012-remove-dead-realized-edge]]; informational finding tracked as [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]])
+- 2026-07-17 [[tsk-2026-07-17-012-remove-dead-realized-edge]] — done — pierce (removed dead `realized_edge()` duplicate of the risk_journal P&L schema bug from `strategies/base.py`; PR #54 merged to dev; GH #55 opened and closed same-session with commit/PR evidence)
 - 2026-07-17 [[tsk-2026-07-17-003-weekly-autopsy-cadence-broken]] — done — blake/pierce (root-caused as the same cloud-routine egress/git-write failure fixed under [[tsk-2026-07-13-001-weekly-strategy-report-cloud-routine-network-and-gitignore-blockers]]; 2026-07-12 narrative autopsy backfilled at [[2026-07-12-strategy-autopsy]]; GH #45 closed with full diagnosis)
 - 2026-07-17 [[tsk-2026-07-17-001-reconciliation-fractional-share-format-bug]] — done — pierce (PR #38 fix merged/deployed, Ledger SOP-022 PASS on re-check, cosmetic type-hint fix PR #39 also shipped, follow-up [[tsk-2026-07-17-002-reconcile-qty-tolerance-boundary-risk]] opened for the tolerance-boundary finding)
 - 2026-07-16 [[tsk-2026-07-09-002-check-weekly-strategy-report-first-fire]] — cancelled — pierce (superseded by the VPS-native rebuild; first-live-fire verification now tracked by [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]])
