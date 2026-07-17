@@ -2,11 +2,11 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-17T10:45:00Z_
+_Last rebuilt: 2026-07-17T11:15:00Z_
 
 ## Summary
 - Open: 19
-- In progress: 0 (0 blocked)
+- In progress: 1 (1 blocked)
 - Done (this month): 9
 - Cancelled (this month): 1
 
@@ -27,11 +27,11 @@ _Last rebuilt: 2026-07-17T10:45:00Z_
 - [[tsk-2026-07-10-001-fix-live-vix-bar-fetch-mbs]] — Source true VIX index data (non-Alpaca) for momentum_breakout_stocks — VIXY proxy rejected by Blake — assignee: pierce — created 2026-07-10 — due 2026-08-07 — GH #44
 - [[tsk-2026-07-10-002-vix-csv-provenance-investigation]] — Trace provenance of data/bars/VIX.csv used in the wf_v9 backtest — source can't be reproduced from live Alpaca — assignee: pierce — created 2026-07-10 — due 2026-09-01
 - [[tsk-2026-07-11-001-automate-fidelity-non-clean-surfacing]] — Formalize surfacing of non-CLEAN Daily Fidelity Check days into myPKA — currently manual, unenforced (Ledger LOW finding, PR #13) — assignee: pierce — created 2026-07-11 — GH #42
-- [[tsk-2026-07-14-001-risk-journal-pnl-schema-mismatch]] — Daily Alpha Brief's P&L calculation may always read $0.00 — trade schema mismatch in risk_journal.py — assignee: pierce — created 2026-07-14 — due 2026-07-21 — GH #29
 - [[tsk-2026-07-17-002-reconcile-qty-tolerance-boundary-risk]] — Widen scripts/reconcile.py QTY_TOLERANCE boundary (strict > at exactly 1e-6 can silently mask a genuine drift) — assignee: pierce — created 2026-07-17 — GH #43
 - [[tsk-2026-07-17-004-server-py-zero-test-coverage]] — src/api/server.py (Observatory dashboard) has zero test coverage — assignee: pierce — created 2026-07-17 — GH #46
 - [[tsk-2026-07-17-005-event-driven-regime-csm-formal-evaluation]] — Formal Blake evaluation: should cross_sectional_momentum trade through event-driven regime windows — assignee: blake — created 2026-07-17
 - [[tsk-2026-07-17-006-demotion-trigger-4-portfolio-wide-design-question]] — Demotion Trigger 4 (reconciliation drift) is portfolio-wide, not per-strategy — assignee: blake — created 2026-07-17 — GH #47
+- [[tsk-2026-07-17-010-risk-journal-open-positions-schema-mismatch]] — risk_journal.py open-positions summary + deployed_pct use the same fictional trade schema as the P&L bug — assignee: pierce — created 2026-07-17
 
 ### Priority 4 — low
 - [[tsk-2026-07-09-005-research-universe-breadth-for-momentum-strategies]] — Research brief: optimal stock universe breadth — assignee: bj — created 2026-07-09 — prep for future bundled Phase 1 cycle, not immediate action
@@ -39,13 +39,13 @@ _Last rebuilt: 2026-07-17T10:45:00Z_
 - [[tsk-2026-07-17-008-walk-forward-cost-estimate-placeholder]] — walk_forward.py _stress_test() cost-estimate placeholder needs a proper version — assignee: pierce — created 2026-07-17 — GH #49
 - [[tsk-2026-07-17-009-bj-base-rate-research-trending-bull-event-blackout]] — B.J. base-rate research: trending-bull and event-blackout frequency from Phase 1 backtest period — assignee: bj — created 2026-07-17
 
-## In progress (0)
-_none_
+## In progress (1)
+- [[tsk-2026-07-14-001-risk-journal-pnl-schema-mismatch]] — assignee: pierce — claimed 2026-07-17 — BLOCKED: awaiting Ledger's SOP-022 fidelity check on PR #52, then merge to main + deploy + post-deploy log confirmation
 
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 11 open, 0 in-progress
+- pierce: 11 open, 1 in-progress (1 blocked)
 - blake: 4 open, 0 in-progress
 - bj: 2 open, 0 in-progress
 
