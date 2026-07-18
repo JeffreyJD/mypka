@@ -3,7 +3,7 @@
 - **Owner:** any agent
 - **Triggered by:** an agent or the user identifying a unit of work that won't finish this turn and should be picked up later
 - **Output:** a new file in `Team Knowledge/tasks/open/`
-- **References:** [[SOP-013-rebuild-task-index]], [[SOP-011-claim-task]], [[GL-001-file-naming-conventions]], [[GL-004-task-resource-linking]]
+- **References:** [[SOP-013-rebuild-task-index]], [[SOP-011-claim-task]], [[GL-001-file-naming-conventions]], [[GL-004-task-resource-linking]], [[GL-016-numbered-artifact-collision-check]]
 
 ## Purpose
 
@@ -54,7 +54,7 @@ NEXT=$(find "Team Knowledge/tasks" -name "tsk-${TODAY}-*.md" 2>/dev/null | wc -l
 ID="tsk-${TODAY}-${NEXT}"
 ```
 
-If creation later fails because the file already exists (race with another agent), increment `NEXT` and retry. Up to 5 retries.
+If creation later fails because the file already exists (race with another agent), increment `NEXT` and retry. Up to 5 retries. This retry loop is Check 1 of [[GL-016-numbered-artifact-collision-check]] — the immediate-before-write reconfirmation — already mechanized for tasks. If you are creating several tasks in the same window as other agents (parallel dispatch, or a batch you're about to commit together), also run that Guideline's Check 2 across the whole batch before committing: list every new `tsk-` id in the batch and confirm none collide with each other or with the live `tasks/` tree, since Check 1 alone only protects against a number that was already claimed by the time you retried — not one claimed concurrently after your check.
 
 ### 3. Slug the title
 

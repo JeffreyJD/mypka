@@ -28,3 +28,5 @@ Filename pattern: `WS-NNN-<title>.md`. See [[GL-001-file-naming-conventions]] fo
 If only one specialist is involved, write an SOP instead — single-agent procedures are skills, not workstreams.
 If the rule is static and never executed, write a Guideline instead.
 If a Charta+Pixel handoff (or any other multi-agent pattern) repeats often enough to need codifying, that's the moment to author a new Workstream — not before.
+
+Before you pick and write the next `WS-NNN` number — especially if another agent may be minting a Workstream in the same window — run the collision check in [[GL-016-numbered-artifact-collision-check]].

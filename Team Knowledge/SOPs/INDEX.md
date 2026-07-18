@@ -17,7 +17,7 @@ Filename pattern: `SOP-NNN-<title>.md`. See [[GL-001-file-naming-conventions]] f
 | SOP-007 | [[SOP-007-audit-content-for-design-system-compliance]] | Iris | Audit a deliverable against GL-003 and report violations. (Designer Pack — installed v4.1.1) |
 | SOP-008 | [[SOP-008-build-an-infographic]] | Charta | Build an infographic / structured visual deliverable (HTML/CSS layout). (Designer Pack — installed v4.1.1) |
 | SOP-009 | [[SOP-009-generate-a-styled-image]] | Pixel | Generate or stylize an image to the design system; Klinger wires the connection half if needed. (Designer Pack — installed v4.1.1) |
-| SOP-010 | [[SOP-010-create-task]] | Hawkeye | Create a task: duplicate check, ID generation, seven-slot cross-reference walk, file write to `tasks/open/`, index rebuild. References [[GL-004-task-resource-linking]], [[GL-001-file-naming-conventions]]. |
+| SOP-010 | [[SOP-010-create-task]] | Hawkeye | Create a task: duplicate check, ID generation (retry-on-exists loop satisfies [[GL-016-numbered-artifact-collision-check]] Check 1), seven-slot cross-reference walk, file write to `tasks/open/`, index rebuild. References [[GL-004-task-resource-linking]], [[GL-001-file-naming-conventions]], [[GL-016-numbered-artifact-collision-check]]. |
 | SOP-011 | [[SOP-011-claim-task]] | Assignee | Claim a task (§A), record a block (§B), or record an unblock (§C): pre-flight cross-reference read, move from `tasks/open/` to `tasks/in-progress/`, frontmatter update, index rebuild. References [[GL-004-task-resource-linking]], [[SOP-017-read-own-journal]]. |
 | SOP-012 | [[SOP-012-close-task]] | Hawkeye / Assignee | Close a task done (§A) or cancelled (§B): verify success criteria, fill Outcome, sharing-check `linked_deliverables`, archive un-shared deliverables, move task file. References [[GL-004-task-resource-linking]], [[SOP-016-write-journal-entry]]. |
 | SOP-013 | [[SOP-013-rebuild-task-index]] | Hawkeye | Regenerate `tasks/INDEX.md` from the live state of `open/`, `in-progress/`, `done/`, `cancelled/`. awk-based frontmatter parser, atomic write, status-vs-folder drift correction. Called by every task-touching SOP. |
@@ -35,7 +35,7 @@ Filename pattern: `SOP-NNN-<title>.md`. See [[GL-001-file-naming-conventions]] f
 
 ## How to add a new SOP
 
-1. Pick the next unused number (`SOP-NNN`) — by authorship order, not topic. Don't reuse reserved numbers.
+1. Pick the next unused number (`SOP-NNN`) — by authorship order, not topic. Don't reuse reserved numbers. Run the collision check in [[GL-016-numbered-artifact-collision-check]] immediately before writing, and again as part of the batch check before committing — especially if another agent may be minting an SOP in the same window.
 2. Filename: `SOP-NNN-<kebab-case-title>.md`.
 3. Header includes the default owner, status, triggers, references, and an explicit "Reusable by any agent" note — the SOP is a skill, not 1:1 ownership.
 4. Reference [[GL-001-file-naming-conventions]] and any other Guideline instead of duplicating its content.

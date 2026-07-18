@@ -2,12 +2,12 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-18T12:29:33Z_
+_Last rebuilt: 2026-07-18T20:05:00Z_
 
 ## Summary
 - Open: 25
 - In progress: 0
-- Done (this month): 22
+- Done (this month): 23
 - Cancelled (this month): 1
 
 ## Open (25)
@@ -19,7 +19,7 @@ _Last rebuilt: 2026-07-18T12:29:33Z_
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
 - [[tsk-2026-07-09-003-instrument-council-divergence-vs-bare-rule]] — Instrument agent-council decision divergence vs. a bare rule — assignee: pierce — created 2026-07-09 — GH #41 — priority bumped 2026-07-18 (retro flag: live decision data accumulating, unstarted a week+)
 - [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] — Confirm Weekly Strategy Report's first live Sunday cron fire runs clean — assignee: pierce — created 2026-07-16 — due 2026-07-20
-- [[tsk-2026-07-18-014-numbered-artifact-collision-rule]] — WS-004 Tier 1 proposal: prevent numbered-artifact collisions in parallel dispatch — assignee: potter — created 2026-07-18 — BLOCKED: awaiting Jeff's choice between (a) serialize vs (b) mandatory pre-commit check
+- [[tsk-2026-07-18-016-ratify-handoff-protocol-and-ws-006]] — Ratify the specialist handoff protocol (Guideline + task-template section) and WS-006 software change lifecycle — assignee: unassigned — created 2026-07-18 — BLOCKED: awaiting Jeff's approval of the WHAT per WS-004 Tier 1
 
 ### Priority 3 — normal
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
@@ -56,10 +56,12 @@ _none_
 - bj: 2 open, 0 in-progress
 - relay: 1 open, 0 in-progress
 - margaret: 1 open, 0 in-progress
-- potter: 2 open, 0 in-progress
+- potter: 1 open, 0 in-progress
 - frank: 1 open, 0 in-progress
+- unassigned: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
+- 2026-07-18 [[tsk-2026-07-18-014-numbered-artifact-collision-rule]] — done — potter (WS-004 Tier 1 proposal formalized: new [[GL-016-numbered-artifact-collision-check]] — re-confirm number immediately before write, plus required batch-wide check before any commit — wired into GL-001, SOP-010, the Guidelines/SOPs/Workstreams indexes, and WS-004 Tier 2 Step 5; Margaret's mirror regen deferred/flagged to Hawkeye)
 - 2026-07-18 [[tsk-2026-07-18-001-ratify-ws-007-infrastructure-change-lifecycle]] — done — potter (WS-004 Tier 1 proposal ratified: WS-007 Infrastructure Change Lifecycle written to Team Knowledge/Workstreams/, form-factor rule single-sourced there, Trapper/Bastion/Relay contracts repointed; Finding A resolved PASS-with-caveat via Ledger; Finding B routed to future software-lifecycle proposal)
 - 2026-07-18 [[tsk-2026-07-18-002-schedule-ledger-drift-audit-cadence]] — done — ledger (WS-004 Tier 2 retro proposal 1: SOP-022 §3 gained a mandatory monthly Drift Audit cadence trigger, folded into close-session)
 - 2026-07-18 [[tsk-2026-07-18-003-sop-022-pre-implementation-review-mode]] — done — ledger (retro proposal 2: SOP-022 §1 gained a conditional pre-implementation plan-review step for financial-risk/gate-adjacent changes)

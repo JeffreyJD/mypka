@@ -17,6 +17,7 @@ Team Inbox/
 mypka.db
 mypka.db-shm
 mypka.db-wal
+_mypka_to_sqlite_last_run.json
 
 # Scaffold updater control folder — local backups + update log (user-state, per manifest.json)
 .mypka/

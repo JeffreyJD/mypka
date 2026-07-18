@@ -63,6 +63,8 @@ Every section that has its own index uses the literal filename `INDEX.md`. Do no
 
 Numbers do not skip. Reuse a retired number only after the retirement is logged in a session log.
 
+Before writing any numbered artifact — and before committing a batch that includes one — run the collision check in [[GL-016-numbered-artifact-collision-check]]. "List the directory, find the next free number" is a lookup, not a lock; the linked Guideline closes the gap.
+
 ### 7. Image filename pattern
 
 `YYYY-MM-DD-<slug>.<ext>` under `PKM/Images/YYYY/MM/`.

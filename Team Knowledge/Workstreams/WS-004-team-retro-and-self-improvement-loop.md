@@ -3,7 +3,7 @@
 - **Status:** Active (since v4.0.0)
 - **Type:** Workstream - a multi-agent composition. The team learns from its own run history and proposes improvements to itself. **Pre-canonicalized exception**, alongside [[WS-001-daily-journaling]], [[WS-002-import-external-knowledge-base]], and [[WS-003-install-an-expansion]] - it ships wired out of the box because the self-improvement loop must be governed from day one, never bolted on later.
 - **Owners:** **Hawkeye** (orchestrator - runs the Tier 2 retro, folds the Tier 1 check into close-session, routes every approved proposal to its implementer). **Every specialist** (Tier 0 and Tier 1 - each captures its own learnings and emits its own proposals). The **named implementer** per approved proposal (writes the actual change). **Margaret** (mypka.db regen after any landed change). **The user** (the gate - approves the WHAT on every Tier 1 and Tier 2 change).
-- **References:** [[GL-005-llm-agnostic-portable-core]] (proposals must keep the portable core clean), [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]], [[SOP-010-create-task]], [[SOP-012-close-task]], [[SOP-016-write-journal-entry]], [[SOP-017-read-own-journal]], [[SOP-001-how-to-add-a-new-specialist]], [[SOP-002-convert-mypka-to-sqlite]], [[Team/agent-index]].
+- **References:** [[GL-005-llm-agnostic-portable-core]] (proposals must keep the portable core clean), [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]], [[GL-016-numbered-artifact-collision-check]] (required before any commit that lands parallel-implemented numbered artifacts), [[SOP-010-create-task]], [[SOP-012-close-task]], [[SOP-016-write-journal-entry]], [[SOP-017-read-own-journal]], [[SOP-001-how-to-add-a-new-specialist]], [[SOP-002-convert-mypka-to-sqlite]], [[Team/agent-index]].
 - **Triggered by:** natural-language phrasing that signals "the team should learn from itself" or "run the retro." See **Trigger contract** below. The close-session routine also runs the Tier 1 check every session and MAY nudge the Tier 2 retro on a roughly monthly cadence as an option (never automatically).
 
 ## Purpose
@@ -110,6 +110,8 @@ The user reviews the ranked list and approves a subset. Nothing is approved by d
 ### Step 5 - Implementers land the approved subset
 
 Each approved proposal goes to its named implementer, who makes the change (claiming/closing a task per [[SOP-012-close-task]] where one was raised). Portable-core changes keep the core clean per [[GL-005-llm-agnostic-portable-core]]. Archiving a dead SOP follows the no-renumber rule in [[GL-001-file-naming-conventions]] - the gap is acceptable.
+
+**When more than one implementer works in the same window and any of them mints a new numbered artifact** (`GL-NNN`, `SOP-NNN`, `WS-NNN`), run [[GL-016-numbered-artifact-collision-check]] before the shared commit lands: each implementer re-confirms its number is still free immediately before writing, and whoever performs the batch commit runs the required cross-batch check across every new numbered artifact the round produced - not just their own. This is not optional review-if-you-remember; it is the step that would have caught the 2026-07-18 GL-014 collision at the moment it happened.
 
 ### Step 6 - Margaret: mypka.db regen
 
