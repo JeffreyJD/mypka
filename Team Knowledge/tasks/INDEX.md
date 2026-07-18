@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-17T18:25:00Z_
+_Last rebuilt: 2026-07-17T23:58:00Z_
 
 ## Summary
-- Open: 21
-- In progress: 0
+- Open: 20
+- In progress: 1
 - Done (this month): 12
 - Cancelled (this month): 1
 
-## Open (21)
+## Open (20)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -32,7 +32,6 @@ _Last rebuilt: 2026-07-17T18:25:00Z_
 - [[tsk-2026-07-17-006-demotion-trigger-4-portfolio-wide-design-question]] — Demotion Trigger 4 (reconciliation drift) is portfolio-wide, not per-strategy — assignee: blake — created 2026-07-17 — GH #47
 - [[tsk-2026-07-17-010-risk-journal-open-positions-schema-mismatch]] — risk_journal.py open-positions summary + deployed_pct use the same fictional trade schema as the P&L bug — assignee: pierce — created 2026-07-17
 - [[tsk-2026-07-17-013-confirm-bac-reconciliation-clean-on-monday-run]] — Confirm BAC reconciles clean on the next automated Daily Fidelity Check run (2026-07-17 FAIL 5/6, settlement-timing theory) — assignee: pierce — created 2026-07-17 — due 2026-07-20 — no GH issue (watch item, not yet a bug)
-- [[tsk-2026-07-17-014-reconcile-settlement-grace-window]] — reconcile.py: add settlement grace window to avoid false-positive drift_detected on recently-filled orders — assignee: pierce — created 2026-07-17 — GH #56 — not yet claimed, awaiting design review with Ledger and Blake before implementation
 
 ### Priority 4 — low
 - [[tsk-2026-07-09-005-research-universe-breadth-for-momentum-strategies]] — Research brief: optimal stock universe breadth — assignee: bj — created 2026-07-09 — prep for future bundled Phase 1 cycle, not immediate action
@@ -41,13 +40,13 @@ _Last rebuilt: 2026-07-17T18:25:00Z_
 - [[tsk-2026-07-17-009-bj-base-rate-research-trending-bull-event-blackout]] — B.J. base-rate research: trending-bull and event-blackout frequency from Phase 1 backtest period — assignee: bj — created 2026-07-17
 - [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]] — Verify council_intent.py's week_pnl_pct stand-down warning displays correctly the first time a real closed loss triggers it (-3%/-5%) — assignee: pierce — created 2026-07-17 — no GH issue (watch item, not yet a bug/enhancement)
 
-## In progress (0)
-_None._
+## In progress (1)
+- [[tsk-2026-07-17-014-reconcile-settlement-grace-window]] — assignee: pierce — claimed 2026-07-17 (design review with Ledger + Blake complete, implemented, PR #57 open on dev, CI green; pending Ledger's SOP-022 re-verification before merge)
 
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 13 open, 0 in-progress
+- pierce: 12 open, 1 in-progress
 - blake: 3 open, 0 in-progress
 - bj: 2 open, 0 in-progress
 
