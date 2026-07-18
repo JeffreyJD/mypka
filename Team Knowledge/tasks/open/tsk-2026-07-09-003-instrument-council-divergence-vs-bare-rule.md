@@ -5,7 +5,7 @@ title: "Instrument agent-council decision divergence vs. a bare regime+momentum 
 
 # Ownership & priority
 assignee: pierce
-priority: 3
+priority: 2
 
 # Status (mirrors folder location)
 status: open
@@ -14,7 +14,7 @@ blocked_by: null
 
 # Time
 created: 2026-07-09T02:44:00Z
-updated: 2026-07-09T02:44:00Z
+updated: 2026-07-18T06:54:42Z
 due: null
 
 # Provenance
@@ -61,6 +61,7 @@ With `momentum_breakout_stocks` able to trade again (regime config fix, 2026-07-
 
 - 2026-07-09 (hawkeye) — created per Jeff's approval to act on the STORM research findings.
 - 2026-07-17 (pierce) — filed as GitHub issue [#41](https://github.com/JeffreyJD/prophet-trader/issues/41) per Jeff's consolidated-backlog directive; this is build work (new instrumentation), qualifies as backlog-worthy enhancement under the bugs/enhancements-only backlog scope.
+- 2026-07-18 (hawkeye) — priority bumped 3 → 2 per Jeff's explicit call during the WS-004 Tier 2 retro review: this task has sat open/unstarted for over a week while both live strategies have been accumulating exactly the decision data it needs to analyze. See [[2026-07-18-team-retro-proposals]] operational flags.
 
 ## Outcome
 

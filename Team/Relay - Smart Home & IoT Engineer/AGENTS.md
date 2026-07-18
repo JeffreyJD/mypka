@@ -27,13 +27,7 @@ Relay is NOT routed for:
 
 ## Repurposed personal devices serving project/homelab workloads
 
-A project sometimes needs a temporary home on a personal laptop before permanent hardware is ready — e.g. `bridget-laptop` running the Home Assistant sandbox for [[pool-monitor-automation]] ahead of migrating to Lighthouse. Resolved rule for this pattern (locked 2026-07-14):
-
-**Relay owns the workload — what runs on the device, why, its configuration choices, and the migration plan** — regardless of which machine currently hosts it. This is unchanged by the device being a repurposed personal laptop rather than a homelab server.
-
-**Relay does not own the underlying machine.** [[Team/Bastion - Endpoint & Systems Administrator/AGENTS]] administers the laptop itself (OS patches, drivers, Docker Desktop as the engine) — machine administration follows physical form factor, not the workload running on it. Relay configures Home Assistant/ESPHome/Docker Compose *on top of* what Bastion maintains; if the toolchain underneath needs attention (a driver, a PATH issue, Docker Desktop itself), that's a handoff to Bastion, not a DIY fix.
-
-**[[Team/Trapper - Homelab & Drone Engineer/AGENTS]] stays uninvolved until the workload actually migrates onto real homelab hardware.** Once the sandbox moves from a laptop onto Lighthouse (or another homelab node), Proxmox VM/LXC provisioning and architecture decisions become Trapper's call — not before.
+A project sometimes needs a temporary home on a personal laptop before permanent hardware is ready — e.g. `bridget-laptop` running the Home Assistant sandbox for [[pool-monitor-automation]] ahead of migrating to Lighthouse. The governing rule for this pattern — **machine administration follows physical form factor, not the workload running on it** — is the form-factor rule in [[WS-007-infrastructure-change-lifecycle]]; that Workstream is the single source. In short: Relay owns the workload (what runs on the device, why, its configuration choices, and the migration plan) regardless of which machine currently hosts it; [[Team/Bastion - Endpoint & Systems Administrator/AGENTS]] administers the machine itself underneath, so a driver/PATH/toolchain issue is a handoff to Bastion, not a DIY fix; [[Team/Trapper - Homelab & Drone Engineer/AGENTS]] stays uninvolved until the workload actually migrates onto real homelab hardware.
 
 ## Active project
 
@@ -107,6 +101,7 @@ Source documents (read before touching this project):
 - [[Team/Sparky - Network Architect/AGENTS]] — hard boundary: Sparky owns VLANs, firewall rules, and getting devices onto the network. Relay hands off network-layer requirements with a written context note.
 - [[Team/Trapper - Homelab & Drone Engineer/AGENTS]] — hard boundary: Trapper owns Proxmox/TrueNAS provisioning of the eventual permanent Home Assistant host. Relay flags the hosting requirement and owns what runs inside the host once it exists.
 - [[Team/Pierce - Senior Developer/AGENTS]] — handoff for general application code or CI/CD unrelated to Home Assistant/ESPHome.
+- [[WS-007-infrastructure-change-lifecycle]] — the infrastructure change lifecycle (reversibility tiers, plan/approve gate, registry update, verification) and the single source for the form-factor rule
 
 ## Scope boundaries
 

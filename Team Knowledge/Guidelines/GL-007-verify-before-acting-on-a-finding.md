@@ -14,10 +14,21 @@ The check is almost always cheap and almost always safe to do without printing s
 
 | Situation | Verification method |
 |---|---|
-| Credential possibly leaked/rotated | Hash both the current live value and the historical value (`sha256sum`) and compare hashes — or compare a short fingerprint (last 4-6 chars). Never echo both raw values side by side. |
+| Credential possibly leaked/rotated | Run a **Hash / Fingerprint Compare** (named method below) — never echo both raw values side by side. |
 | Config/commit possibly stale | Check the live host/repo directly (`git log -1`, `git rev-parse HEAD`, live file read) before trusting a registry note's recorded value. |
 | "Is this bug still present" | Re-run the reproduction against current code/state, don't infer from the historical report alone. |
 | "Did the user already fix this" | Ask, or check for the most recent evidence (latest commit, latest log line, latest task/journal entry) before assuming silence means "still broken." |
+
+## Named method: Hash / Fingerprint Compare
+
+Use this specific, named check whenever a finding is "is a leaked or historical credential still live" — a case that comes up often enough that it deserves a citable procedure rather than being re-derived from memory each time.
+
+1. Take the **historical value** (the one found in the log, backup, or git-history artifact) and the **current live value** (from the running config, `.env`, or secret manager).
+2. Hash both independently with the same algorithm (SHA-256 is sufficient) — or, if hashing isn't convenient in the moment, reduce both to a short fingerprint (the last 4-6 characters of each).
+3. Compare the **hashes or fingerprints**, never the raw values. **Never print or compare both raw values side by side, even in a private terminal** — the whole point of the method is confirming liveness without creating a second exposure of the secret.
+4. **Match** → the historical value is still the live one: the exposure is real and current, rotation is genuinely needed. **No match** → someone already rotated it: the finding is historical, no remediation action needed beyond noting it as resolved.
+
+Cite this by name ("running a hash/fingerprint compare") rather than re-explaining the steps inline — this section is the canonical description.
 
 ## Why this rule exists
 
@@ -33,3 +44,4 @@ The audit itself was correct. The miss was recommending action without first che
 ## Updates to this Guideline
 
 - 2026-07-08 — created (Hawkeye), graduated from [[2026-07-08-06-30_hawkeye_prophet-trader-status-check-token-leak-found]].
+- 2026-07-18 — added the named "Hash / Fingerprint Compare" method (Vex), per WS-004 Tier 2 Team Retro proposal 8 — the technique already lived in the table above but had been invoked from memory 3+ times without a citable name; now named and spelled out as its own section. Source: [[Team/Hawkeye - Orchestrator/journal/2026-07-08-verify-before-assuming-a-finding-is-unresolved]].

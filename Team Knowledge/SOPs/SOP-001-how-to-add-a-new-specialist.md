@@ -4,7 +4,7 @@
 - **Reusable by any agent.** This is a skill, not a 1:1 ownership. SOPs are procedures any agent can invoke when they need them. Potter is the default executor for hiring, but any specialist running the procedure (e.g. when bootstrap mode re-engages and Potter isn't available) follows the same steps.
 - **Co-owner for research step:** B.J.
 - **Triggered by:** user request to hire, or Hawkeye detecting a gap
-- **References:** [[GL-001-file-naming-conventions]], [[Team/agent-index]]
+- **References:** [[GL-001-file-naming-conventions]], [[GL-009-localize-expansion-role-names]], [[Team/agent-index]]
 
 ## Pre-hired team
 
@@ -131,6 +131,19 @@ Show the user the draft AGENTS.md, the draft `.claude/agents/<slug>.md` shim, an
 ### 9. Log the hire (Hawkeye)
 
 Hawkeye writes a line in the next session log: "Hired <Name> as <Role> after research from B.J.. Brief at `[[<research-deliverable-slug>]]`. Contract at `[[Team/<Name> - <Role>/AGENTS]]`. Shim at `.claude/agents/<slug>.md`." This becomes part of the team's persistent memory.
+
+## Post-hire verification checklist (mandatory)
+
+**This is a hard gate, not an optional note.** A hire is not complete until every item below passes. Run this checklist after Step 7 (Workstream updates) and before Step 8 (confirming the draft with the user) — catching a defect here, at hire time, is the entire point; the alternative is a later audit discovering it after the specialist has already been operating with a defective contract or an undispatchable shim.
+
+Three real defect classes have each slipped through undetected in the past, only caught by a later audit: thin contracts missing routing tables and scope boundaries, missing `journal/` template folders, and UTF-8 BOM on shims that silently makes an agent non-dispatchable with no visible error. Run all four checks below, every hire, no exceptions:
+
+1. **Contract line-count floor.** `Team/<Name> - <Role>/AGENTS.md` is at minimum ~80 lines. A contract shorter than this is very likely missing a required section (routing cues, Method/protocol, scope boundaries) — re-read Step 4's section list and fill the gap before proceeding. Line count alone doesn't guarantee quality, but a contract well under the floor is a reliable smell that something required was skipped.
+2. **`journal/_template.md` present.** Confirm `Team/<Name> - <Role>/journal/_template.md` exists. Every specialist needs this folder from day one — a hire that ships without it silently breaks the first journal entry the specialist tries to write.
+3. **Shim encoding: UTF-8, no BOM.** Confirm `.claude/agents/<slug>.md` (and any other activated host's shim) is UTF-8 without a byte-order mark. A BOM at the start of a shim file silently breaks frontmatter parsing on some hosts — the agent becomes non-dispatchable with no error message, which is exactly the failure mode this checklist exists to catch before it ships. Write shim files with a tool that does not add a BOM; verify if there's any doubt.
+4. **No generic placeholder names left in either file.** Scan both `Team/<Name> - <Role>/AGENTS.md` and the shim(s) for any leftover upstream/generic role name (an Expansion pack's authoring placeholder, a draft name that didn't get replaced, a stray reference to a role that isn't on this team). Ties directly to [[GL-009-localize-expansion-role-names]] — the same localization discipline that Expansion merges require applies to a fresh SOP-001 hire whenever the draft was seeded from external research or a template that named roles generically.
+
+If any item fails, fix it before Step 8. Do not show the user a draft that fails this checklist "to save a round trip" — a failed item found later costs more than the round trip does now.
 
 ## Common mistakes to avoid
 

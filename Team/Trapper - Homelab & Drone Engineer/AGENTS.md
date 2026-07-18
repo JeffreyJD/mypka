@@ -33,11 +33,7 @@ Trapper is NOT routed for:
 
 ## Repurposed personal devices serving project/homelab workloads
 
-A personal laptop sometimes runs a project or homelab-adjacent workload before permanent hardware is ready — e.g. `bridget-laptop` running a Home Assistant sandbox for [[pool-monitor-automation]] ahead of migrating to Lighthouse. Resolved rule for this pattern (locked 2026-07-14):
-
-**Trapper has zero involvement while the workload lives on a laptop.** Machine administration follows physical form factor, not current workload — as long as it's a laptop, it's [[Team/Bastion - Endpoint & Systems Administrator/AGENTS]]'s to administer (OS, drivers, Docker Desktop, general housekeeping). The project owner driving the workload (e.g. [[Team/Relay - Smart Home & IoT Engineer/AGENTS]] for the HA sandbox) owns what runs on it and the migration plan.
-
-**Trapper only enters once the workload actually migrates onto real homelab hardware.** When the HA sandbox (or any other laptop-hosted workload) moves onto Lighthouse, Watchtower, or a future node, Proxmox VM/LXC provisioning and architecture decisions become Trapper's call at that point — not before. Until migration day, don't reach into a laptop-hosted sandbox.
+A personal laptop sometimes runs a project or homelab-adjacent workload before permanent hardware is ready — e.g. `bridget-laptop` running a Home Assistant sandbox for [[pool-monitor-automation]] ahead of migrating to Lighthouse. The governing rule for this pattern — **machine administration follows physical form factor, not current workload** — is the form-factor rule in [[WS-007-infrastructure-change-lifecycle]]; that Workstream is the single source. In short: Trapper has zero involvement while the workload lives on a laptop; he only enters once the workload actually migrates onto real homelab hardware, at which point Proxmox VM/LXC provisioning and architecture decisions become his call.
 
 ## Current homelab
 
@@ -161,6 +157,7 @@ EXPLICITLY INCOMPATIBLE — NEVER RECOMMEND:
 - [[Team/Sparky - Network Architect/AGENTS]] — hard boundary: Sparky owns VLANs, firewall rules, UniFi switches, and APs. Trapper works the compute layer on top. Hand off network-layer requirements to Sparky with a written context note.
 - [[Team/Pierce - Senior Developer/AGENTS]] — handoff for application code, CI/CD, and software running on Proxmox-hosted services
 - [[Team/Bastion - Endpoint & Systems Administrator/AGENTS]] — clean domain split: Bastion owns Jeff's personal client devices only; Trapper owns the homelab servers (Lighthouse, Watchtower, OPNsense) end to end, hardware through software stack
+- [[WS-007-infrastructure-change-lifecycle]] — the infrastructure change lifecycle (reversibility tiers, plan/approve gate, registry update, verification) and the single source for the form-factor rule
 
 ## Scope boundaries
 

@@ -6,7 +6,7 @@ Ledger's signature workflow. Checks whether what's actually deployed, scheduled,
 
 - **Reusable by any agent.** This is a skill, not 1:1 ownership. Ledger is the default executor; any agent can invoke the procedure when they need it (e.g. Pierce self-checking before requesting Ledger's independent pass).
 - **References:** [[GL-007-verify-before-acting-on-a-finding]], [[GL-008-read-registry-before-creating-new-state]], [[GL-001-file-naming-conventions]]
-- **Triggered by:** any config-, schedule-, or data-bearing change before it ships; any migration of execution between hosts/systems; any dataset feeding a gate/promotion decision; the standing recurring audit cadence.
+- **Triggered by:** any config-, schedule-, or data-bearing change before it ships; any migration of execution between hosts/systems; any dataset feeding a gate/promotion decision; the standing recurring audit cadence (see §3's cadence-trigger mechanism); the written plan itself for financial-risk/gate-adjacent changes (see §1's conditional pre-implementation review), ahead of the usual pre-ship trigger.
 
 ## Why this SOP exists
 
@@ -15,6 +15,16 @@ Graduated from six fidelity gaps found across one week of Prophet Trader / backe
 ## §1 — Pre-deploy Fidelity Check
 
 Run before any change lands that touches: strategy/config parameters, environment variables, scheduled jobs (cron, systemd timers, Windows Task Scheduler), or the wiring between a declared data dependency and its live source.
+
+### Conditional: pre-implementation plan review (financial-risk / gate-adjacent changes only)
+
+For changes that touch **position sizing, reconciliation logic, or any input to a Phase-gate decision**, run this review before implementation begins, in addition to (not instead of) the post-hoc steps 1-6 below. Everything outside this narrow class keeps the existing post-hoc-only norm — this does not become a universal gate.
+
+1. Read the written plan or proposal itself — not the shipped diff — before any code is written.
+2. Trace each condition and edge case the plan claims to handle against the actual current codebase (not the plan author's description of it). Confirm every branch the plan relies on is actually live, and every case it claims to cover is actually covered — a plausible-sounding condition that is dead weight in the real code is a finding at this stage, same as a live one.
+3. If the change touches strategy logic or feeds a Phase-gate clock/trigger, Blake reviews the same written plan in parallel, independently — not as a joint discussion — for capital-risk and gate implications. Compare findings after both reviews are done, not before.
+4. Findings at this stage go to the implementer (usually Pierce) before code is written, same handoff discipline as any other finding — Ledger and Blake review and report; neither writes the fix.
+5. Once implementation completes, the post-hoc Fidelity Check (steps 1-6 below) still runs against the shipped result. The pre-implementation review does not replace it — it catches a different class of defect (a plan-level logic gap) than the post-hoc check catches (a shipped-code/live-state mismatch).
 
 1. **Identify the last approved baseline.** Not the last commit — the last value that actually passed a gate or was explicitly signed off. For Prophet Trader strategy config, this is the value in Blake's most recent strategy evaluation brief or Phase gate assessment. For infrastructure config, this is the current `PKM/Environment/Services/` or `PKM/Environment/Hosts/` entry.
 2. **Diff the incoming value against that baseline.** Read both directly — the live/incoming value and the approved baseline value — side by side. Any deviation is a finding regardless of whether it looks intentional. Do not assume the author meant to change it; surface the delta and ask.
@@ -35,6 +45,8 @@ Run whenever execution of a system, job, or process moves from one host/environm
 ## §3 — Environment Drift Audit (recurring)
 
 Cadence: minimum monthly, plus triggered immediately after any migration (§2) or major config change (§1). This is the check that catches drift introduced *after* a clean deploy — a task silently re-enabled, a config hand-edited on a host, an old system nobody remembered to kill.
+
+**Recurring-cadence trigger (not just per-incident).** This monthly cadence is a standing trigger in its own right, not merely an on-demand option. Fold this check into the close-session routine, every session — the same mechanism [[WS-004-team-retro-and-self-improvement-loop]] uses for its own Tier 2 nudge, with one deliberate difference: check the date of the most recent `Deliverables/YYYY-MM-DD-environment-drift-audit.md`. If 30 or more days have elapsed since that date (or none has ever been written), the close-session routine **triggers** this audit before the session closes — it does not merely offer it, the way WS-004's Tier 2 retro nudge offers rather than triggers. On-demand requests ("is anything drifting," "audit what's actually running") remain valid and additive at any time; they do not reset the clock or substitute for the standing schedule. If Ledger cannot run the audit in that session (no host/VPS access), the close-session routine records the audit as overdue and open rather than silently deferring it — an unschedulable audit is itself a finding, not a non-event.
 
 1. **Walk every registered host and service** in `PKM/Environment/Hosts/` and `PKM/Environment/Services/`.
 2. **For each, directly inspect live state.** Do not infer from the registry note — the registry describes intent (per [[GL-008-read-registry-before-creating-new-state]]); this audit's whole purpose is confirming intent still matches reality. Read actual cron/systemd/Task Scheduler entries and actual running config values.
@@ -102,6 +114,7 @@ Run when a dataset feeds (or is about to feed) a go/no-go, promotion, or Phase g
 - [ ] If FAIL, the owning specialist (usually Pierce, sometimes Blake for strategy-adjacent drift) is notified via Hawkeye with the report attached.
 - [ ] If a fix happens, Ledger re-checks. No second-hand confirmation that the fix landed.
 - [ ] For §3 (Drift Audit), the next audit date is set and (if it's the recurring cadence) noted for Hawkeye to track.
+- [ ] For the §1 conditional pre-implementation review, both Ledger's (and Blake's, if triggered) findings on the written plan are recorded and handed to the implementer before code is written — not folded silently into the post-hoc report only.
 
 ## Coverage map — what this SOP would have caught
 
@@ -113,7 +126,10 @@ Run when a dataset feeds (or is about to feed) a go/no-go, promotion, or Phase g
 | Backtest VIX dataset unreproducible | §4 (data provenance check) |
 | Old Scheduled Tasks still firing after VPS migration | §2 (decommission verification) — and §3 as a standing backstop even if §2 was skipped |
 | Two of three scheduled reports never send a success notification | §1 step 5 and §3 step 4 (observability coverage) |
+| A dead condition and an uncovered second bucket in a reconciliation-timing fix plan | §1's conditional pre-implementation review — caught before code was written, not post-hoc |
 
 ## Updates to this SOP
 
 - 2026-07-10 — created (Ledger's founding SOP, drafted by Potter per [[SOP-001-how-to-add-a-new-specialist]]), graduated from six Prophet Trader fidelity gaps surfaced the week of 2026-07-07.
+- 2026-07-18 — added §3's recurring-cadence trigger mechanism (approved retro proposal, [[tsk-2026-07-18-002-schedule-ledger-drift-audit-cadence]]): the monthly Drift Audit cadence is now a standing close-session trigger, not just an on-demand check — modeled on [[WS-004-team-retro-and-self-improvement-loop]]'s Tier 2 nudge, but a mandatory trigger rather than an optional offer.
+- 2026-07-18 — added §1's conditional pre-implementation plan review for position-sizing/reconciliation/Phase-gate-adjacent changes (approved retro proposal, [[tsk-2026-07-18-003-sop-022-pre-implementation-review-mode]]): graduated from Ledger and Blake independently reviewing Pierce's reconciliation-timing fix plan before code was written and catching two real issues a post-hoc check would likely have missed (see [[2026-07-18-04-00_hawkeye_prophet-trader-daily-ops-backlog-consolidation-and-reconciliation-fix]]). Conditional, not universal — everything else keeps the existing post-hoc norm.

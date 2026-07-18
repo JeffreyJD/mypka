@@ -47,25 +47,9 @@ The only acceptable "no" is when the user explicitly says they do not want to gr
 
 ## The team (core specialists — see [[Team/agent-index]] for full roster)
 
-See [[Team/agent-index]] for the full routing table. Six core specialists ship in the scaffold. The team grows from here: hire new specialists through Potter, or install Expansion Packs (available with the myICOR membership on the Expansion Packs page) via [[WS-003-install-an-expansion]].
+Six core specialists ship in the scaffold. The team grows from here: hire new specialists through Potter, or install Expansion Packs (available with the myICOR membership on the Expansion Packs page) via [[WS-003-install-an-expansion]].
 
-| Specialist | Folder | Role |
-|---|---|---|
-| Hawkeye | [[Team/Hawkeye - Orchestrator/AGENTS]] | Orchestrator, Librarian, Session-Log Author |
-| Potter | [[Team/Potter - HR/AGENTS]] | Hires new specialists, reviews team hygiene. Default owner of [[SOP-001-how-to-add-a-new-specialist]]. |
-| B.J. | [[Team/B.J. - Researcher/AGENTS]] | Deep research with cross-source verification |
-| Radar | [[Team/Radar - Journal Writer/AGENTS]] | Captures daily inputs into the Journal and PKM |
-| Klinger | [[Team/Klinger - Automation Specialist/AGENTS]] | API integrations, MCP servers, webhooks, OAuth, automations. Connection layer for external imports — fetches the bytes, hands off to Margaret. Wires up external image generators when local image-gen isn't available. |
-| Margaret | [[Team/Margaret - Database Architect/AGENTS]] | myPKA structure, frontmatter integrity, SQLite conversion. Primary executor of [[WS-002-import-external-knowledge-base]] and default owner of [[SOP-002-convert-mypka-to-sqlite]]. |
-| Sparky | [[Team/Sparky - Network Architect/AGENTS]] | Network architecture, VLANs, firewall rules, UniFi administration, wireless RF planning, IP addressing schema, network security, incident triage. |
-| Pierce | [[Team/Pierce - Senior Developer/AGENTS]] | Python application development, GitHub Actions CI/CD, VPS application operations (deployments, cron, systemd, logs), software architecture, git workflow enforcement, Docker, new project onboarding. |
-| Blake | [[Team/Blake - Chief Investment Officer/AGENTS]] | Prophet Trader CIO — strategy evaluation, Phase gate readiness (paper → live capital), position sizing doctrine, regime-based deployment, weekly strategy autopsy, new strategy go/no-go, risk parameter review. |
-| Felix | [[Team/Felix - Frontend Developer/AGENTS]] | Frontend Developer — UI components, pages, layouts, design-system fidelity, TypeScript, performance, accessibility. Default owner of [[SOP-003-felix-build-a-component]]. |
-| Vex | [[Team/Vex - Security Engineer/AGENTS]] | Security Engineer — auth/authorization audits, credential hygiene, GDPR controls, Expansion trust gate. Default owner of [[SOP-004-vex-security-audit]]. |
-| Vera | [[Team/Vera - QA Specialist/AGENTS]] | QA Specialist — visual QA gate, WCAG 2.2 AA, responsive breakpoints, design-system enforcement. Default owner of [[SOP-005-vera-quality-gate]]. |
-| Iris | [[Team/Iris - Design System Architect/AGENTS]] | Design System Architect — authors and maintains [[GL-003-design-system]]. Default owner of [[SOP-006-author-a-design-system]] and [[SOP-007-audit-content-for-design-system-compliance]]. |
-| Charta | [[Team/Charta - Infographic Designer/AGENTS]] | Infographic Designer — data and concept visualizations, brand-consistent infographics. Default owner of [[SOP-008-build-an-infographic]]. |
-| Pixel | [[Team/Pixel - Visual Specialist/AGENTS]] | Visual Specialist — styled image generation and brand-consistent visual assets. Default owner of [[SOP-009-generate-a-styled-image]]. |
+The full specialist roster — name, role, folder, and routing cues — lives in exactly one place: [[Team/agent-index]]. Read it there, not here; a duplicated table in this file has drifted out of sync with reality before (missing hires added after the last update) and is exactly the kind of SSOT violation the Golden Rule below exists to prevent.
 
 **SOPs are skills, not 1:1 ownership.** Each SOP names a default owner (the specialist who runs it most often), but any agent can invoke an SOP when they need its procedure. Think of SOPs the way Claude skills work — discrete, named, callable. Workstreams are multi-agent compositions; Guidelines are general rules every agent reads. See [[Team Knowledge/INDEX]].
 

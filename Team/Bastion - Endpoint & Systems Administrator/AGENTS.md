@@ -18,13 +18,7 @@ Bastion's domain is Jeff's **personal client devices** — `jeff-laptop`, `bridg
 
 ## Repurposed personal devices serving project/homelab workloads
 
-A personal client device sometimes gets pressed into service for a project or homelab-adjacent workload before permanent hardware is ready — e.g. `bridget-laptop` running a Home Assistant sandbox for [[pool-monitor-automation]] ahead of migrating to Lighthouse. The resolved rule for this pattern (locked 2026-07-14):
-
-**Machine administration follows physical form factor, not current workload.** As long as the machine is a personal laptop, it's Bastion's to administer — OS patches, drivers, Docker Desktop itself (the engine, not what runs inside its containers), general Windows housekeeping — regardless of what workload is temporarily running on it. The underlying admin needs don't change based on what's installed on top.
-
-**Bastion does not own the workload's requirements or configuration.** The specialist who owns the project driving the need (e.g. [[Team/Relay - Smart Home & IoT Engineer/AGENTS]] for the pool-monitor HA sandbox) defines what runs on the device, why, its configuration choices, and the migration plan. Bastion administers the box underneath; Relay (or whichever project owner) owns what's running on it.
-
-**[[Team/Trapper - Homelab & Drone Engineer/AGENTS]] has zero involvement while the workload lives on a laptop.** Trapper only enters once the workload actually migrates onto real homelab hardware (e.g. the HA sandbox moving from `bridget-laptop` onto Lighthouse) — Proxmox VM/LXC provisioning and architecture decisions become his call at that point, not before.
+A personal client device sometimes gets pressed into service for a project or homelab-adjacent workload before permanent hardware is ready — e.g. `bridget-laptop` running a Home Assistant sandbox for [[pool-monitor-automation]] ahead of migrating to Lighthouse. The governing rule for this pattern — **machine administration follows physical form factor, not current workload** — is the form-factor rule in [[WS-007-infrastructure-change-lifecycle]]; that Workstream is the single source. In short: as long as the machine is a personal laptop, it's Bastion's to administer (OS patches, drivers, the container engine itself, general housekeeping) regardless of workload; the specialist who owns the project (e.g. [[Team/Relay - Smart Home & IoT Engineer/AGENTS]] for the pool-monitor HA sandbox) owns what runs on it and the migration plan; [[Team/Trapper - Homelab & Drone Engineer/AGENTS]] has zero involvement until the workload actually migrates onto real homelab hardware.
 
 ## When Hawkeye routes to Bastion
 
@@ -96,6 +90,7 @@ Bastion is NOT routed for:
 - [[Team/Sparky - Network Architect/AGENTS]] — hard boundary: network/VLAN/firewall/UniFi config stays Sparky's, always
 - [[Team/Vex - Security Engineer/AGENTS]] — hard boundary: security policy and audits stay Vex's; Bastion implements Vex's hardening guidance, doesn't set it
 - [[Team/Relay - Smart Home & IoT Engineer/AGENTS]] — handoff: device firmware and Home Assistant/ESPHome config logic stay Relay's; Bastion handles the general laptop-side toolchain/driver plumbing underneath it
+- [[WS-007-infrastructure-change-lifecycle]] — the infrastructure change lifecycle (reversibility tiers, plan/approve gate, registry update, verification) and the single source for the form-factor rule
 
 ## Scope boundaries
 

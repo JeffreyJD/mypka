@@ -2,12 +2,12 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-18T03:45:00Z_
+_Last rebuilt: 2026-07-18T10:56:37Z_
 
 ## Summary
 - Open: 20
 - In progress: 0
-- Done (this month): 13
+- Done (this month): 22
 - Cancelled (this month): 1
 
 ## Open (20)
@@ -17,11 +17,11 @@ _Last rebuilt: 2026-07-18T03:45:00Z_
 
 ### Priority 2 — high
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
+- [[tsk-2026-07-09-003-instrument-council-divergence-vs-bare-rule]] — Instrument agent-council decision divergence vs. a bare rule — assignee: pierce — created 2026-07-09 — GH #41 — priority bumped 2026-07-18 (retro flag: live decision data accumulating, unstarted a week+)
 - [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] — Confirm Weekly Strategy Report's first live Sunday cron fire runs clean — assignee: pierce — created 2026-07-16 — due 2026-07-20
 
 ### Priority 3 — normal
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
-- [[tsk-2026-07-09-003-instrument-council-divergence-vs-bare-rule]] — Instrument agent-council decision divergence vs. a bare rule — assignee: pierce — created 2026-07-09 — GH #41
 - [[tsk-2026-07-09-004-deflated-sharpe-retrospective-mbs]] — Deflated Sharpe Ratio retrospective on momentum_breakout_stocks — assignee: blake — created 2026-07-09
 - [[tsk-2026-07-10-001-fix-live-vix-bar-fetch-mbs]] — Source true VIX index data (non-Alpaca) for momentum_breakout_stocks — VIXY proxy rejected by Blake — assignee: pierce — created 2026-07-10 — due 2026-08-07 — GH #44
 - [[tsk-2026-07-10-002-vix-csv-provenance-investigation]] — Trace provenance of data/bars/VIX.csv used in the wf_v9 backtest — source can't be reproduced from live Alpaca — assignee: pierce — created 2026-07-10 — due 2026-09-01
@@ -46,11 +46,21 @@ _none_
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 13 open, 0 in-progress
+- pierce: 11 open, 0 in-progress
 - blake: 3 open, 0 in-progress
 - bj: 2 open, 0 in-progress
 
 ## Recently closed (last 7 days)
+- 2026-07-18 [[tsk-2026-07-18-001-ratify-ws-007-infrastructure-change-lifecycle]] — done — potter (WS-004 Tier 1 proposal ratified: WS-007 Infrastructure Change Lifecycle written to Team Knowledge/Workstreams/, form-factor rule single-sourced there, Trapper/Bastion/Relay contracts repointed; Finding A resolved PASS-with-caveat via Ledger; Finding B routed to future software-lifecycle proposal)
+- 2026-07-18 [[tsk-2026-07-18-002-schedule-ledger-drift-audit-cadence]] — done — ledger (WS-004 Tier 2 retro proposal 1: SOP-022 §3 gained a mandatory monthly Drift Audit cadence trigger, folded into close-session)
+- 2026-07-18 [[tsk-2026-07-18-003-sop-022-pre-implementation-review-mode]] — done — ledger (retro proposal 2: SOP-022 §1 gained a conditional pre-implementation plan-review step for financial-risk/gate-adjacent changes)
+- 2026-07-18 [[tsk-2026-07-18-004-hawkeye-execute-vs-route-boundary]] — done — potter (retro proposal 3: Hawkeye's contract gained an explicit execute-vs-route test)
+- 2026-07-18 [[tsk-2026-07-18-005-windows-shell-interop-guideline]] — done — bastion (retro proposal 4: new GL-014-windows-shell-interop-gotchas consolidating five recurring gotchas)
+- 2026-07-18 [[tsk-2026-07-18-006-sop-001-post-hire-checklist]] — done — potter (retro proposal 5: SOP-001 gained a mandatory post-hire verification checklist)
+- 2026-07-18 [[tsk-2026-07-18-007-ws-002-onenote-lockfile-import-rules]] — done — margaret (retro proposal 6: WS-002 documents OneNote/lock-file/slug-collision import rules)
+- 2026-07-18 [[tsk-2026-07-18-008-root-agents-md-stale-table-fix]] — done — potter (retro proposal 7: root AGENTS.md's stale specialist table replaced with a Team/agent-index pointer)
+- 2026-07-18 [[tsk-2026-07-18-009-credential-hash-guideline]] — done — vex (retro proposal 8: GL-007 gained a named Hash/Fingerprint Compare method; new GL-015-credential-expansion-over-new-grants — renumbered from a GL-014 collision with tsk-2026-07-18-005, both agents ran in parallel)
+- 2026-07-18 [[tsk-2026-07-18-010-dedupe-healthchecks-weekly-report-check]] — done — pierce (retro operational flag: independently re-verified live that the 2026-07-12 duplicate had already been resolved 2026-07-16; no fix needed, registry updated with confirmed evidence)
 - 2026-07-18 [[tsk-2026-07-17-014-reconcile-settlement-grace-window]] — done — pierce (Ledger SOP-022 PASS on PR #57; merged dev→main via release PR #59 at `c670b3d`; deploy confirmed via GitHub Actions + VPS HEAD match; GH #56 closed with fix confirmation, links #58 as deferred follow-up)
 - 2026-07-17 [[tsk-2026-07-14-001-risk-journal-pnl-schema-mismatch]] — done — pierce (Ledger SOP-022 PASS on PR #52; merged dev→main via release PR #53 at `ea5c677`; deploy confirmed via GitHub Actions + VPS HEAD match; GH #29 closed with fix confirmation; dead-code duplicate finding remediated same-session as [[tsk-2026-07-17-012-remove-dead-realized-edge]]; informational finding tracked as [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]])
 - 2026-07-17 [[tsk-2026-07-17-012-remove-dead-realized-edge]] — done — pierce (removed dead `realized_edge()` duplicate of the risk_journal P&L schema bug from `strategies/base.py`; PR #54 merged to dev; GH #55 opened and closed same-session with commit/PR evidence)
@@ -59,8 +69,3 @@ _none_
 - 2026-07-16 [[tsk-2026-07-09-002-check-weekly-strategy-report-first-fire]] — cancelled — pierce (superseded by the VPS-native rebuild; first-live-fire verification now tracked by [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]])
 - 2026-07-16 [[tsk-2026-07-13-001-weekly-strategy-report-cloud-routine-network-and-gitignore-blockers]] — done — pierce (merged dev→main, deployed to VPS, cron wired, quarter-open-equity backfill executed, Environment docs updated; follow-up [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] carries first-live-fire verification)
 - 2026-07-15 [[tsk-2026-07-12-001-post-deploy-baseline-recheck-fidelity-check]] — done — pierce (PR #22 merged/deployed, Ledger PASS, healthchecks.io red alert cleared, two LOW findings also shipped)
-- 2026-07-09 [[tsk-2026-07-09-001-merge-b2-autopsy-timing-fix]] — done — jeff/hawkeye (approved, merged, deployed, verified)
-- 2026-07-09 [[tsk-2026-07-08-004-merge-weekly-autopsy-multi-strategy-fix]] — done — jeff/hawkeye (approved, merged, deployed, verified)
-- 2026-07-09 [[tsk-2026-07-08-003-create-weekly-strategy-report-healthcheck]] — done — hawkeye (created via API, wired into routine)
-- 2026-07-08 [[tsk-2026-07-08-002-merge-mbs-regime-config-fix]] — done — jeff/hawkeye (approved, merged, deployed, verified)
-- 2026-07-08 [[tsk-2026-07-08-001-rotate-telegram-bot-token]] — done — jeff (verified already resolved same-day)
