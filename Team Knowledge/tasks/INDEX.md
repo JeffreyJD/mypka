@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-18T10:56:37Z_
+_Last rebuilt: 2026-07-18T11:23:19Z_
 
 ## Summary
-- Open: 20
+- Open: 22
 - In progress: 0
 - Done (this month): 22
 - Cancelled (this month): 1
 
-## Open (20)
+## Open (22)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -39,6 +39,8 @@ _Last rebuilt: 2026-07-18T10:56:37Z_
 - [[tsk-2026-07-17-008-walk-forward-cost-estimate-placeholder]] — walk_forward.py _stress_test() cost-estimate placeholder needs a proper version — assignee: pierce — created 2026-07-17 — GH #49
 - [[tsk-2026-07-17-009-bj-base-rate-research-trending-bull-event-blackout]] — B.J. base-rate research: trending-bull and event-blackout frequency from Phase 1 backtest period — assignee: bj — created 2026-07-17
 - [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]] — Verify council_intent.py's week_pnl_pct stand-down warning displays correctly the first time a real closed loss triggers it (-3%/-5%) — assignee: pierce — created 2026-07-17 — no GH issue (watch item, not yet a bug/enhancement)
+- [[tsk-2026-07-18-011-esphome-build-artifacts-in-vault]] — Remove ESPHome/PlatformIO build artifacts that leaked into PKM/Documents/pool — assignee: relay — created 2026-07-18 — found during mypka.db regen
+- [[tsk-2026-07-18-012-sop-002-schema-scope-team-knowledge]] — Decide whether SOP-002's SQLite mirror should cover Team Knowledge/ and Team/ contracts — assignee: margaret — created 2026-07-18 — BLOCKED: awaiting Jeff's scope decision
 
 ## In progress (0)
 _none_
@@ -49,6 +51,8 @@ _none_
 - pierce: 11 open, 0 in-progress
 - blake: 3 open, 0 in-progress
 - bj: 2 open, 0 in-progress
+- relay: 1 open, 0 in-progress
+- margaret: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
 - 2026-07-18 [[tsk-2026-07-18-001-ratify-ws-007-infrastructure-change-lifecycle]] — done — potter (WS-004 Tier 1 proposal ratified: WS-007 Infrastructure Change Lifecycle written to Team Knowledge/Workstreams/, form-factor rule single-sourced there, Trapper/Bastion/Relay contracts repointed; Finding A resolved PASS-with-caveat via Ledger; Finding B routed to future software-lifecycle proposal)
