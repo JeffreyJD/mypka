@@ -2,12 +2,12 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-17T23:58:00Z_
+_Last rebuilt: 2026-07-18T03:45:00Z_
 
 ## Summary
 - Open: 20
-- In progress: 1
-- Done (this month): 12
+- In progress: 0
+- Done (this month): 13
 - Cancelled (this month): 1
 
 ## Open (20)
@@ -40,17 +40,18 @@ _Last rebuilt: 2026-07-17T23:58:00Z_
 - [[tsk-2026-07-17-009-bj-base-rate-research-trending-bull-event-blackout]] — B.J. base-rate research: trending-bull and event-blackout frequency from Phase 1 backtest period — assignee: bj — created 2026-07-17
 - [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]] — Verify council_intent.py's week_pnl_pct stand-down warning displays correctly the first time a real closed loss triggers it (-3%/-5%) — assignee: pierce — created 2026-07-17 — no GH issue (watch item, not yet a bug/enhancement)
 
-## In progress (1)
-- [[tsk-2026-07-17-014-reconcile-settlement-grace-window]] — assignee: pierce — claimed 2026-07-17 (design review with Ledger + Blake complete, implemented, PR #57 open on dev, CI green; pending Ledger's SOP-022 re-verification before merge)
+## In progress (0)
+_none_
 
 ## By assignee
 - rizzo: 1 open, 0 in-progress
 - henry: 1 open, 0 in-progress
-- pierce: 12 open, 1 in-progress
+- pierce: 12 open, 0 in-progress
 - blake: 3 open, 0 in-progress
 - bj: 2 open, 0 in-progress
 
 ## Recently closed (last 7 days)
+- 2026-07-18 [[tsk-2026-07-17-014-reconcile-settlement-grace-window]] — done — pierce (Ledger SOP-022 PASS on PR #57; merged dev→main via release PR #59 at `c670b3d`; deploy confirmed via GitHub Actions + VPS HEAD match; GH #56 closed with fix confirmation, links #58 as deferred follow-up)
 - 2026-07-17 [[tsk-2026-07-14-001-risk-journal-pnl-schema-mismatch]] — done — pierce (Ledger SOP-022 PASS on PR #52; merged dev→main via release PR #53 at `ea5c677`; deploy confirmed via GitHub Actions + VPS HEAD match; GH #29 closed with fix confirmation; dead-code duplicate finding remediated same-session as [[tsk-2026-07-17-012-remove-dead-realized-edge]]; informational finding tracked as [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]])
 - 2026-07-17 [[tsk-2026-07-17-012-remove-dead-realized-edge]] — done — pierce (removed dead `realized_edge()` duplicate of the risk_journal P&L schema bug from `strategies/base.py`; PR #54 merged to dev; GH #55 opened and closed same-session with commit/PR evidence)
 - 2026-07-17 [[tsk-2026-07-17-003-weekly-autopsy-cadence-broken]] — done — blake/pierce (root-caused as the same cloud-routine egress/git-write failure fixed under [[tsk-2026-07-13-001-weekly-strategy-report-cloud-routine-network-and-gitignore-blockers]]; 2026-07-12 narrative autopsy backfilled at [[2026-07-12-strategy-autopsy]]; GH #45 closed with full diagnosis)

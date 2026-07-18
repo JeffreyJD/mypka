@@ -8,13 +8,13 @@ assignee: pierce
 priority: 3
 
 # Status (mirrors folder location)
-status: in-progress
+status: done
 blocked_reason: null
 blocked_by: null
 
 # Time
 created: 2026-07-17T18:20:00Z
-updated: 2026-07-17T23:58:00Z
+updated: 2026-07-18T03:45:00Z
 due: null
 
 # Provenance
@@ -62,8 +62,8 @@ Recommended fix (option b, pending design review): a settlement grace window key
 - [x] `scripts/reconcile.py::_compute_diff()` updated with the agreed grace-window logic; overall `status` no longer flips to `drift_detected` solely because of an in-window unsettled fill.
 - [x] Regression test added in `tests/test_reconcile.py`: cases inside/outside the grace window, mismatches-bucket variant, next-day escalation, orphan exclusion — 25 new tests, 58/58 total passing.
 - [x] PR opened on `dev` ([#57](https://github.com/JeffreyJD/prophet-trader/pull/57)), CI green.
-- [ ] Ledger's SOP-022 Fidelity Check re-verification — **required before merge**, not yet run.
-- [x] GitHub issue #56 updated with the finalized design and PR evidence (not yet closed — waiting on merge).
+- [x] Ledger's SOP-022 Fidelity Check re-verification — PASSED on PR #57; all design conditions from the Ledger+Blake review independently verified in the actual code.
+- [x] GitHub issue #56 updated and closed with the finalized design, PR evidence, and deploy confirmation.
 
 ## Design (finalized 2026-07-17)
 
@@ -81,6 +81,17 @@ Synthesized from Ledger's and Blake's independent reviews (see full findings in 
 
 - 2026-07-17 18:20 (pierce) — created per Jeff's approval to move forward on the settlement-grace-window design fix. GitHub issue [#56](https://github.com/JeffreyJD/prophet-trader/issues/56) opened first with full investigation findings; this task is the myPKA-side backlog mirror, cross-linked both directions. Explicitly NOT implementing yet — next step is a design review with Ledger and Blake per Jeff's direction, not code.
 - 2026-07-17 (pierce) — design review synthesized (Ledger + Blake findings routed by Jeff), implemented in `scripts/reconcile.py` / `scripts/daily_routine.py` / `scripts/daily_fidelity_check.py` on branch `fix/reconcile-settlement-grace-window`. 25 new tests in `tests/test_reconcile.py`, 58/58 passing; full suite 602 passed / 2 skipped / 4 pre-existing unrelated failures (`test_anthropic_narrator.py`, missing `anthropic` package, confirmed pre-existing on `dev`). PR [#57](https://github.com/JeffreyJD/prophet-trader/pull/57) opened against `dev`, CI green. Adapter `get_order` enhancement filed separately as [#58](https://github.com/JeffreyJD/prophet-trader/issues/58) per Ledger's finding #5 — not scope-creeped into this fix. **Not self-merging** — flagged for Ledger's SOP-022 Fidelity Check re-verification, this touches financial reconciliation logic. Task remains open pending that review and merge.
+- 2026-07-18 00:45 (pierce) — Ledger's SOP-022 Fidelity Check PASSED on PR #57: all design conditions from the Ledger+Blake review (grace window keying, `pending_settlement` distinct status, next-day escalation, orphan exclusion, JSON status contract) independently verified in the merged code. One non-blocking note from Ledger: PR description's "602 passed/2 skipped/4 pre-existing failures" figure was local-venv-only (missing `anthropic` package locally) and should have been distinguished from CI's actual result (608 passed/9 deselected/0 failed, fully green) — noted here for future PR-description hygiene, not a re-open trigger. PR #57 merged into `dev` (`e33bfa2`). Release PR #59 (`dev`→`main`) opened, CI green, merged (`c670b3d`). GitHub Actions "Deploy to VPS" ran clean: fast-forward `ea5c677..c670b3d`, `pip install` completed, `Deploy complete — c670b3d`. VPS `git rev-parse HEAD` confirmed `c670b3d72df026fb77ceb5bedd2d024dc5a3bcb0` — commit hash match across dev/main/VPS. GH issue #56 updated and closed with fix confirmation, linking #58 as the deferred follow-up. GH #58 (Adapter `get_order` enhancement) left open as a separate future item.
+- 2026-07-18 00:45 (pierce) — done: merged, deployed, verified live at `c670b3d`; GH #56 closed.
 
 ## Outcome
-_(filled when status flips to done — see SOP-012-close-task)_
+
+What shipped: settlement grace window for `scripts/reconcile.py` — journal-fill-recent mismatches (`missing_in_broker` and `mismatches`) inside a 12-minute window are classified as `pending_settlement` instead of `drift_detected`, with next-day escalation for genuinely stuck settlements and orphans excluded by design. Design was independently reviewed by Ledger and Blake (see `## Design` section above), then verified against the actual merged code by Ledger's SOP-022 Fidelity Check — PASS, no discrepancies between agreed design and shipped implementation.
+
+Where it lives: `scripts/reconcile.py`, `scripts/daily_routine.py`, `scripts/daily_fidelity_check.py`, `tests/test_reconcile.py` (25 new tests, 58/58 passing in that file; full CI suite 608 passed / 9 deselected / 0 failed). PR [#57](https://github.com/JeffreyJD/prophet-trader/pull/57) (`fix/reconcile-settlement-grace-window` → `dev`, merged `e33bfa2`) and release PR [#59](https://github.com/JeffreyJD/prophet-trader/pull/59) (`dev` → `main`, merged `c670b3d`). Deployed to [[PKM/Environment/Hosts/davisglobe-vps-ash-1]] via GitHub Actions "Deploy to VPS" — confirmed clean fast-forward and `Deploy complete — c670b3d`; VPS `git rev-parse HEAD` independently confirmed `c670b3d72df026fb77ceb5bedd2d024dc5a3bcb0`, matching `dev` and `main`.
+
+Follow-ups: GitHub issue [#58](https://github.com/JeffreyJD/prophet-trader/issues/58) (Adapter `get_order`/order-status enhancement, Ledger's finding #5 — the real long-term fix) left open as a separate future item, not part of this deploy.
+
+Lessons: none warranting a new journal entry this close — Ledger's one non-blocking note (distinguish local-venv test-run figures from CI's actual result in future PR descriptions, since CI is authoritative) is captured in the Updates log above for the next PR-writing pass.
+
+Archived deliverables: none (`linked_deliverables: []`).
