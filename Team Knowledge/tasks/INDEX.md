@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-18T11:23:19Z_
+_Last rebuilt: 2026-07-18T12:29:33Z_
 
 ## Summary
-- Open: 22
+- Open: 25
 - In progress: 0
 - Done (this month): 22
 - Cancelled (this month): 1
 
-## Open (22)
+## Open (25)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -19,6 +19,7 @@ _Last rebuilt: 2026-07-18T11:23:19Z_
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
 - [[tsk-2026-07-09-003-instrument-council-divergence-vs-bare-rule]] — Instrument agent-council decision divergence vs. a bare rule — assignee: pierce — created 2026-07-09 — GH #41 — priority bumped 2026-07-18 (retro flag: live decision data accumulating, unstarted a week+)
 - [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] — Confirm Weekly Strategy Report's first live Sunday cron fire runs clean — assignee: pierce — created 2026-07-16 — due 2026-07-20
+- [[tsk-2026-07-18-014-numbered-artifact-collision-rule]] — WS-004 Tier 1 proposal: prevent numbered-artifact collisions in parallel dispatch — assignee: potter — created 2026-07-18 — BLOCKED: awaiting Jeff's choice between (a) serialize vs (b) mandatory pre-commit check
 
 ### Priority 3 — normal
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
@@ -32,6 +33,7 @@ _Last rebuilt: 2026-07-18T11:23:19Z_
 - [[tsk-2026-07-17-006-demotion-trigger-4-portfolio-wide-design-question]] — Demotion Trigger 4 (reconciliation drift) is portfolio-wide, not per-strategy — assignee: blake — created 2026-07-17 — GH #47
 - [[tsk-2026-07-17-010-risk-journal-open-positions-schema-mismatch]] — risk_journal.py open-positions summary + deployed_pct use the same fictional trade schema as the P&L bug — assignee: pierce — created 2026-07-17
 - [[tsk-2026-07-17-013-confirm-bac-reconciliation-clean-on-monday-run]] — Confirm BAC reconciles clean on the next automated Daily Fidelity Check run (2026-07-17 FAIL 5/6, settlement-timing theory) — assignee: pierce — created 2026-07-17 — due 2026-07-20 — no GH issue (watch item, not yet a bug)
+- [[tsk-2026-07-18-013-west-9th-tenant-identity-ambiguities]] — Resolve or explicitly park two West 9th Street tenant-identity ambiguities from the June import — assignee: frank — created 2026-07-18 — flagged by outside audit as the one dropped thread from the retro cycle
 
 ### Priority 4 — low
 - [[tsk-2026-07-09-005-research-universe-breadth-for-momentum-strategies]] — Research brief: optimal stock universe breadth — assignee: bj — created 2026-07-09 — prep for future bundled Phase 1 cycle, not immediate action
@@ -41,6 +43,7 @@ _Last rebuilt: 2026-07-18T11:23:19Z_
 - [[tsk-2026-07-17-011-council-intent-standdown-warning-first-live-trigger]] — Verify council_intent.py's week_pnl_pct stand-down warning displays correctly the first time a real closed loss triggers it (-3%/-5%) — assignee: pierce — created 2026-07-17 — no GH issue (watch item, not yet a bug/enhancement)
 - [[tsk-2026-07-18-011-esphome-build-artifacts-in-vault]] — Remove ESPHome/PlatformIO build artifacts that leaked into PKM/Documents/pool — assignee: relay — created 2026-07-18 — found during mypka.db regen
 - [[tsk-2026-07-18-012-sop-002-schema-scope-team-knowledge]] — Decide whether SOP-002's SQLite mirror should cover Team Knowledge/ and Team/ contracts — assignee: margaret — created 2026-07-18 — BLOCKED: awaiting Jeff's scope decision
+- [[tsk-2026-07-18-015-ws-007-cadence-ssot-phrasing]] — WS-007 Step 7: point the Drift Audit cadence at SOP-022 §3 instead of restating it — assignee: potter — created 2026-07-18 — trivial, batchable, no urgency
 
 ## In progress (0)
 _none_
@@ -53,6 +56,8 @@ _none_
 - bj: 2 open, 0 in-progress
 - relay: 1 open, 0 in-progress
 - margaret: 1 open, 0 in-progress
+- potter: 2 open, 0 in-progress
+- frank: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
 - 2026-07-18 [[tsk-2026-07-18-001-ratify-ws-007-infrastructure-change-lifecycle]] — done — potter (WS-004 Tier 1 proposal ratified: WS-007 Infrastructure Change Lifecycle written to Team Knowledge/Workstreams/, form-factor rule single-sourced there, Trapper/Bastion/Relay contracts repointed; Finding A resolved PASS-with-caveat via Ledger; Finding B routed to future software-lifecycle proposal)
