@@ -3,7 +3,7 @@
 - **Owner:** any agent
 - **Triggered by:** an agent or the user identifying a unit of work that won't finish this turn and should be picked up later
 - **Output:** a new file in `Team Knowledge/tasks/open/`
-- **References:** [[SOP-013-rebuild-task-index]], [[SOP-011-claim-task]], [[GL-001-file-naming-conventions]], [[GL-004-task-resource-linking]], [[GL-016-numbered-artifact-collision-check]]
+- **References:** [[SOP-013-rebuild-task-index]], [[SOP-011-claim-task]], [[GL-001-file-naming-conventions]], [[GL-004-task-resource-linking]], [[GL-016-numbered-artifact-collision-check]], [[GL-017-specialist-handoff-protocol]]
 
 ## Purpose
 
@@ -98,9 +98,27 @@ Copy `Team Knowledge/tasks/_template.md` to `Team Knowledge/tasks/open/${FILENAM
 - All identity, ownership, status, time, provenance fields
 - All **seven** `linked_*` arrays (use `[]` if genuinely none — but only after walking step 4)
 - Tags
-- Body: `## What this is`, `## Context one click away`, `## Success criteria`, `## Updates`
+- Body: `## What this is`, optionally `## Handoff` (see below), `## Context one click away`, `## Success criteria`, `## Updates`
 
 The `## Context one click away` section in the body must mirror the frontmatter `linked_*` arrays as `[[wikilinks]]` — that's how the human reader gets one-click navigation. For `linked_deliverables`, use the `Working artifacts:` sub-bullet pattern in the template. Frontmatter is for machine reading; body wikilinks are for humans. Both populated, kept in sync.
+
+#### The optional `## Handoff` section
+
+Per [[GL-017-specialist-handoff-protocol]], a task carries a `## Handoff` section — sitting right after `## What this is` — **only when this task exists because work is being handed off from one specialist to another and the handoff crosses a session boundary** (work stops mid-flight and resumes later). A one-off fix, a research task, or any task that isn't a lifecycle handoff omits the section entirely, exactly as tasks do today. This is body prose only — **zero new frontmatter fields**, so [[GL-004-task-resource-linking]], the schema audit, the SQLite mirror, and [[SOP-013-rebuild-task-index]] are all untouched.
+
+When it applies, the section carries the four-part packet:
+
+```markdown
+## Handoff
+- **From / to:** <upstream specialist> → <downstream specialist>
+- **Done:** <what the upstream specialist completed>
+- **Decided:** <what is settled and should not be relitigated>
+- **Open:** <what the downstream specialist must resolve>
+- **Gate:** <design|review|security|test|fidelity> — PASS | FAIL | PASS-with-notes → <evidence pointer>
+- **Read first:** <ordered pointers, mirrored in Context one click away>
+```
+
+If the handoff happens **within** one session (no task created at all), the packet goes in the GitHub PR description and issue thread instead — see [[GL-017-specialist-handoff-protocol]] for the full rule.
 
 `created` and `updated` are RFC3339 UTC: `date -u +%Y-%m-%dT%H:%M:%SZ`.
 

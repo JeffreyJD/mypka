@@ -2,7 +2,7 @@
 
 - **Type:** Workstream — a multi-agent composition.
 - **Owners:** Pierce (obd-scanner tooling + fleet detection), Rizzo (triage and vehicle record updates), Hawkeye (routing)
-- **References:** [[Team/Pierce - Senior Developer/AGENTS]], [[Team/Rizzo - Automobiles Agent/AGENTS]], [[SOP-010-create-task]], [[SOP-012-close-task]], [[SOP-017-read-own-journal]], [[GL-001-file-naming-conventions]]
+- **References:** [[Team/Pierce - Senior Developer/AGENTS]], [[Team/Rizzo - Automobiles Agent/AGENTS]], [[SOP-010-create-task]], [[SOP-012-close-task]], [[SOP-017-read-own-journal]], [[GL-001-file-naming-conventions]], [[GL-017-specialist-handoff-protocol]]
 - **Trigger:** Jeff drops any scan output into `Team Inbox/`, or signals that a scan session is complete.
 
 ## Purpose
@@ -53,7 +53,7 @@ Jeff drops the tagged output into `Team Inbox/` or signals completion. Hawkeye r
 
 ### Step 2 — Hawkeye confirms routing
 
-Before handing to Rizzo, Hawkeye confirms:
+This is the Hawkeye → Rizzo handoff, governed by [[GL-017-specialist-handoff-protocol]]. This scan-intake flow has no GitHub artifact, so the packet travels in the routing message itself rather than a PR/issue — the message carries the handoff's four elements in miniature: what's done (scan captured), what's decided/open (vehicle match, scope of files), and read-first (the existing task, if any). Before handing to Rizzo, Hawkeye confirms:
 - Which vehicle (slug + display name).
 - Which scan files are in scope (paths).
 - Whether this is a new scan or a supplement to an existing open task.
@@ -76,7 +76,7 @@ Rizzo receives: vehicle slug + path(s) to scan output file(s) + open task ID if 
    - Update **Current Status** odometer if a new reading is in the scan.
 5. Task handling:
    - If an open task exists: add findings as an update entry; escalate priority if warranted.
-   - If no open task and any code or PID reaches **Schedule** or **Stop driving**: create a task via [[SOP-010-create-task]]; link this WS and the deliverable.
+   - If no open task and any code or PID reaches **Schedule** or **Stop driving**: create a task via [[SOP-010-create-task]]; link this WS and the deliverable. This is a session-crossing handoff by definition (the task is the continuity mechanism itself), so the task carries the `## Handoff` section per [[GL-017-specialist-handoff-protocol]] when a specialist beyond Rizzo needs to pick it up (e.g. escalation to a shop, or a follow-up scan by Pierce's tooling).
    - Clean (all Monitor or no codes): no new task, but note the clean scan in the vehicle file.
 6. Produce a deliverable: `Deliverables/YYYY-MM-DD-<vehicle-slug>-obd-scan-<slug>.md`.
 

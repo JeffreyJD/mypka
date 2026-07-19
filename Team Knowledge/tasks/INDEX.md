@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-18T20:05:00Z_
+_Last rebuilt: 2026-07-19T02:06:28Z_
 
 ## Summary
-- Open: 25
+- Open: 24
 - In progress: 0
-- Done (this month): 23
+- Done (this month): 26
 - Cancelled (this month): 1
 
-## Open (25)
+## Open (24)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -19,7 +19,6 @@ _Last rebuilt: 2026-07-18T20:05:00Z_
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
 - [[tsk-2026-07-09-003-instrument-council-divergence-vs-bare-rule]] — Instrument agent-council decision divergence vs. a bare rule — assignee: pierce — created 2026-07-09 — GH #41 — priority bumped 2026-07-18 (retro flag: live decision data accumulating, unstarted a week+)
 - [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] — Confirm Weekly Strategy Report's first live Sunday cron fire runs clean — assignee: pierce — created 2026-07-16 — due 2026-07-20
-- [[tsk-2026-07-18-016-ratify-handoff-protocol-and-ws-006]] — Ratify the specialist handoff protocol (Guideline + task-template section) and WS-006 software change lifecycle — assignee: unassigned — created 2026-07-18 — BLOCKED: awaiting Jeff's approval of the WHAT per WS-004 Tier 1
 
 ### Priority 3 — normal
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
@@ -58,9 +57,10 @@ _none_
 - margaret: 1 open, 0 in-progress
 - potter: 1 open, 0 in-progress
 - frank: 1 open, 0 in-progress
-- unassigned: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
+- 2026-07-19 [[tsk-2026-07-19-001-hire-architect-reviewer-test-engineer]] — done — hawkeye (WS-004 Tier 1 follow-on proposal: three new specialists hired per SOP-001 — [[Team/Keystone - Architect/AGENTS|Keystone]] (Architect, Design gate), [[Team/Lens - Reviewer/AGENTS|Lens]] (Reviewer, Correctness gate), [[Team/Breaker - Test Engineer/AGENTS|Breaker]] (Test Engineer, Test gate) — each with contract, shim, journal folder, agent-index row; Pierce's contract amended (architecture/code-review scope removed, ADR path corrected to in-repo, Method step 2 routed to Keystone); WS-006 fully de-placeholdered and its stale pre-hire "gates don't block merge" caveat corrected in all four places it appeared; three B.J. research briefs archived)
+- 2026-07-19 [[tsk-2026-07-18-016-ratify-handoff-protocol-and-ws-006]] — done — hawkeye (WS-004 Tier 1 proposal ratified: new [[GL-017-specialist-handoff-protocol]] — the packet, Done/Decided-vs-open/Gate verdict/Read-first, that travels at every specialist seam — plus optional `## Handoff` task-template section, plus [[WS-006-software-change-lifecycle]] software lifecycle; WS-005/WS-007 retrofitted with real GL-017 pointers; Margaret's schema/SQLite check PASS zero-delta; Pierce's required domain review caught a blocking-grade gate-firing ambiguity and wrong tier-table examples, both fixed and re-verified; Pierce also fixed his own contract's stale repo list; a Potter contract-scope inconsistency surfaced and is noted as an open thread, not resolved)
 - 2026-07-18 [[tsk-2026-07-18-014-numbered-artifact-collision-rule]] — done — potter (WS-004 Tier 1 proposal formalized: new [[GL-016-numbered-artifact-collision-check]] — re-confirm number immediately before write, plus required batch-wide check before any commit — wired into GL-001, SOP-010, the Guidelines/SOPs/Workstreams indexes, and WS-004 Tier 2 Step 5; Margaret's mirror regen deferred/flagged to Hawkeye)
 - 2026-07-18 [[tsk-2026-07-18-001-ratify-ws-007-infrastructure-change-lifecycle]] — done — potter (WS-004 Tier 1 proposal ratified: WS-007 Infrastructure Change Lifecycle written to Team Knowledge/Workstreams/, form-factor rule single-sourced there, Trapper/Bastion/Relay contracts repointed; Finding A resolved PASS-with-caveat via Ledger; Finding B routed to future software-lifecycle proposal)
 - 2026-07-18 [[tsk-2026-07-18-002-schedule-ledger-drift-audit-cadence]] — done — ledger (WS-004 Tier 2 retro proposal 1: SOP-022 §3 gained a mandatory monthly Drift Audit cadence trigger, folded into close-session)

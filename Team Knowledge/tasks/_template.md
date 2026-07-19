@@ -41,6 +41,15 @@ tags: []
 ## What this is
 One paragraph: what's the work, what's the user-visible outcome, repro steps if it's a bug. Keep it tight — anyone resuming this should be able to read this section and know what they're picking up.
 
+## Handoff
+_(Optional — only when this task exists because work is being handed off mid-lifecycle across a session boundary. Delete this whole section if it doesn't apply. See [[GL-017-specialist-handoff-protocol]].)_
+- **From / to:** <upstream specialist> → <downstream specialist>
+- **Done:** <what the upstream specialist completed>
+- **Decided:** <what is settled and should not be relitigated>
+- **Open:** <what the downstream specialist must resolve>
+- **Gate:** <design|review|security|test|fidelity> — PASS | FAIL | PASS-with-notes → <evidence pointer>
+- **Read first:** <ordered pointers, mirrored in Context one click away>
+
 ## Context one click away
 - Procedure: [[<SOP-name>]]
 - Workstream: [[<workstream-name>]]

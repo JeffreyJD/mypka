@@ -2,7 +2,7 @@
 
 - **Type:** Workstream — a multi-agent composition.
 - **Owners:** Trapper (homelab servers, end to end), Bastion (personal client devices), Sparky (network layer), Relay (device/IoT workloads), Ledger (verification), Hawkeye (routing). **Jeff (the approval gate on every irreversible change).**
-- **References:** [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]], [[GL-005-llm-agnostic-portable-core]], [[GL-007-verify-before-acting-on-a-finding]], [[GL-008-read-registry-before-creating-new-state]], [[SOP-010-create-task]], [[SOP-012-close-task]], [[SOP-017-read-own-journal]], [[SOP-022-deployment-fidelity-verification]], [[Team/Trapper - Homelab & Drone Engineer/AGENTS]], [[Team/Bastion - Endpoint & Systems Administrator/AGENTS]], [[Team/Sparky - Network Architect/AGENTS]], [[Team/Relay - Smart Home & IoT Engineer/AGENTS]], [[Team/Ledger - Deployment Verification Engineer/AGENTS]], [[Team/Vex - Security Engineer/AGENTS]]
+- **References:** [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]], [[GL-005-llm-agnostic-portable-core]], [[GL-007-verify-before-acting-on-a-finding]], [[GL-008-read-registry-before-creating-new-state]], [[GL-017-specialist-handoff-protocol]], [[SOP-010-create-task]], [[SOP-012-close-task]], [[SOP-017-read-own-journal]], [[SOP-022-deployment-fidelity-verification]], [[Team/Trapper - Homelab & Drone Engineer/AGENTS]], [[Team/Bastion - Endpoint & Systems Administrator/AGENTS]], [[Team/Sparky - Network Architect/AGENTS]], [[Team/Relay - Smart Home & IoT Engineer/AGENTS]], [[Team/Ledger - Deployment Verification Engineer/AGENTS]], [[Team/Vex - Security Engineer/AGENTS]]
 - **Trigger:** Jeff requests a change to any host, endpoint, or device — or a specialist identifies one while working. Natural-language cues: a part number, a firmware version, a driver, a patch, a VM, a dataset, a new machine, "should I buy", "can I upgrade", "it's running slow", "set up X on Y".
 
 ## Purpose
@@ -42,7 +42,7 @@ Infrastructure tiers on **whether the door swings back**, not on cost of failure
 |---|---|---|
 | **Reversible** | Patch pass, driver install, package update, non-destructive config change, entity rename | Registry read → change → registry update. No plan document, no approval. |
 | **Irreversible / expensive** | Firmware flash, BIOS update, hardware purchase, ZFS pool migration, dataset or VM deletion, host migration, ESPHome first flash on new hardware | Written plan to `Deliverables/` → **Jeff approves** → execute → registry update → verification |
-| **Cross-domain** | Anything needing another layer: a VLAN for a new host, a hardening item, a hosting requirement | Written requirement handed to the owning specialist **before** proceeding. The requesting specialist does not reach across the boundary. |
+| **Cross-domain** | Anything needing another layer: a VLAN for a new host, a hardening item, a hosting requirement | Written requirement handed to the owning specialist **before** proceeding, per [[GL-017-specialist-handoff-protocol]]'s packet shape (done / decided-vs-open / gate verdict / read-first). The requesting specialist does not reach across the boundary. |
 
 A change can be both irreversible and cross-domain. Both gates apply.
 
@@ -52,7 +52,7 @@ Drone builds (Trapper's domain) fit this tiering exactly — a maiden flight aft
 
 ### Step 1 — Hawkeye routes
 
-Hawkeye identifies the layer from the domain table above and routes to the owning specialist. Where a change spans layers, Hawkeye routes to the specialist who owns the *primary* change and names the downstream handoff explicitly in the brief.
+Hawkeye identifies the layer from the domain table above and routes to the owning specialist. Where a change spans layers, Hawkeye routes to the specialist who owns the *primary* change and names the downstream handoff explicitly in the brief — this cross-domain handoff follows [[GL-017-specialist-handoff-protocol]]'s packet shape even though it has no GitHub artifact to carry it: the brief itself states what's done, what's decided/open, and what the downstream specialist should read first.
 
 If the machine is a personal laptop, the form-factor rule decides — not what the machine is currently being used for.
 
@@ -108,7 +108,7 @@ Hawkeye reports: what changed, on which host, which tier it was, whether Jeff ap
 
 ## Task handling
 
-A change that will not finish in one session becomes a task per [[SOP-010-create-task]] — with the seven-array walk, including `linked_deliverables` pointing at any plan document. Closed per [[SOP-012-close-task]].
+A change that will not finish in one session becomes a task per [[SOP-010-create-task]] — with the seven-array walk, including `linked_deliverables` pointing at any plan document. This is a session-crossing handoff, so the task carries the `## Handoff` section per [[GL-017-specialist-handoff-protocol]] when the change is being handed from one specialist to another mid-lifecycle (e.g. a cross-domain requirement waiting on Sparky, or a plan awaiting Jeff's approval that will be picked up in a later session). Closed per [[SOP-012-close-task]].
 
 A durable insight — a compatibility gotcha, a driver quirk, a migration lesson — becomes a journal entry. Per WS-004 Tier 0, that is autonomous and needs no gate.
 
