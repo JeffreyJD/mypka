@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-19T23:21:17Z_
+_Last rebuilt: 2026-07-20T18:30:00Z_
 
 ## Summary
-- Open: 27
+- Open: 28
 - In progress: 0
 - Done (this month): 26
 - Cancelled (this month): 1
 
-## Open (27)
+## Open (28)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -20,6 +20,7 @@ _Last rebuilt: 2026-07-19T23:21:17Z_
 - [[tsk-2026-07-09-003-instrument-council-divergence-vs-bare-rule]] — Instrument agent-council decision divergence vs. a bare rule — assignee: pierce — created 2026-07-09 — GH #41 — priority bumped 2026-07-18 (retro flag: live decision data accumulating, unstarted a week+)
 - [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] — Confirm Weekly Strategy Report's first live Sunday cron fire runs clean — assignee: pierce — created 2026-07-16 — due 2026-07-20
 - [[tsk-2026-07-19-003-potter-contract-scope-ambiguity]] — Resolve Potter's contract scope: hiring-only, or general framework-hygiene authoring too — assignee: unassigned — created 2026-07-19 — BLOCKED: awaiting Jeff's ruling on (a) vs (b) — surfaced by outside post-implementation audit, restates an open thread from tsk-2026-07-18-016
+- [[tsk-2026-07-20-001-unifi-events-log-pull-wifi-drops]] — Pull UCK G2 Plus Events log for jeff-laptop MAC to confirm/deny WiFi-drop root cause — assignee: sparky — created 2026-07-20 — read-only, no approval gate needed; root cause inconclusive pending this log pull (802.11r/FT vs external RF interference on ch. 36)
 
 ### Priority 3 — normal
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
@@ -61,6 +62,7 @@ _none_
 - potter: 3 open, 0 in-progress
 - frank: 1 open, 0 in-progress
 - unassigned: 1 open, 0 in-progress
+- sparky: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
 - 2026-07-19 [[tsk-2026-07-19-001-hire-architect-reviewer-test-engineer]] — done — hawkeye (WS-004 Tier 1 follow-on proposal: three new specialists hired per SOP-001 — [[Team/Keystone - Architect/AGENTS|Keystone]] (Architect, Design gate), [[Team/Lens - Reviewer/AGENTS|Lens]] (Reviewer, Correctness gate), [[Team/Breaker - Test Engineer/AGENTS|Breaker]] (Test Engineer, Test gate) — each with contract, shim, journal folder, agent-index row; Pierce's contract amended (architecture/code-review scope removed, ADR path corrected to in-repo, Method step 2 routed to Keystone); WS-006 fully de-placeholdered and its stale pre-hire "gates don't block merge" caveat corrected in all four places it appeared; three B.J. research briefs archived)
