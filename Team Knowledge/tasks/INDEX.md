@@ -2,15 +2,15 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-19T02:06:28Z_
+_Last rebuilt: 2026-07-19T23:21:17Z_
 
 ## Summary
-- Open: 24
+- Open: 27
 - In progress: 0
 - Done (this month): 26
 - Cancelled (this month): 1
 
-## Open (24)
+## Open (27)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
@@ -19,6 +19,7 @@ _Last rebuilt: 2026-07-19T02:06:28Z_
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
 - [[tsk-2026-07-09-003-instrument-council-divergence-vs-bare-rule]] — Instrument agent-council decision divergence vs. a bare rule — assignee: pierce — created 2026-07-09 — GH #41 — priority bumped 2026-07-18 (retro flag: live decision data accumulating, unstarted a week+)
 - [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] — Confirm Weekly Strategy Report's first live Sunday cron fire runs clean — assignee: pierce — created 2026-07-16 — due 2026-07-20
+- [[tsk-2026-07-19-003-potter-contract-scope-ambiguity]] — Resolve Potter's contract scope: hiring-only, or general framework-hygiene authoring too — assignee: unassigned — created 2026-07-19 — BLOCKED: awaiting Jeff's ruling on (a) vs (b) — surfaced by outside post-implementation audit, restates an open thread from tsk-2026-07-18-016
 
 ### Priority 3 — normal
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
@@ -33,6 +34,7 @@ _Last rebuilt: 2026-07-19T02:06:28Z_
 - [[tsk-2026-07-17-010-risk-journal-open-positions-schema-mismatch]] — risk_journal.py open-positions summary + deployed_pct use the same fictional trade schema as the P&L bug — assignee: pierce — created 2026-07-17
 - [[tsk-2026-07-17-013-confirm-bac-reconciliation-clean-on-monday-run]] — Confirm BAC reconciles clean on the next automated Daily Fidelity Check run (2026-07-17 FAIL 5/6, settlement-timing theory) — assignee: pierce — created 2026-07-17 — due 2026-07-20 — no GH issue (watch item, not yet a bug)
 - [[tsk-2026-07-18-013-west-9th-tenant-identity-ambiguities]] — Resolve or explicitly park two West 9th Street tenant-identity ambiguities from the June import — assignee: frank — created 2026-07-18 — flagged by outside audit as the one dropped thread from the retro cycle
+- [[tsk-2026-07-19-002-felix-git-workflow-section]] — Add a git-workflow section to Felix's contract, mirroring Pierce's — assignee: potter — created 2026-07-19 — documentation-only, transcribes already-confirmed behavior
 
 ### Priority 4 — low
 - [[tsk-2026-07-09-005-research-universe-breadth-for-momentum-strategies]] — Research brief: optimal stock universe breadth — assignee: bj — created 2026-07-09 — prep for future bundled Phase 1 cycle, not immediate action
@@ -43,6 +45,7 @@ _Last rebuilt: 2026-07-19T02:06:28Z_
 - [[tsk-2026-07-18-011-esphome-build-artifacts-in-vault]] — Remove ESPHome/PlatformIO build artifacts that leaked into PKM/Documents/pool — assignee: relay — created 2026-07-18 — found during mypka.db regen
 - [[tsk-2026-07-18-012-sop-002-schema-scope-team-knowledge]] — Decide whether SOP-002's SQLite mirror should cover Team Knowledge/ and Team/ contracts — assignee: margaret — created 2026-07-18 — BLOCKED: awaiting Jeff's scope decision
 - [[tsk-2026-07-18-015-ws-007-cadence-ssot-phrasing]] — WS-007 Step 7: point the Drift Audit cadence at SOP-022 §3 instead of restating it — assignee: potter — created 2026-07-18 — trivial, batchable, no urgency
+- [[tsk-2026-07-19-004-pierce-adr-row-cleanup]] — Remove/reword the stale ADR row in Pierce's deliverable-structure table — assignee: potter — created 2026-07-19 — cosmetic, batch into next Pierce-contract touch, no urgency
 
 ## In progress (0)
 _none_
@@ -55,8 +58,9 @@ _none_
 - bj: 2 open, 0 in-progress
 - relay: 1 open, 0 in-progress
 - margaret: 1 open, 0 in-progress
-- potter: 1 open, 0 in-progress
+- potter: 3 open, 0 in-progress
 - frank: 1 open, 0 in-progress
+- unassigned: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
 - 2026-07-19 [[tsk-2026-07-19-001-hire-architect-reviewer-test-engineer]] — done — hawkeye (WS-004 Tier 1 follow-on proposal: three new specialists hired per SOP-001 — [[Team/Keystone - Architect/AGENTS|Keystone]] (Architect, Design gate), [[Team/Lens - Reviewer/AGENTS|Lens]] (Reviewer, Correctness gate), [[Team/Breaker - Test Engineer/AGENTS|Breaker]] (Test Engineer, Test gate) — each with contract, shim, journal folder, agent-index row; Pierce's contract amended (architecture/code-review scope removed, ADR path corrected to in-repo, Method step 2 routed to Keystone); WS-006 fully de-placeholdered and its stale pre-hire "gates don't block merge" caveat corrected in all four places it appeared; three B.J. research briefs archived)
