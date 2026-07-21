@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:apps="http://schemas.google.com/apps/2006">
+  <title>Mail Filters — Davis Inbox Triage seed set (GL-018)</title>
+  <!-- Import via Gmail: Settings > Filters and Blocked Addresses > Import filters.
+       Every rule below trashes on arrival AND can be run against existing mail
+       ("Also apply filter to matching conversations") to bulk-clear the backlog.
+       These are the confirmed repeat PROMOTIONAL senders from the 2026 cleanup.
+       NONE of these senders emit account/statement mail to this inbox, so
+       trashing wholesale is safe. Senders with a marketing+account split
+       (Coinbase, Hilton, AwardWallet, Emerald Club) are DELIBERATELY EXCLUDED
+       here and handled per-message by GL-018's purpose-over-sender rule. -->
+
+  <entry>
+    <category term='filter'></category>
+    <title>Home Depot marketing</title>
+    <apps:property name='from' value='mg.homedepot.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+    <apps:property name='sizeOperator' value='s_sl'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Banggood deals</title>
+    <apps:property name='from' value='deals.banggood.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>The Parking Spot promos</title>
+    <apps:property name='from' value='email.theparkingspot.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>MSC Cruises</title>
+    <apps:property name='from' value='email.msccruisesusa.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>SeatGeek events</title>
+    <apps:property name='from' value='seatgeek.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>SeaWorld parks (Adventure Island / Busch Gardens)</title>
+    <apps:property name='from' value='m.seaworldparks.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>DiscountFilters</title>
+    <apps:property name='from' value='eml.discountfilters.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>HBO Max marketing</title>
+    <apps:property name='from' value='mail.hbomax.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Peacock marketing</title>
+    <apps:property name='from' value='peacocktv.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>1800Flowers</title>
+    <apps:property name='from' value='em.1800flowers.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Breeze Airways promos</title>
+    <apps:property name='from' value='email.flybreeze.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>GoPro marketing</title>
+    <apps:property name='from' value='e-mail.gopro.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Vevor</title>
+    <apps:property name='from' value='ses.vevor.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Turtle Wax</title>
+    <apps:property name='from' value='turtlewax.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Crutchfield deals</title>
+    <apps:property name='from' value='mail.crutchfield.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Fox Sports promos</title>
+    <apps:property name='from' value='inbox.foxsports.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Michaels</title>
+    <apps:property name='from' value='emdeals.michaels.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Ancestry marketing</title>
+    <apps:property name='from' value='email.ancestry.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Lowe's marketing and surveys</title>
+    <apps:property name='from' value='e.lowes.com OR express.medallia.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>WMJ Marine / Marine Parts Source / Marine Parts marketing</title>
+    <apps:property name='from' value='wmjmarine.ccsend.com OR marinepartssource.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>The Rag Company</title>
+    <apps:property name='from' value='theragcompany.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Roku offers</title>
+    <apps:property name='from' value='email.roku.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Auto dealer marketing (Victory Toyota / Dunn Tire / dealer hub)</title>
+    <apps:property name='from' value='eautodealerhub.com OR dunntire.ccsend.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Canva marketing</title>
+    <apps:property name='from' value='engage.canva.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Too Good To Go</title>
+    <apps:property name='from' value='mail.toogoodtogo.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>ParkMobile promos</title>
+    <apps:property name='from' value='mail.parkmobile.io'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+
+  <!-- SOCIAL NOTIFICATIONS: LinkedIn notification streams. These are the
+       notification EMAILS only - the actual invitations/messages live in
+       LinkedIn itself, so trashing the emails loses nothing; Jeff actions
+       connections and DMs in the app. This covers invitations, job listings,
+       notifications, and message-recap emails. It does NOT touch a real
+       person-to-person email that arrives from a non-notification address. -->
+  <entry>
+    <category term='filter'></category>
+    <title>LinkedIn invitations</title>
+    <apps:property name='from' value='invitations@linkedin.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>LinkedIn notifications</title>
+    <apps:property name='from' value='notifications-noreply@linkedin.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>LinkedIn messages/prompts</title>
+    <apps:property name='from' value='messages-noreply@linkedin.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>LinkedIn job listings</title>
+    <apps:property name='from' value='jobs-listings@linkedin.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>LinkedIn job alerts</title>
+    <apps:property name='from' value='jobalerts-noreply@linkedin.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+  <entry>
+    <category term='filter'></category>
+    <title>Instagram notifications</title>
+    <apps:property name='from' value='mail.instagram.com'/>
+    <apps:property name='shouldTrash' value='true'/>
+  </entry>
+
+</feed>

@@ -43,6 +43,17 @@ When you **create** a task during your work, follow [[SOP-010-create-task]] — 
 
 When you **close** a task, follow [[SOP-012-close-task]] — write the `## Outcome` and, if you learned something durable, write a journal entry per [[SOP-016-write-journal-entry]] and add it to the closed task's `linked_journal_entries`.
 
+## Inbox triage (incoming-traffic interception)
+
+Radar owns [[SOP-023-triage-inbox]] — the interception, classification, and
+routing of incoming email for any inbox Jeff enables. Radar runs the procedure
+per [[GL-018-inbox-triage-and-classification]]: never trashes on uncertainty
+(escalate to ALERT), never auto-creates calendar events/tasks or auto-deletes
+human/account/unknown mail (propose-then-confirm), files knowledge and documents
+into the PKM folder that owns the fact, and always emits an alert digest so Jeff
+sees what mattered. One inbox per run, state keyed by `inbox_id`. Dry-run until
+Jeff graduates an inbox to live writes.
+
 ## Auto-Folder Rule
 
 When you write into `PKM/Journal/`, `PKM/Images/`, or any date-nested folder, create the `YYYY/MM/` parent folders if they do not exist. Never fail because a folder is missing. Create it.
