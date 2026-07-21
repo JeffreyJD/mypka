@@ -2,7 +2,7 @@
 
 - **Type:** Guideline (static rules; read on every inbox-triage action)
 - **Applies to:** [[SOP-023-triage-inbox]] and any agent processing an email inbox
-- **References:** [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]], [[GL-004-task-resource-linking]], [[GL-012-confirm-dispatch-not-just-narrate-it]]
+- **References:** [[GL-001-file-naming-conventions]], [[GL-002-frontmatter-conventions]], [[GL-004-task-resource-linking]], [[GL-012-confirm-dispatch-not-just-narrate-it]], [[SOP-010-create-task]]
 - **Born** 2026-07-20 from Jeff's inbox-triage design session: a live cleanup of ~400 stale threads surfaced the need for a durable, portable taxonomy so the same judgment ("junk vs. keep vs. act") is applied identically every run, across multiple inboxes, by any LLM.
 
 ## Why this exists
@@ -92,7 +92,7 @@ is Jeff's explicit call, per category.
 ## Multi-inbox handling (Goal 2)
 
 The system is inbox-agnostic. Each run is scoped to one `inbox_id` (a stable
-short name, e.g. `gmail-personal`, `davisglobe`, `perficient`). All state is
+short name, e.g. `gmail-personal`, `davisglobe`). All state is
 keyed by `inbox_id` so inboxes never cross-contaminate.
 
 - **Shared across inboxes:** the category definitions, dispositions,
@@ -182,6 +182,96 @@ Seed entries confirmed in the 2026-07-20 pass (inbox `gmail-personal`):
   Best Western marketing (distinct from account mail).
 - Trash/`social-notification`: LinkedIn notifications (excluding direct
   member-to-member messages).
+
+### Priority-tier override system (hard rule)
+
+Above and independent of the category/disposition table, every message is
+first checked against a three-tier priority system. Tiers 1 and 2 exist for
+one purpose — **don't let a real person get buried** — and both outrank
+ordinary category-based judgment, including any existing sender-registry row.
+Tier 3 is everything that doesn't match Tier 1 or Tier 2, and falls through to
+the category/disposition table exactly as this Guideline already defines it,
+unchanged.
+
+#### Tier 1 — Contact match (highest)
+
+If the sender's email address matches an entry in Jeff's Google Contacts, the
+disposition is always **ALERT + ACT** — never `TRASH`, never `ARCHIVE`, never
+`FILE`-only — regardless of category and regardless of any existing
+sender-registry row for that sender. This overrides everything else in this
+Guideline, including a registry-confirmed `TRASH`/`ARCHIVE` standing
+disposition, for that specific message.
+
+This is stronger than Tier 2 below and stronger than the general
+`human-direct` category's typical "ALERT or ACT." A contact match makes `ACT`
+— a concrete drafted task or follow-up, per [[SOP-010-create-task]] —
+**mandatory**, not situational. A contact-matched message is never left
+sitting as an ALERT-only digest line with nothing proposed.
+
+**Technical dependency (stated honestly):** this check requires a Google
+Contacts (People API) lookup. **No such connector exists yet** — Hawkeye is
+having Klinger scope building one. Until it exists, the interim proxy is:
+cross-reference the sender's email address against `PKM/CRM/People/*.md`
+frontmatter (the `email` field) — people Jeff has already logged as real
+contacts in the vault. This proxy is **incomplete and will under-match** until
+the real connector lands: `PKM/CRM/People/` only holds whoever has been
+logged there, not Jeff's full Google Contacts list. A sender the proxy misses
+is not thereby excluded from this rule's intent — it simply falls through to
+Tier 2, then Tier 3, until the real lookup exists. Do not treat a proxy miss
+as a considered "not a contact" verdict.
+
+#### Tier 2 — Direct human correspondence, sender not a known contact
+
+A real individual person writing directly to Jeff — not a mailing list, not a
+marketing/bulk blast, not a `no-reply`/`notifications@` automated sender —
+still gets escalated even when that sender isn't (yet) in Contacts or CRM.
+This is a strengthening of the existing `human-direct` category: **`ALERT` is
+now mandatory** for this tier, not just typical. `ACT` remains judgment-based
+on whether the content actually carries an action — this matches the
+category table's existing "ALERT or ACT" for `human-direct`, the only change
+is that the `ALERT` half is now non-negotiable rather than the usual case.
+
+"Real person" cannot be pure vibes — it needs concrete, mechanical signals a
+classifier can actually check, cheaply, without deep judgment:
+
+**Signals *for* Tier 2** (the more of these present, the stronger the case):
+- Single addressed recipient — Jeff (or Jeff + a small named group), not
+  bcc'd into a list.
+- No bulk-mail headers present: no `List-Unsubscribe`, no `List-Id`, no
+  `Precedence: bulk`.
+- Sender address is not a `no-reply@` / `donotreply@` / `notifications@` /
+  `alerts@` pattern.
+- Body reads as personal correspondence: references specific context, asks a
+  direct question, isn't templated marketing copy.
+
+**Signals *against* Tier 2** (any one of these means this is NOT Tier 2 — it
+falls through to Tier 3, the ordinary category table):
+- Any bulk-mail header present (`List-Unsubscribe`, `List-Id`,
+  `Precedence: bulk`).
+- Sender is clearly automated or transactional (a system, a service, a
+  notification pipeline — even if it's mail Jeff cares about, like an account
+  alert; those are handled by the `account-security`/`financial` categories,
+  not Tier 2).
+- Content is templated/promotional even when personalized with a name (e.g.
+  "Hi Jeffrey, ..." mail-merge marketing is not Tier 2 just because it uses
+  his name).
+
+This check is deliberately mechanical — header and sender-pattern inspection
+plus a quick read of whether the body is templated — not an open-ended
+judgment call. When genuinely ambiguous after checking these signals, GL-018's
+existing escalate-when-uncertain rule applies: route to `unknown` / `ALERT`
+rather than guessing a Tier 3 disposition.
+
+#### Tier 3 — everything else
+
+No Tier 1 match, no Tier 2 signals. Falls through to the
+category/disposition table earlier in this Guideline exactly as already
+defined — no changes to that table from this section.
+
+Born 2026-07-21 (Jeff's explicit ruling; Tier 2 added same day as a
+refinement generalizing the original contact-match rule into an explicit
+three-tier system). Applies to every inbox-triage run going forward,
+per-inbox, from this date on.
 
 ## PKM routing table (Goal 4)
 

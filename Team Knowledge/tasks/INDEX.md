@@ -2,20 +2,21 @@
 
 _Auto-generated. Do not edit by hand. Run `SOP-013-rebuild-task-index` to regenerate._
 
-_Last rebuilt: 2026-07-20T21:45:00Z_
+_Last rebuilt: 2026-07-21T18:05:00Z_
 
 ## Summary
-- Open: 29
+- Open: 31
 - In progress: 0
 - Done (this month): 26
 - Cancelled (this month): 1
 
-## Open (29)
+## Open (31)
 
 ### Priority 1 — urgent
 - [[tsk-2026-06-30-001-subaru-ez30d-active-diagnostic]] — Subaru EZ30D active diagnostic — cooling fans, lean LTFT, misfire capture, obd-scanner integration — assignee: rizzo — created 2026-06-30
 
 ### Priority 2 — high
+- [[tsk-2026-07-21-001-millville-insurance-claim-followup]] — Follow up on Millville Insurance Claim #2661202PA (Crown of Glory) — assignee: mulcahy — created 2026-07-21 — surfaced by first SOP-023 gmail-personal dry-run; insured asset identity unconfirmed, no PKM insurance-document home yet
 - [[tsk-2026-07-06-002-sea-ray-windlass-upgrade]] — Sea Ray 340 windlass upgrade — spec, select, and plan install — assignee: henry — created 2026-07-06
 - [[tsk-2026-07-09-003-instrument-council-divergence-vs-bare-rule]] — Instrument agent-council decision divergence vs. a bare rule — assignee: pierce — created 2026-07-09 — GH #41 — priority bumped 2026-07-18 (retro flag: live decision data accumulating, unstarted a week+)
 - [[tsk-2026-07-16-001-confirm-weekly-strategy-report-first-live-fire]] — Confirm Weekly Strategy Report's first live Sunday cron fire runs clean — assignee: pierce — created 2026-07-16 — due 2026-07-20
@@ -24,6 +25,7 @@ _Last rebuilt: 2026-07-20T21:45:00Z_
 - [[tsk-2026-07-20-002-downton-abbey-iot-total-connectivity-failure]] — Downton Abbey-IOT SSID total connectivity failure — confirm US-24 VLAN-trunking gap — assignee: sparky — created 2026-07-20 — BLOCKED: awaiting US-24 hard-reset/adoption, itself gated on jeff-laptop's USB-Ethernet adapter physical connection
 
 ### Priority 3 — normal
+- [[tsk-2026-07-21-002-portugal-spain-wedding-trip-followup]] — Follow up on Portugal-Spain wedding trip planning (Alyssa's thread) — assignee: kellye — created 2026-07-21 — surfaced by first SOP-023 gmail-personal dry-run
 - [[tsk-2026-07-01-001-obd-scanner-ci]] — Add GitHub Actions CI to obd-scanner — assignee: pierce — created 2026-07-01
 - [[tsk-2026-07-09-004-deflated-sharpe-retrospective-mbs]] — Deflated Sharpe Ratio retrospective on momentum_breakout_stocks — assignee: blake — created 2026-07-09
 - [[tsk-2026-07-10-001-fix-live-vix-bar-fetch-mbs]] — Source true VIX index data (non-Alpaca) for momentum_breakout_stocks — VIXY proxy rejected by Blake — assignee: pierce — created 2026-07-10 — due 2026-08-07 — GH #44
@@ -64,6 +66,8 @@ _none_
 - frank: 1 open, 0 in-progress
 - unassigned: 1 open, 0 in-progress
 - sparky: 2 open, 0 in-progress
+- mulcahy: 1 open, 0 in-progress
+- kellye: 1 open, 0 in-progress
 
 ## Recently closed (last 7 days)
 - 2026-07-19 [[tsk-2026-07-19-001-hire-architect-reviewer-test-engineer]] — done — hawkeye (WS-004 Tier 1 follow-on proposal: three new specialists hired per SOP-001 — [[Team/Keystone - Architect/AGENTS|Keystone]] (Architect, Design gate), [[Team/Lens - Reviewer/AGENTS|Lens]] (Reviewer, Correctness gate), [[Team/Breaker - Test Engineer/AGENTS|Breaker]] (Test Engineer, Test gate) — each with contract, shim, journal folder, agent-index row; Pierce's contract amended (architecture/code-review scope removed, ADR path corrected to in-repo, Method step 2 routed to Keystone); WS-006 fully de-placeholdered and its stale pre-hire "gates don't block merge" caveat corrected in all four places it appeared; three B.J. research briefs archived)

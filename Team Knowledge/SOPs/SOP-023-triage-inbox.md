@@ -65,7 +65,54 @@ equivalent for any other LLM.
 
 ### Phase 2 — Classify (delegates all judgment to GL-018)
 
-5. For each message, assign a **category** and **disposition** strictly per
+4a. **Priority-tier check (hard rule — see
+    [[GL-018-inbox-triage-and-classification]] "Priority-tier override
+    system").** Before running the category/disposition table in step 5,
+    check every message against the three tiers, in order, per message:
+
+    - **Tier 1 — contact match.** Check the sender's email address against
+      Jeff's Google Contacts.
+      - **In Claude Code / a connector-equipped harness, once the Contacts
+        connector exists:** call it directly.
+      - **Today, before that connector exists:** use the interim proxy —
+        cross-reference the sender's email against `PKM/CRM/People/*.md`
+        frontmatter (`email` field). This is a partial substitute only; it
+        under-matches relative to the full Google Contacts list.
+      - A match **short-circuits straight to `disposition: ALERT + ACT`**
+        (category becomes/stays `human-direct`), skipping steps 5 and the
+        Tier 2 check below entirely for that message — no registry lookup,
+        no category judgment, no TRASH/ARCHIVE/FILE-only outcome, ever, for
+        that message. Done — move to the next message.
+      - No match: continue to the Tier 2 check.
+    - **Tier 2 — direct human correspondence, not a known contact.** A cheap,
+      mechanical check — header and sender-pattern inspection plus a quick
+      read of whether the body is templated, not deep judgment. Check the
+      signals in GL-018:
+      - **For:** single addressed recipient (not bcc'd into a list), no
+        bulk-mail headers (`List-Unsubscribe`, `List-Id`,
+        `Precedence: bulk`), sender address isn't a
+        `no-reply`/`donotreply`/`notifications@`/`alerts@` pattern, body
+        reads as personal correspondence (specific context, a direct
+        question, not templated marketing copy).
+      - **Against:** any bulk-mail header present, sender clearly
+        automated/transactional, content templated/promotional even if
+        personalized with a name.
+      - If the "for" signals win: `disposition: ALERT` is **mandatory**
+        (category becomes/stays `human-direct`); `ACT` is still
+        judgment-based on whether the content actually carries an action,
+        exactly as the category table already allows for `human-direct`.
+        Skip step 5's category/disposition table for this message (category
+        is already settled as `human-direct`; only the ACT-or-not judgment
+        remains, per the existing table).
+      - If the "against" signals win, or it's genuinely ambiguous after
+        checking: fall through to Tier 3 — step 5 as normal. If truly
+        ambiguous even after the signal check, GL-018's
+        escalate-when-uncertain rule applies (`unknown` / `ALERT`) rather
+        than guessing.
+    - **Tier 3 — no Tier 1 or Tier 2 match.** Proceed to step 5.
+
+5. For each message not already dispositioned by the Tier 1 or Tier 2 checks
+   above, assign a **category** and **disposition** strictly per
    [[GL-018-inbox-triage-and-classification]]. Consult the sender registry
    first; classify fresh if the sender is unknown.
 6. Produce, per message, a small structured record:
