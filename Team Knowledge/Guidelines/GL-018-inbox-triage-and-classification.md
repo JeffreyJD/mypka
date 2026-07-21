@@ -196,17 +196,19 @@ unchanged.
 #### Tier 1 — Contact match (highest)
 
 If the sender's email address matches an entry in Jeff's Google Contacts, the
-disposition is always **ALERT + ACT** — never `TRASH`, never `ARCHIVE`, never
-`FILE`-only — regardless of category and regardless of any existing
+message is always **ALERT** — never `TRASH`, never `ARCHIVE`, never a silent
+`FILE`-only outcome — regardless of category and regardless of any existing
 sender-registry row for that sender. This overrides everything else in this
 Guideline, including a registry-confirmed `TRASH`/`ARCHIVE` standing
 disposition, for that specific message.
 
 This is stronger than Tier 2 below and stronger than the general
-`human-direct` category's typical "ALERT or ACT." A contact match makes `ACT`
-— a concrete drafted task or follow-up, per [[SOP-010-create-task]] —
-**mandatory**, not situational. A contact-matched message is never left
-sitting as an ALERT-only digest line with nothing proposed.
+`human-direct` category's typical "ALERT or ACT." **What happens beyond the
+mandatory ALERT is no longer a single ACT-or-not choice** — see "Compound
+dispositions for Tier 1/2 correspondence" below, which replaces the old
+single-disposition model for both tiers. A contact-matched message is never
+left sitting as an ALERT-only digest line with a genuine action inside it
+going unproposed — the compound evaluation is what guarantees that.
 
 **Technical dependency (stated honestly):** this check requires a Google
 Contacts (People API) lookup. **No such connector exists yet** — Hawkeye is
@@ -226,10 +228,11 @@ A real individual person writing directly to Jeff — not a mailing list, not a
 marketing/bulk blast, not a `no-reply`/`notifications@` automated sender —
 still gets escalated even when that sender isn't (yet) in Contacts or CRM.
 This is a strengthening of the existing `human-direct` category: **`ALERT` is
-now mandatory** for this tier, not just typical. `ACT` remains judgment-based
-on whether the content actually carries an action — this matches the
-category table's existing "ALERT or ACT" for `human-direct`, the only change
-is that the `ALERT` half is now non-negotiable rather than the usual case.
+now mandatory** for this tier, not just typical. What happens beyond the
+mandatory `ALERT` is governed by the compound evaluation in "Compound
+dispositions for Tier 1/2 correspondence" below, not by a single ACT-or-not
+choice — the old "ALERT or ACT" framing from the category table no longer
+applies once a message lands in Tier 2.
 
 "Real person" cannot be pure vibes — it needs concrete, mechanical signals a
 classifier can actually check, cheaply, without deep judgment:
@@ -273,6 +276,59 @@ refinement generalizing the original contact-match rule into an explicit
 three-tier system). Applies to every inbox-triage run going forward,
 per-inbox, from this date on.
 
+### Compound dispositions for Tier 1/2 correspondence (hard rule)
+
+The single-disposition model (`ALERT | ACT | FILE | ARCHIVE | TRASH` — one
+choice per message) is correct for Tier 3, ordinary category-based messages.
+It is **not** correct for Tier 1 (contact match) or Tier 2 (direct human
+correspondence): a real message from a real person can legitimately need
+several simultaneous outcomes at once — it might carry a fact worth filing,
+warrant a reply, *and* spawn a task, all from the same message. These are not
+mutually exclusive alternatives to pick between. Forcing a single
+disposition on a Tier 1/2 message silently drops whichever outcomes don't
+get picked.
+
+**For any message classified into Tier 1 or Tier 2, evaluate three
+independent signals instead of choosing one disposition:**
+
+1. **Knowledge-worthy?** — does the message contain information worth
+   keeping (a fact, a document, a decision, a plan)? If yes, **FILE**
+   executes per the normal PKM routing table below — additive, no per-item
+   approval needed, identical to how FILE already works for any other
+   message.
+2. **Reply-worthy?** — does the message warrant a response? If yes, build a
+   **reply draft** (the existing draft/send ACT sub-type) and hold it for
+   Jeff's approval. Never send it outright — propose-then-confirm applies to
+   a reply exactly as it does to a calendar event or a task.
+3. **Task-worthy?** — does the message carry an action beyond just
+   replying (something to follow up on, schedule, go do)? If yes, draft a
+   **task** per [[SOP-010-create-task]] and hold it for approval.
+
+**All three can fire independently from the same message.** A simple
+acknowledgment ("thanks, got it") triggers none of them, or just FILE if
+there's a fact worth keeping even in a short message. A substantive message
+— the kind that carries news, asks something, and implies follow-up work —
+can trigger all three at once. Do not force a pick between them; run all
+three checks every time.
+
+**Bundling rule:** when both a reply-draft and a task-draft come from the
+same source message, present them **bundled together** in the run
+summary/alert digest as related items from one source — not as unrelated
+separate proposals scattered across the digest. Jeff should be able to
+review "here's the message, here's the reply I'd send, here's the task it
+also spawns" as one grouped unit with the shared context intact, rather than
+piecing together two proposals that turn out to share an origin.
+
+This compound-evaluation rule applies **only** where Tier 1/2 has already
+elevated the message above ordinary category judgment. Tier 3 messages are
+unaffected — they keep the single-disposition category/disposition table
+exactly as already defined.
+
+Born 2026-07-21 (Jeff's explicit ruling, same day as the Tier 1/2 system
+itself — a real gap surfaced almost immediately: the single-disposition
+model doesn't fit a message like one from Bridget that both needs filing
+and needs a reply).
+
 ## PKM routing table (Goal 4)
 
 When a message is `FILE`, its knowledge and/or attachment routes to the folder
@@ -293,6 +349,78 @@ of the fact*, not by sender:
 
 If no folder clearly owns the fact, `FILE` degrades to `ALERT` with a suggested
 folder — never silently dropped.
+
+### Task cross-check for shipment/part FILE actions (hard rule)
+
+A `reference-knowledge` or `financial` (order/receipt) message about a
+shipment, part, or order for a **vehicle, the boat, or homelab equipment**
+does not just get filed into the relevant knowledge note in isolation. There
+is often an **open task already waiting on exactly that part** — the vehicle
+diagnostic task blocked on a sensor, the homelab build task blocked on a
+cable with a documented ETA (real example already in the vault: Lighthouse's
+SAS cables / rear-flex-bay-cable blocker in
+`PKM/Documents/homelab/build-log.md`, ordered 2026-05-05, ETA 2026-05-07 to
+2026-05-14). Filing the shipping update as a standalone note and never
+touching the blocked task means the task's `blocked_by`/ETA state silently
+goes stale even though the answer just arrived in the inbox.
+
+**Before finalizing a FILE action for this class of message**, cross-check
+`Team Knowledge/tasks/open/` and `Team Knowledge/tasks/in-progress/` for an
+existing task that references the same part, vendor, or order:
+
+- **Match found:** append an entry to that task's `## Updates` section with
+  the new shipping/tracking info (carrier, tracking number, ETA), and refresh
+  the `blocked_by` field or any ETA-bearing text if the task's blocker is
+  specifically this shipment. This is **additive** — it executes
+  automatically in live mode exactly like any other FILE action, no
+  per-item approval needed, because it's the same kind of non-destructive
+  vault write as filing the knowledge note itself.
+- **No match found:** file the note as usual, no task-side action. Do not
+  invent a task just because a shipping email arrived — only touch tasks
+  that already exist and already reference this item.
+- **Ambiguous match** (plausibly the same part/vendor but not a clean
+  match — e.g. matching vendor, unclear if it's the same order): do not
+  silently guess a link. Either surface it as an ALERT-adjacent note in the
+  run summary for Jeff to confirm, or note the ambiguity directly in the
+  FILE'd knowledge note for a human to reconcile later. Never auto-link a
+  shaky match to a task's blocker state — a wrong ETA update is worse than
+  no update.
+
+This does not create a new `linked_*` frontmatter field on either side —
+per [[GL-004-task-resource-linking]], the task's own `## Updates` body
+section is exactly where this kind of running commentary already lives (see
+[[SOP-010-create-task]]); no back-pointer gets added to the knowledge note.
+
+Born 2026-07-21 (Jeff's explicit ruling, surfaced from the same day's
+inbox-triage work — the gap was noticed against a real open homelab-build
+blocker already tracked in the vault).
+
+### Invoice-to-repair/upgrade tracking (hard rule)
+
+Same mechanical pattern as the shipment/part cross-check above — an invoice
+is just another signal type that should update existing tracking rather than
+sit in isolation. When a `financial` (invoice/receipt) message concerns a
+part or service for an **active repair/upgrade** on a vehicle, the boat, or
+homelab equipment, the FILE step cross-checks for an existing tracking
+record for that repair/upgrade before filing the invoice as a standalone
+financial record. The tracking record can be either of two kinds:
+
+- An open/in-progress task — same task index as the shipment/part
+  cross-check (`Team Knowledge/tasks/open/` and `tasks/in-progress/`).
+- A domain knowledge log that already tracks the work — e.g. the boat's
+  `PKM/Documents/lake-erie/maintenance-log.md`, a vehicle's own file, a
+  homelab build log.
+
+- **Match found (task or log):** append the invoice details — vendor,
+  amount, date, part/service description, invoice number if present — to
+  that record. Additive, executes automatically, no per-item approval, same
+  as any other FILE write.
+- **No match:** file the invoice as an ordinary financial record per the
+  existing PKM routing table (`PKM/Documents/` + `documents` entity). Do not
+  invent a repair/upgrade tracking record just because an invoice arrived.
+- **Ambiguous:** same rule as the shipment/part cross-check — never
+  auto-link a shaky match. Surface it instead (ALERT-adjacent note in the
+  run summary, or a note of the ambiguity in the FILE'd record itself).
 
 ## Attachments and documents
 

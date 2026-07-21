@@ -78,11 +78,11 @@ equivalent for any other LLM.
         cross-reference the sender's email against `PKM/CRM/People/*.md`
         frontmatter (`email` field). This is a partial substitute only; it
         under-matches relative to the full Google Contacts list.
-      - A match **short-circuits straight to `disposition: ALERT + ACT`**
-        (category becomes/stays `human-direct`), skipping steps 5 and the
-        Tier 2 check below entirely for that message — no registry lookup,
-        no category judgment, no TRASH/ARCHIVE/FILE-only outcome, ever, for
-        that message. Done — move to the next message.
+      - A match **short-circuits past the single-disposition table
+        entirely** — skip steps 5 and the Tier 2 check below for that
+        message — and instead runs the **compound evaluation** in step 4b
+        (below). Category becomes/stays `human-direct`. Done — move to the
+        next message once step 4b completes.
       - No match: continue to the Tier 2 check.
     - **Tier 2 — direct human correspondence, not a known contact.** A cheap,
       mechanical check — header and sender-pattern inspection plus a quick
@@ -97,27 +97,50 @@ equivalent for any other LLM.
       - **Against:** any bulk-mail header present, sender clearly
         automated/transactional, content templated/promotional even if
         personalized with a name.
-      - If the "for" signals win: `disposition: ALERT` is **mandatory**
-        (category becomes/stays `human-direct`); `ACT` is still
-        judgment-based on whether the content actually carries an action,
-        exactly as the category table already allows for `human-direct`.
-        Skip step 5's category/disposition table for this message (category
-        is already settled as `human-direct`; only the ACT-or-not judgment
-        remains, per the existing table).
+      - If the "for" signals win: category becomes/stays `human-direct`, and
+        this message also runs the **compound evaluation** in step 4b below
+        instead of the single-disposition table in step 5.
       - If the "against" signals win, or it's genuinely ambiguous after
         checking: fall through to Tier 3 — step 5 as normal. If truly
         ambiguous even after the signal check, GL-018's
         escalate-when-uncertain rule applies (`unknown` / `ALERT`) rather
         than guessing.
-    - **Tier 3 — no Tier 1 or Tier 2 match.** Proceed to step 5.
+    - **Tier 3 — no Tier 1 or Tier 2 match.** Proceed to step 5 (the ordinary
+      single-disposition category table — unaffected by any of this).
 
-5. For each message not already dispositioned by the Tier 1 or Tier 2 checks
-   above, assign a **category** and **disposition** strictly per
-   [[GL-018-inbox-triage-and-classification]]. Consult the sender registry
-   first; classify fresh if the sender is unknown.
-6. Produce, per message, a small structured record:
+4b. **Compound evaluation for Tier 1/2 messages (hard rule — see
+    [[GL-018-inbox-triage-and-classification]] "Compound dispositions for
+    Tier 1/2 correspondence").** A Tier 1 or Tier 2 message does **not** get
+    a single disposition from the table in step 5. Instead, evaluate all
+    three of these independently, every time — any, none, or all may fire:
+
+    - **Knowledge-worthy?** Contains a fact, document, decision, or plan
+      worth keeping? → **FILE** executes per the normal PKM routing table
+      (step 10 below) — additive, no per-item approval, same as any other
+      FILE write.
+    - **Reply-worthy?** Warrants a response? → build a **reply draft**
+      (subject, body, source message-id) and hold it for approval — never
+      send outright.
+    - **Task-worthy?** Carries an action beyond replying? → draft a **task**
+      per [[SOP-010-create-task]] (duplicate-check and GL-016 collision loop
+      still apply when the task is actually created after approval) and hold
+      it for approval.
+
+    A simple acknowledgment triggers none of these (or just FILE, if there's
+    still a fact worth keeping). A substantive message can trigger all
+    three. **When both a reply-draft and a task-draft come from the same
+    source message, bundle them together** as one grouped item in the run
+    summary — see Phase 4 step 14 — not as two unrelated proposals.
+
+5. For each message not already dispositioned by the Tier 1/2 checks above
+   (i.e. every Tier 3 message), assign a **category** and **disposition**
+   strictly per [[GL-018-inbox-triage-and-classification]]. Consult the
+   sender registry first; classify fresh if the sender is unknown.
+6. Produce, per message, a small structured record. Tier 3 messages use the
+   single-disposition shape; Tier 1/2 messages use the compound shape:
 
    ```
+   // Tier 3 (ordinary category-based, unchanged):
    {
      "message_id": "...",
      "inbox_id": "...",
@@ -129,6 +152,21 @@ equivalent for any other LLM.
      "proposed_action": { ... } | null,   // for ACT/FILE
      "pkm_route": "<folder path>" | null,  // for FILE
      "registry_suggestion": { ... } | null // new/changed sender row to ratify
+   }
+
+   // Tier 1/2 (compound — see GL-018 "Compound dispositions"):
+   {
+     "message_id": "...",
+     "inbox_id": "...",
+     "sender": "...",
+     "subject": "...",
+     "category": "human-direct",
+     "tier": 1 | 2,
+     "file": { "pkm_route": "...", "note": "..." } | null,
+     "reply_draft": { "subject": "...", "body": "..." } | null,
+     "task_draft": { "title": "...", ... } | null,
+     "bundle_id": "<shared id when reply_draft and task_draft both present>" | null,
+     "reason": "one line, why each signal fired or didn't"
    }
    ```
 
@@ -159,6 +197,45 @@ auto-delete of human-direct/account-security/unknown mail, no outbound sends.**
       storage/TrueNAS for large binaries per host convention); create/update the
       `documents` entity note with `digital_location`, `doc_type`,
       `expiry_date`/`renewal_trigger` if any.
+    - **Task cross-check (hard rule — see [[GL-018-inbox-triage-and-classification]]
+      "Task cross-check for shipment/part FILE actions").** If the routed
+      category is a vehicle, boat, or homelab-equipment shipment/part/order
+      (`reference-knowledge` or `financial`), before finalizing this FILE
+      action, search `Team Knowledge/tasks/open/` and
+      `Team Knowledge/tasks/in-progress/` for an existing task that
+      references the same part name, vendor, or order number, or is
+      otherwise about the general subject this task concerns:
+      - **Match:** append a dated line to that task's `## Updates` section
+        with the shipping/tracking details (carrier, tracking number, ETA),
+        and refresh `blocked_by`/any ETA text if this shipment is the
+        specific blocker. This executes automatically, same as the FILE
+        write itself — no per-item approval needed.
+      - **No match:** file the note as usual; no task-side action, and no
+        task gets invented just because a shipping email arrived.
+      - **Ambiguous:** do not auto-link. Either add it to the run summary
+        as an ALERT-adjacent item for Jeff to confirm the link, or note the
+        ambiguity in the FILE'd knowledge note itself — pick whichever
+        reads cleaner for the specific case, but never guess a task link.
+    - **Invoice-to-repair/upgrade cross-check (hard rule — see
+      [[GL-018-inbox-triage-and-classification]] "Invoice-to-repair/upgrade
+      tracking").** Same pattern as the task cross-check above, for
+      `financial` invoice/receipt messages concerning a part or service for
+      an active vehicle/boat/homelab repair or upgrade. Before finalizing
+      this FILE action, cross-check for an existing tracking record —
+      either an open/in-progress task (same task index as above) *or* a
+      domain knowledge log already tracking the work (e.g. the boat's
+      `PKM/Documents/lake-erie/maintenance-log.md`, a vehicle's own file, a
+      homelab build log):
+      - **Match (task or log):** append the invoice details — vendor,
+        amount, date, part/service description, invoice number if present
+        — to that record. Executes automatically, no per-item approval,
+        same as any other FILE write.
+      - **No match:** file the invoice as an ordinary financial record per
+        the routing table (`PKM/Documents/` + `documents` entity). No
+        repair/upgrade tracking record gets invented just because an
+        invoice arrived.
+      - **Ambiguous:** never auto-link a shaky match — surface it in the
+        run summary or note the ambiguity in the FILE'd record itself.
     - **In Claude Code:** use file-write tools directly. **In any other LLM:**
       emit the exact file path + full contents for the human/harness to write.
 11. **ACT** (propose only): build the concrete proposal and queue it.
@@ -179,8 +256,22 @@ auto-delete of human-direct/account-security/unknown mail, no outbound sends.**
 14. **Emit the run summary** (the single most important output). Structure:
     - **Alerts** — the `ALERT` digest, most important first. This is Goal 1 and
       Goal 3's payoff: "here is what mattered."
-    - **Proposals awaiting your nod** — every `ACT` calendar/task draft.
-    - **Filed** — what was written to which PKM folder (knowledge + docs).
+    - **Proposals awaiting your nod** — every `ACT` calendar/task draft, plus
+      every Tier 1/2 reply-draft and task-draft from step 4b. **When a
+      reply-draft and a task-draft share a `bundle_id` (same source
+      message), present them together as one grouped item** — the source
+      message, the reply, and the task as a single unit — never as two
+      separate, unrelated-looking proposals scattered across the list.
+    - **Filed** — what was written to which PKM folder (knowledge + docs),
+      including Tier 1/2 FILE outcomes from step 4b alongside ordinary
+      Tier 3 FILE dispositions. **Any task-Updates-log append from the step
+      10 task cross-check, or any tracking-record update from the step 10
+      invoice cross-check, is called out distinctly here**, not folded
+      silently into the knowledge-side line — e.g. "Filed + updated
+      `tsk-2026-06-30-001` (Subaru diagnostic) with new part ETA" for the
+      shipment/part case, or "Filed + updated boat maintenance-log with new
+      invoice for [part]" for the invoice case — so Jeff sees the
+      tracking-side effect, not just the knowledge-side one.
     - **Cleaned** — counts archived/trashed, by category.
     - **Registry changes to ratify** — proposed sender-row additions/edits.
     - **Filter recommendations** — for high-frequency junk senders seen this
