@@ -21,3 +21,6 @@ _mypka_to_sqlite_last_run.json
 
 # Scaffold updater control folder — local backups + update log (user-state, per manifest.json)
 .mypka/
+
+# Secrets — never tracked, .env.example is the checked-in template
+.env
