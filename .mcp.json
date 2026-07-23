@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "google-workspace-jeffreyj2490": {
+      "command": "C:\\Users\\jeff\\.google-workspace-mcp\\.venv\\Scripts\\workspace-mcp.exe",
+      "args": [
+        "--single-user",
+        "--permissions",
+        "gmail:drafts",
+        "contacts:readonly"
+      ],
+      "env": {
+        "GOOGLE_CLIENT_SECRET_PATH": "C:\\Users\\jeff\\.google-workspace-mcp\\client_secret.json",
+        "WORKSPACE_MCP_CREDENTIALS_DIR": "C:\\Users\\jeff\\.google-workspace-mcp\\credentials\\jeffreyj2490"
+      }
+    },
+    "google-workspace-davisglobe": {
+      "command": "C:\\Users\\jeff\\.google-workspace-mcp\\.venv\\Scripts\\workspace-mcp.exe",
+      "args": [
+        "--single-user",
+        "--permissions",
+        "gmail:drafts",
+        "contacts:readonly"
+      ],
+      "env": {
+        "GOOGLE_CLIENT_SECRET_PATH": "C:\\Users\\jeff\\.google-workspace-mcp\\client_secret.json",
+        "WORKSPACE_MCP_CREDENTIALS_DIR": "C:\\Users\\jeff\\.google-workspace-mcp\\credentials\\davisglobe"
+      }
+    }
+  }
+}
